@@ -48,4 +48,16 @@ class CustomersModel extends Model
         $result = DB::table($this->table)->select('customer_id', 'customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at')->get();
         return $result;
     }
+
+    public function getCustomer($page = null, $recordOnPage = 20)
+    {
+        $result = DB::table($this->table)->select('customer_id', 'customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at')->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
+        return $result;
+    }
+
+    public function getCountCustomer()
+    {
+        $count = DB::table($this->table)->count();
+        return $count;
+    }
 }

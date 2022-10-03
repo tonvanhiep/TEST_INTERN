@@ -6,14 +6,26 @@ btnMenuExtend.onclick = function()
 {
     if (divContent.className == "col-md-10") {
         divMenu.style.display = 'none';
-        btnMenuExtend.innerText = '>';
+        btnMenuExtend.innerText = '→';
         divContent.className = "col-md-12";
 
     } else if (divContent.className == "col-md-12") {
         divMenu.style.display = 'block';
-        btnMenuExtend.innerText = '<';
+        btnMenuExtend.innerText = '←';
         divContent.className = "col-md-10";
     }
 }
 
 
+function openPopUp()
+{
+    alert("Mở");
+    document.getElementById('pop-up').style.display == "block";
+
+}
+
+function closePopUp()
+{
+    alert("Đóng");
+    document.getElementById('pop-up').style.display == "none";
+}

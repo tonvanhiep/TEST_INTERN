@@ -22,7 +22,7 @@
                     <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                         <div class="card" style="border-radius: 15px;">
                             <div class="card-body p-5">
-                                <a href="{{route('home')}}" class="fw-bold text-body"><< Trở về trang chủ</a>
+                                <a href="{{route('home')}}" class="fw-bold text-body">&larr; Trở về trang chủ</a>
 
                                 <h2 class="text-uppercase text-center mb-4 mt-4">Đăng nhập</h2>
 

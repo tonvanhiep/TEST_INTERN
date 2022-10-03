@@ -9,14 +9,18 @@
 
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/admin-style.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+
+    @yield('css')
 </head>
 <body>
-    @yield('css')
-    <div class="container-fluid dashboard">
+    @yield('popup')
+    <div class="container-fluid dashboard mt-3">
         <div class="d-flex align-items-start">
 
             @include('components.admin-menu')
@@ -27,7 +31,7 @@
         </div>
     </div>
 
-    <script src="{{asset('assets/js/admin-style.js')}}"></script>
+    <script src="{{asset('assets/js/admin-xx.js?v=002')}}"></script>
     @yield('js')
 </body>
 </html>

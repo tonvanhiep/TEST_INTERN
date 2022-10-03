@@ -14,9 +14,11 @@ function editCustomerId(id) {
         for (let index = 0; index < arrInp.length; index++) {
             arrInp[index].disabled = true;
             btnEdit.innerText = "Sửa";
-            btnEdit.className = "btn btn-outline-danger";
+            btnEdit.className = "btn btn-outline-warning";
         }
         //luu len database qua ajax
     }
 
 }
+
+function deleteCustomerId(id) {}
