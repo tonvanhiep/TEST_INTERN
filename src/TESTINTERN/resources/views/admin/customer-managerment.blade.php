@@ -10,94 +10,67 @@
 
 
 @section('popup')
-    {{-- <div class="bg-image position-fixed" style="margin: auto; display:none;" id="pop-up">
-        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-            <div class="container h-100">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                        <div class="card" style="border-radius: 15px;">
-                            <div class="card-body p-5">
-                                <button class="btn btn-outline-dark" onclick="closePopUp();"> Đóng </button>
-
-                                <h2 class="text-uppercase text-center mb-4 mt-4">Đăng ký tài khoản</h2>
-
-                                <form method="POST" action="http://localhost:8000/taikhoan/dangky">
-                                    <input type="hidden" name="_token" value="EDH4xZ7fUH3UHtvhkzROVwReTGiIxSo79KlYh9Wc">        <div class="form-outline mb-3">
-                                        <label class="form-label" for="inp-name">Họ và tên *</label>
-                                        <input type="text" id="inp-name" name="name" class="form-control"/>
-                                    </div>
-
-                                    <div class="form-outline mb-3">
-                                        <label class="form-label" for="inp-email">Email *</label>
-                                        <input type="email" id="inp-email" name="email" class="form-control"/>
-                                    </div>
-
-                                    <div class="form-outline mb-3">
-                                        <label class="form-label" for="inp-tel">Số điện thoại *</label>
-                                        <input type="tel" id="inp-tel" name="tel" class="form-control"/>
-                                    </div>
-
-                                    <div class="form-outline mb-3">
-                                        <label class="form-label" for="inp-pass">Mật khẩu *</label>
-                                        <input type="password" id="inp-pass" name="pass" class="form-control"/>
-                                    </div>
-
-                                    <div class="form-outline mb-3">
-                                        <label class="form-label" for="inp-repass">Nhập lại mật khẩu *</label>
-                                        <input type="password" id="inp-repass" name="re-pass" class="form-control"/>
-                                    </div>
-
-                                    <div class="form-outline mb-3">
-                                        <label class="form-label" for="inp-address">Địa chỉ</label>
-                                        <input type="text" id="inp-address" name="address" class="form-control"/>
-                                    </div>
-
-                                    <div class="form-check d-flex justify-content mb-4">
-                                        <input class="form-check-input me-2" type="checkbox" name="agree-rule" value="agree" id="agree-rule"/>
-                                        <label class="form-check-label" for="agree-rule">
-                                            Tôi đã đọc và đồng ý với các <a href="#!" class="text-body"><u>điều khoản</u></a>
-                                        </label>
-                                    </div>
-
-                                    <div class="d-flex justify-content-center">
-                                        <button type="submit" class="btn btn-info btn-block">Đăng ký tài khoản</button>
-                                    </div>
-
-                                    <p class="text-center text-muted mt-4 mb-0">
-                                        Bạn đã có tài khoản? <a href="http://localhost:8000/taikhoan/dangnhap" class="fw-bold text-body"><u>Đăng nhập</u></a>
-                                    </p>
-                                </form>
+    <div class="container mt-5">
+        {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Contact Us</button> --}}
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tạo tài khoản khách hàng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
-                        </div>
+                        @endif
+                        <form method="POST" action="http://localhost:8000/taikhoan/dangky">
+                            @csrf
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="inp-name">Họ và tên *</label>
+                                <input type="text" id="inp-name" name="name" class="form-control"/>
+                            </div>
+
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="inp-email">Email *</label>
+                                <input type="email" id="inp-email" name="email" class="form-control"/>
+                            </div>
+
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="inp-tel">Số điện thoại *</label>
+                                <input type="tel" id="inp-tel" name="tel" class="form-control"/>
+                            </div>
+
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="inp-pass">Mật khẩu *</label>
+                                <input type="password" id="inp-pass" name="pass" class="form-control"/>
+                            </div>
+
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="inp-repass">Nhập lại mật khẩu *</label>
+                                <input type="password" id="inp-repass" name="re-pass" class="form-control"/>
+                            </div>
+
+                            <div class="form-outline mb-3">
+                                <label class="form-label" for="inp-address">Địa chỉ</label>
+                                <input type="text" id="inp-address" name="address" class="form-control"/>
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-info btn-block">Đăng ký tài khoản</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div> --}}
-
-    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Launch static backdrop modal
-  </button>
-
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
-        </div>
-      </div>
     </div>
-  </div>
+
 @endsection
 
 
@@ -106,13 +79,14 @@
 <div class="right-sidebar">
 
     <h3 class="title-category mb-40">
-        <button class="btn btn-outline-dark" id="btn-menu-extend" style="display: inline">&larr;</button>QUẢN LÝ KHÁCH HÀNG
+        <button class="btn btn-outline-dark" id="btn-menu-extend" style="display: inline; margin-right:15px">&larr;</button>QUẢN LÝ KHÁCH HÀNG
     </h3>
 
 
     <div class="d-flex flex-row-reverse">
         <div class="p-2">
-            <button class="btn btn-info" onclick="openPopUp();">Tạo tài khoản</button>
+            {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Contact Us</button> --}}
+            <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Tạo tài khoản</button>
         </div>
         <div class="p-2">
             <button class="btn btn-info">Xuất CSV</button>
@@ -154,7 +128,7 @@
 
 
 
-<div class="mt-3" >
+    <div class="mt-3" >
         @include('components.pagination')
 
         <div class="d-flex justify-content-end">
@@ -227,13 +201,6 @@
 
 
 @section('js')
-    <script>
-        var myModal = document.getElementById('myModal')
-        var myInput = document.getElementById('myInput')
-
-        myModal.addEventListener('shown.bs.modal', function () {
-        myInput.focus()
-        })
-    </script>
     <script src="{{asset('assets/js/customer-managerment.js')}}"></script>
 @endsection
+
