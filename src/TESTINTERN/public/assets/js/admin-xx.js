@@ -29,3 +29,26 @@ function closePopUp()
     alert("Đóng");
     document.getElementById('pop-up').style.display == "none";
 }
+
+function page(page = 1)
+{
+    var urlAction = document.getElementById('url-pagination').textContent;
+    var token = document.getElementById('token-pagination').textContent;
+
+    $.ajax({
+        type: 'POST',
+        cache: false,
+        url: urlAction,
+        data: {
+            "_token": token,
+            "page": page
+        },
+        success: function(data) {
+            console.log('success');
+            document.getElementById('pagination-content').innerHTML = data;
+        },
+        error: function(data) {
+            console.log(data);
+        },
+    });
+}

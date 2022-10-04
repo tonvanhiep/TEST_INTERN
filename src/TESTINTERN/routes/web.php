@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Client\LoginController;
 use App\Http\Controllers\Client\RegisterController;
 use App\Http\Controllers\TestController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,9 +45,19 @@ Route::prefix('quanly')->name('admin.')->group(function ()
 {
     Route::get('/dangnhap', [AdminLoginController::class, 'index'])->name('loginManagement');
     Route::post('/dangnhap', [AdminLoginController::class, 'actionLogin'])->name('p_loginManagement');
+    Route::post('/dangky', [AdminLoginController::class, 'actionRegister'])->name('p_registerManagement');
     Route::get('/dangxuat', [AdminLoginController::class, 'actionLogout'])->name('logoutManagement');
 
     Route::get('/khachhang', [CustomerManagermentController::class, 'index'])->name('customerManagement');
+    Route::post('/khachhang', [CustomerManagermentController::class, 'paginationCustomer'])->name('p_paginationCustomerManagement');
+    Route::post('/chinhsuakh', [CustomerManagermentController::class, 'editCustomer'])->name('p_editCustomerManagement');
+    Route::post('/xoakh', [CustomerManagermentController::class, 'deleteCustomer'])->name('p_deleteCustomerManagement');
+    Route::post('/timkiemkh', [CustomerManagermentController::class, 'searchCustomer'])->name('p_searchcustomerManagement');
+
     Route::get('/quantrivien', [UserController::class, 'index'])->name('adminManagement');
     Route::get('/sanpham', [ProductController::class, 'index'])->name('productManagement');
 });
+
+// Route::get('test', function(){
+//     return Excel::download(new User(), 'users.xlsx');
+// });

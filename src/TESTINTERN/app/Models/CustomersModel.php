@@ -13,13 +13,11 @@ class CustomersModel extends Model
 
     protected $table = 'MST_CUSTOMER';
 
-    public function index()
-    {
-
-    }
+    public function index() {}
 
     public function addCustomer($data = null)
     {
+        if($data == null) return;
         DB::table($this->table)->insert([
             [
                 'customer_name' => $data['name'],
@@ -34,8 +32,37 @@ class CustomersModel extends Model
         ]);
     }
 
+    public function updateCustomer($id = -1, $data)
+    {
+        if($id == -1 || $data == null) return array('success' => false, 'message' => 'ID khách hàng không hợp lệ.');
+        $result = DB::table($this->table)->where('customer_id', '!=', $id)->where('email', 'like', $data['email'])->get();
+        if(count($result) > 0) return array('success' => false, 'message' => 'Email đã tồn tại.');
+
+        DB::table($this->table)
+              ->where('customer_id', $id)
+              ->update(
+                [
+                    'customer_name' => $data['name'],
+                    'email' => $data['email'],
+                    'tel_num' => $data['tel'],
+                    'address' => $data['address'],
+                    'is_active' => $data['is_active'],
+                    'updated_at' => date('Y-m-d H:i:s')
+                ]
+            );
+        return array('success' => true, 'message' => 'Success');
+    }
+
+    public function deleteCustomer($id = -1)
+    {
+        if($id == -1 || $id <= 0) return;
+        DB::table($this->table)->where('customer_id', '=', $id)->delete();
+    }
+
     public function checkLogin($data)
     {
+        if($data == null) return;
+
         $result = DB::table($this->table)->select('customer_id')
                                          ->where('email', '=', $data['email'])
                                          ->where('password', '=', $data['pass'])
@@ -45,13 +72,16 @@ class CustomersModel extends Model
 
     public function getAllCustomer()
     {
-        $result = DB::table($this->table)->select('customer_id', 'customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at')->get();
+        $result = DB::table($this->table)
+            ->select('customer_id', 'customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at')->get();
         return $result;
     }
 
-    public function getCustomer($page = null, $recordOnPage = 20)
+    public function getCustomer($page = 1, $recordOnPage = 20)
     {
-        $result = DB::table($this->table)->select('customer_id', 'customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at')->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
+        $result = DB::table($this->table)
+            ->select('customer_id', 'customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at')
+            ->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
         return $result;
     }
 

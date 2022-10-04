@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\AdminModel;
+use App\Models\CustomersModel;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -44,5 +46,18 @@ class LoginController extends Controller
             $request->session()->forget('admin_id');
         }
         return redirect()->route('home');
+    }
+
+    public function actionRegister(RegisterRequest $request)
+    {
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'tel' => $request->tel,
+            'pass' => $request->pass,
+            'address' => $request->address
+        ];
+        $account = new CustomersModel();
+        $account->addCustomer($data);
     }
 }

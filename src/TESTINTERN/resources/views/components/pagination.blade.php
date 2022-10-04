@@ -1,5 +1,6 @@
 @if (isset($currentPage) && isset($totalPage))
 <div class="d-flex justify-content-center">
+    <p hidden id="current-page">{{$currentPage}}</p>
     <div>
         <ul class="pagination">
             @if ($currentPage >= 3)
