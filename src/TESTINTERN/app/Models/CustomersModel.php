@@ -13,11 +13,35 @@ class CustomersModel extends Model
 
     protected $table = 'MST_CUSTOMER';
 
+    public function wdt($data = null)
+    {
+        // dd($data);
+        if($data == null) return;
+        $result = DB::table($this->table)->where('email', 'like', $data['email'])->get();
+        if(count($result) > 0) return array('success' => false, 'message' => 'Email đã tồn tại.');
+
+        DB::table($this->table)->insert([
+            [
+                'customer_name' => $data['name'],
+                'email' => $data['email'],
+                'tel_num' => $data['tel'],
+                'address' => $data['address'],
+                'password' => $data['pass'],
+                'is_active' => $data['is_active'],
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]
+        ]);
+    }
+
     public function index() {}
 
     public function addCustomer($data = null)
     {
         if($data == null) return;
+        $result = DB::table($this->table)->where('email', 'like', $data['email'])->get();
+        if(count($result) > 0) return array('success' => false, 'message' => 'Email đã tồn tại.');
+
         DB::table($this->table)->insert([
             [
                 'customer_name' => $data['name'],
@@ -77,17 +101,35 @@ class CustomersModel extends Model
         return $result;
     }
 
-    public function getCustomer($page = 1, $recordOnPage = 20)
+    public function getCustomer($condition = null, $page = 1, $recordOnPage = 20)
     {
+        if($condition == null) return -1;
+
         $result = DB::table($this->table)
             ->select('customer_id', 'customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at')
+            ->where('customer_name', 'like', '%'.preg_replace("/[^a-zA-Z0-9]/", "%", (($condition['name'] == null) ? '' : $condition['name'])).'%')
+            ->where('email', 'like', '%'.(($condition['email'] == null) ? '' : $condition['email']).'%')
+            ->where('address', 'like', '%'.preg_replace("/[^a-zA-Z0-9]/", "%", (($condition['address'] == null) ? '' : $condition['address'])).'%')
+            ->where(function($query) use ($condition) {
+                $query->where('is_active', '=' ,(($condition['is_active'] == -1) ? 0 : $condition['is_active']))
+                      ->orWhere('is_active', '=', (($condition['is_active'] == -1) ? 1 : $condition['is_active']));
+                })
             ->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
         return $result;
     }
 
-    public function getCountCustomer()
+    public function getCountCustomer($condition = null)
     {
-        $count = DB::table($this->table)->count();
+        if($condition == null) return -1;
+        $count = DB::table($this->table)
+            ->where('customer_name', 'like', '%'.preg_replace("/[^a-zA-Z0-9]/", "%", (($condition['name'] == null) ? '' : $condition['name'])).'%')
+            ->where('email', 'like', '%'.(($condition['email'] == null) ? '' : $condition['email']).'%')
+            ->where('address', 'like', '%'.preg_replace("/[^a-zA-Z0-9]/", "%", (($condition['address'] == null) ? '' : $condition['address'])).'%')
+            ->where(function($query) use ($condition) {
+                $query->where('is_active', '=' ,(($condition['is_active'] == -1) ? 0 : $condition['is_active']))
+                      ->orWhere('is_active', '=', (($condition['is_active'] == -1) ? 1 : $condition['is_active']));
+                })
+            ->count();
         return $count;
     }
 }

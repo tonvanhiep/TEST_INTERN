@@ -1,4 +1,4 @@
-function editCustomerId(id) { // chua xong
+function editCustomerId(id) {
     let btnEdit = document.getElementById('btn-edit-inp-' + id);
     let arrInp = document.getElementsByClassName('inp-row-' + id);
 
@@ -81,11 +81,48 @@ function deleteCustomerId(id) {
     }
 }
 
-function submitSearchFormAjax()
+function submitSearchFormAjax(delSearch)
 {
-    alert("submitSearchFormAjax");
-    //var urlAction = document.getElementById('search-form').action;
+    var email = document.getElementById('search-email').value;
+    var name = document.getElementById('search-name').value;
+    var address = document.getElementById('search-address').value;
+    var is_active = document.getElementById('filter-status').value;
 
+    email = email.trim().replace(/^\s+|\s+$/gm,'');
+    name = name.trim().replace(/^\s+|\s+$/gm,'');
+    address = address.trim().replace(/^\s+|\s+$/gm,'');
+    is_active = (is_active == 1 || is_active == 0) ? is_active : -1;
+
+    if(delSearch == 1) {
+        email = '';
+        name = '';
+        address = '';
+        is_active = -1;
+    }
+    else if (email == '' && name == '' && address == '' && is_active == -1) {
+        alert("Bạn chưa nhập thông tin tìm kiếm");
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        cache: false,
+        url: document.getElementById('search-form').action,
+        data: {
+            "_token": document.getElementById('token-search').textContent,
+            "email": (email == '') ? null : email,
+            "name": (name == '') ? null : name,
+            "address": (address == '') ? null : address,
+            "is_active": (is_active == '') ? null : is_active,
+        },
+        success: function(data) {
+            console.log('success');
+            document.getElementById('pagination-content').innerHTML = data;
+        },
+        error: function(data) {
+            console.log(data);
+        },
+    });
 }
 
 function submitRegisterFormAjax()
@@ -144,36 +181,25 @@ function submitRegisterFormAjax()
 
 function deleteSearchFormAjax()
 {
-    alert("deleteSearchFormAjax");
-    var urlAction = document.getElementById('register-form').action;
+    submitSearchFormAjax(1);
+}
 
+function importCsv()
+{
     // $.ajax({
     //     type: 'POST',
     //     cache: false,
-    //     url: urlAction,
+    //     url: document.getElementById('form-uploadfile').action,
     //     data: {
-    //         "_token": "",
-    //         "name": "s",
-    //         "email": "m",
-    //         "pass": "p",
-    //         "re-pass": "rp",
-    //         "address": "ad"
+    //         "_token": document.getElementById('token-uploadfile').textContent,
+    //         "file": document.getElementById('file-csv').value
     //     },
     //     success: function(data) {
-    //         console.log(data);
+    //         console.log('success');
+    //         page(1);
     //     },
     //     error: function(data) {
     //         console.log(data);
     //     },
     // });
-}
-
-function importCSV()
-{
-    alert("importCSV");
-}
-
-function exportCSV()
-{
-    alert("exportCSV");
 }

@@ -2,6 +2,8 @@
 
 
 
+
+
 @section('title')
     Quản lý khách hàng
 @endsection
@@ -9,9 +11,9 @@
 
 
 
+
 @section('popup')
     <div class="container">
-        {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Contact Us</button> --}}
         <div class="modal" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -63,7 +65,32 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="modal" id="myModal2">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Import csv</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="div-alert"></div>
+                        <form id="form-uploadfile" method="POST" action="{{route('admin.p_importCsvCustomerManagement')}}">
+                            <p hidden id="token-uploadfile">{{ csrf_token() }}</p>
+                            @csrf
+                            <div class="input-group">
+                                <input name="filecsv" type="file" class="form-control" id="file-csv" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04" >Tải lên</button>
+                                {{-- onclick="importCsv();" --}}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
 
 
 
@@ -83,15 +110,16 @@
             <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Tạo tài khoản</button>
         </div>
         <div class="p-2">
-            <button class="btn btn-info">Xuất CSV</button>
+            <button class="btn btn-info" onclick="location.href='{{route('admin.exportCsvCustomerManagement')}}'">Xuất CSV</button>
         </div>
         <div class="p-2">
-            <button class="btn btn-info">Thêm CSV</button>
+            <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#myModal2">Thêm CSV</button>
         </div>
     </div>
 
     <div class="options">
         <form class="d-flex flex-row" id="search-form" action="{{route('admin.p_searchcustomerManagement')}}">
+            <p hidden id="token-search">{{ csrf_token() }}</p>
             <div class="p-2">
                 <label class="form-label" for="search-name">Họ và tên</label>
                 <input class="form-control" id="search-name" type="search" placeholder="Nhập họ tên khách hàng">
@@ -103,8 +131,9 @@
             <div class="p-2">
                 <label class="form-label" for="filter-status">Trạng thái</label>
                 <select class="form-select" id="filter-status">
-                    <option selected>Hoạt động</option>
-                    <option>Tạm khóa</option>
+                    <option value="-1" selected>Tất cả</option>
+                    <option value="1">Hoạt động</option>
+                    <option value="0">Tạm khóa</option>
                 </select>
             </div>
             <div class="p-2">
@@ -127,9 +156,9 @@
     </div>
 </div>
 
-
-
 @endsection
+
+
 
 
 

@@ -1,7 +1,7 @@
 @include('components.pagination')
 
 <div class="d-flex justify-content-end">
-    <p>Hiển thị từ <strong> {{$record['min']}} </strong> đến <strong> {{$record['max']}} </strong> trong tổng số <strong> {{$record['total']}} </strong> khách hàng</p>
+    <p>Hiển thị từ <strong> {{($record['min'] >= 0) ? $record['min'] : 0}} </strong> đến <strong> {{$record['max']}} </strong> trong tổng số <strong> {{$record['total']}} </strong> khách hàng</p>
 </div>
 
 <div>

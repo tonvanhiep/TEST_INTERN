@@ -34,6 +34,16 @@ function page(page = 1)
 {
     var urlAction = document.getElementById('url-pagination').textContent;
     var token = document.getElementById('token-pagination').textContent;
+    var email = document.getElementById('search-email').value;
+    var name = document.getElementById('search-name').value;
+    var address = document.getElementById('search-address').value;
+    var is_active = document.getElementById('filter-status').value;
+
+    email = email.trim().replace(/^\s+|\s+$/gm,'');
+    name = name.trim().replace(/^\s+|\s+$/gm,'');
+    address = address.trim().replace(/^\s+|\s+$/gm,'');
+    is_active = (is_active == 1 || is_active == 0) ? is_active : -1;
+
 
     $.ajax({
         type: 'POST',
@@ -41,7 +51,11 @@ function page(page = 1)
         url: urlAction,
         data: {
             "_token": token,
-            "page": page
+            "page": page,
+            "email": (email == '') ? null : email,
+            "name": (name == '') ? null : name,
+            "address": (address == '') ? null : address,
+            "is_active": (is_active == '') ? -1 : is_active,
         },
         success: function(data) {
             console.log('success');

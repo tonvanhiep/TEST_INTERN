@@ -53,6 +53,8 @@ Route::prefix('quanly')->name('admin.')->group(function ()
     Route::post('/chinhsuakh', [CustomerManagermentController::class, 'editCustomer'])->name('p_editCustomerManagement');
     Route::post('/xoakh', [CustomerManagermentController::class, 'deleteCustomer'])->name('p_deleteCustomerManagement');
     Route::post('/timkiemkh', [CustomerManagermentController::class, 'searchCustomer'])->name('p_searchcustomerManagement');
+    Route::get('/khachhang/xuatcsv', [CustomerManagermentController::class, 'exportCSV'])->name('exportCsvCustomerManagement');
+    Route::post('/khachhang/nhapcsv', [CustomerManagermentController::class, 'importCSV'])->name('p_importCsvCustomerManagement');
 
     Route::get('/quantrivien', [UserController::class, 'index'])->name('adminManagement');
     Route::get('/sanpham', [ProductController::class, 'index'])->name('productManagement');

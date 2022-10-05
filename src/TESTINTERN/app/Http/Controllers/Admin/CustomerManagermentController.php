@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\CustomersExport;
 use App\Http\Controllers\Controller;
+use App\Imports\CustomersImport;
 use App\Models\CustomersModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerManagermentController extends Controller
 {
@@ -17,10 +20,16 @@ class CustomerManagermentController extends Controller
         $this->customer = new CustomersModel();
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $page = 1;
-        $totalCustomer = $this->customer->getCountCustomer();
+        $condition = array(
+            'is_active' => (!$request->has('is_active') ? -1 : $request->is_active),
+            'name' => (!$request->has('name') ? null : $request->name),
+            'address' => (!$request->has('address') ? null : $request->address),
+            'email' => (!$request->has('email') ? null : $request->email)
+        );
+        $totalCustomer = $this->customer->getCountCustomer($condition);
         $totalPage = intval($totalCustomer / $this->customerOnPage + (($totalCustomer % $this->customerOnPage == 0) ? 0 : 1));
         $currentPage = ($page <= $totalPage) ? $page : $totalPage;
 
@@ -29,14 +38,21 @@ class CustomerManagermentController extends Controller
             'max' => ($currentPage * $this->customerOnPage <= $totalCustomer) ? ($currentPage * $this->customerOnPage) : $totalCustomer,
             'total' => $totalCustomer
         ];
-        $listCustomer = $this->customer->getCustomer($currentPage, $this->customerOnPage);
+        $listCustomer = $this->customer->getCustomer($condition, $currentPage, $this->customerOnPage);
         return view('admin.customer-management', compact('listCustomer', 'record', 'totalPage', 'currentPage'));
     }
 
     public function paginationCustomer(Request $request)
     {
+        $condition = array(
+            'is_active' => (!$request->has('is_active') ? -1 : $request->is_active),
+            'name' => (!$request->has('name') ? null : $request->name),
+            'address' => (!$request->has('address') ? null : $request->address),
+            'email' => (!$request->has('email') ? null : $request->email)
+        );
+
         $page = ($request->page >= 1) ? $request->page : 1;
-        $totalCustomer = $this->customer->getCountCustomer();
+        $totalCustomer = $this->customer->getCountCustomer($condition);
         $totalPage = intval($totalCustomer / $this->customerOnPage + (($totalCustomer % $this->customerOnPage == 0) ? 0 : 1));
         $currentPage = ($page <= $totalPage) ? $page : $totalPage;
 
@@ -45,7 +61,7 @@ class CustomerManagermentController extends Controller
             'max' => ($currentPage * $this->customerOnPage <= $totalCustomer) ? ($currentPage * $this->customerOnPage) : $totalCustomer,
             'total' => $totalCustomer
         ];
-        $listCustomer = $this->customer->getCustomer($currentPage, $this->customerOnPage);
+        $listCustomer = $this->customer->getCustomer($condition, $currentPage, $this->customerOnPage);
 
         $returnHTML = view('admin.pagination-customer-management', compact('listCustomer', 'record', 'totalPage', 'currentPage'))->render();
         return response()->json($returnHTML);
@@ -73,7 +89,12 @@ class CustomerManagermentController extends Controller
         $result = $this->customer->updateCustomer($id, $data);
 
         if($result['success'] == false) {
-            return Redirect::back()->withErrors(['msg' => $request['massage']]);
+            return response()->json([
+                'message' => $result['message'],
+                'errors' => [
+                    'email' => [$result['message']]
+                ]
+            ], 422);
         }
         return 'Success';
     }
@@ -85,5 +106,42 @@ class CustomerManagermentController extends Controller
             ]
         );
         $this->customer->deleteCustomer($request->id);
+    }
+
+    public function searchCustomer(Request $request)
+    {
+        $condition = array(
+            'is_active' => (!$request->has('is_active') ? -1 : $request->is_active),
+            'name' => (!$request->has('name') ? null : $request->name),
+            'address' => (!$request->has('address') ? null : $request->address),
+            'email' => (!$request->has('email') ? null : $request->email)
+        );
+        $page = ($request->page >= 1) ? $request->page : 1;
+        $totalCustomer = $this->customer->getCountCustomer($condition);
+        $totalPage = intval($totalCustomer / $this->customerOnPage + (($totalCustomer % $this->customerOnPage == 0) ? 0 : 1));
+        $currentPage = ($page <= $totalPage) ? $page : $totalPage;
+
+        $record = [
+            'min' => ($currentPage - 1) * $this->customerOnPage + 1,
+            'max' => ($currentPage * $this->customerOnPage <= $totalCustomer) ? ($currentPage * $this->customerOnPage) : $totalCustomer,
+            'total' => $totalCustomer
+        ];
+        $listCustomer = $this->customer->getCustomer($condition, $currentPage, $this->customerOnPage);
+
+
+
+        $returnHTML = view('admin.pagination-customer-management', compact('listCustomer', 'record', 'totalPage', 'currentPage'))->render();
+        return response()->json($returnHTML);
+    }
+
+    public function exportCSV()
+    {
+        return Excel::download(new CustomersExport, 'list-customers-'.preg_replace("/[ ]/", "-", date('Y-m-d H:i:s')).'.csv');
+    }
+
+    public function importCSV(Request $request)
+    {
+        Excel::import(new CustomersImport, $request->filecsv);
+
     }
 }
