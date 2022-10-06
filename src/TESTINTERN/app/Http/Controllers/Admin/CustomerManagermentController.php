@@ -143,5 +143,7 @@ class CustomerManagermentController extends Controller
     {
         Excel::import(new CustomersImport, $request->filecsv);
 
+        return redirect()->back();
+        // return 'Success';
     }
 }

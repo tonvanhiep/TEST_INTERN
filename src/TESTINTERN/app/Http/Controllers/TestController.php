@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminModel;
 use App\Models\CustomersModel;
 use Illuminate\Http\Request;
 
@@ -23,16 +24,16 @@ class TestController extends Controller
     {
         $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-        for($i = 0; $i < 250; $i++) {
-            $customer = new CustomersModel();
-            $dataCustomer = [
-                'name' => 'NAVE LOPI HANUI',
-                'email' => $this->generate_string($permitted_chars, 16).'@gmail.com',
-                'tel' => '0'.$this->generate_string('0123456789', 9),
-                'pass' => 'e807f1fcf82d132f9bb018ca6738a19f',
-                'address' => 'ABC XYZ, ABC MNG, CDN WOP, FGH CSV'
+        for($i = 0; $i < 100; $i++) {
+            $admin = new AdminModel();
+            $dataAdmin = [
+                'name' => $this->generate_string('ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 12),
+                'email' => $this->generate_string($permitted_chars, 12).'@gmail.com',
+                'pass' => md5(123456789),
+                'is_active' => rand(0, 1),
+                'group' => rand(1, 3),
             ];
-            $customer->addCustomer($dataCustomer);
+            $admin->addAdmin($dataAdmin);
         }
 
         return 'Success';

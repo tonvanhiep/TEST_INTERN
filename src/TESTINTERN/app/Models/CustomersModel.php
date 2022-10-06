@@ -13,26 +13,8 @@ class CustomersModel extends Model
 
     protected $table = 'MST_CUSTOMER';
 
-    public function wdt($data = null)
-    {
-        // dd($data);
-        if($data == null) return;
-        $result = DB::table($this->table)->where('email', 'like', $data['email'])->get();
-        if(count($result) > 0) return array('success' => false, 'message' => 'Email đã tồn tại.');
+    protected $fillable = ['customer_name','email','tel_num','address','password','is_active','created_at','updated_at'];
 
-        DB::table($this->table)->insert([
-            [
-                'customer_name' => $data['name'],
-                'email' => $data['email'],
-                'tel_num' => $data['tel'],
-                'address' => $data['address'],
-                'password' => $data['pass'],
-                'is_active' => $data['is_active'],
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s')
-            ]
-        ]);
-    }
 
     public function index() {}
 
@@ -54,6 +36,11 @@ class CustomersModel extends Model
                 'updated_at' => date('Y-m-d H:i:s')
             ]
         ]);
+    }
+
+    public function checkExisted($email)
+    {
+        return DB::table($this->table)->where('email', 'like', $email)->get();
     }
 
     public function updateCustomer($id = -1, $data)

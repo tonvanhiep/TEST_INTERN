@@ -5,7 +5,7 @@
 
 
 @section('title')
-    Quản lý khách hàng
+    管理者アカウントの管理
 @endsection
 
 
@@ -18,12 +18,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Tạo tài khoản khách hàng</h5>
+                        <h5 class="modal-title">Tạo tài khoản admin</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <div id="div-alert"></div>
-                        <form id="register-form" action="{{route('account.p_registerAdmin')}}">
+                        <form id="register-form" action="{{route('admin.p_registerManagement')}}">
                             <p hidden id="token-register">{{ csrf_token() }}</p>
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="inp-name">Họ và tên *</label>
@@ -33,11 +33,6 @@
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="inp-email">Email *</label>
                                 <input type="email" id="inp-email" class="form-control"/>
-                            </div>
-
-                            <div class="form-outline mb-3">
-                                <label class="form-label" for="inp-tel">Số điện thoại *</label>
-                                <input type="tel" id="inp-tel" class="form-control"/>
                             </div>
 
                             <div class="form-outline mb-3">
@@ -51,8 +46,12 @@
                             </div>
 
                             <div class="form-outline mb-3">
-                                <label class="form-label" for="inp-address">Địa chỉ</label>
-                                <input type="text" id="inp-address" class="form-control"/>
+                                <label class="form-label" for="inp-group">Group *</label>
+                                <select class="form-select" name="group" id="inp-group">
+                                    <option value="1" selected>Admin</option>
+                                    <option value="2" >Editer</option>
+                                    <option value="3" >Reviewer</option>
+                                </select>
                             </div>
 
                             <div class="d-flex justify-content-center">
@@ -75,7 +74,7 @@
                     </div>
                     <div class="modal-body">
                         <div id="div-alert"></div>
-                        <form id="form-uploadfile" enctype="multipart/form-data" method="POST" action="{{route('admin.p_importCsvCustomerManagement')}}">
+                        <form id="form-uploadfile" enctype="multipart/form-data" method="POST" action="{{route('admin.admin.p_importCsv')}}">
                             <p hidden id="token-uploadfile">{{ csrf_token() }}</p>
                             @csrf
                             <div class="input-group">
@@ -97,11 +96,11 @@
 
 @section('content')
 <div class="right-sidebar">
-    <p hidden id="url-pagination">{{route('admin.p_paginationCustomerManagement')}}</p>
+    <p hidden id="url-pagination">{{route('admin.admin.p_pagination')}}</p>
     <p hidden id="token-pagination">{{csrf_token()}}</p>
 
     <h3 class="title-category mb-40">
-        <button class="btn btn-outline-dark" id="btn-menu-extend" style="display: inline; margin-right:15px">&larr;</button>QUẢN LÝ KHÁCH HÀNG
+        <button class="btn btn-outline-dark" id="btn-menu-extend" style="display: inline; margin-right:15px">&larr;</button>管理者アカウントの管理
     </h3>
 
 
@@ -110,7 +109,7 @@
             <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Tạo tài khoản</button>
         </div>
         <div class="p-2">
-            <button class="btn btn-info" onclick="location.href='{{route('admin.exportCsvCustomerManagement')}}'">Xuất CSV</button>
+            <button class="btn btn-info" onclick="location.href='{{route('admin.admin.exportCsv')}}'">Xuất CSV</button>
         </div>
         <div class="p-2">
             <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#myModal2">Thêm CSV</button>
@@ -118,15 +117,24 @@
     </div>
 
     <div class="options">
-        <form class="d-flex flex-row" id="search-form" action="{{route('admin.p_searchcustomerManagement')}}">
+        <form class="d-flex flex-row" id="search-form" action="{{route('admin.admin.p_search')}}">
             <p hidden id="token-search">{{ csrf_token() }}</p>
             <div class="p-2">
                 <label class="form-label" for="search-name">Họ và tên</label>
-                <input class="form-control" id="search-name" type="search" placeholder="Nhập họ tên khách hàng">
+                <input class="form-control" id="search-name" type="search" placeholder="Nhập họ tên">
             </div>
             <div class="p-2">
                 <label class="form-label" for="search-email">Email</label>
                 <input class="form-control" id="search-email" type="search" placeholder="Nhập email">
+            </div>
+            <div class="p-2">
+                <label class="form-label" for="filter-group">Group</label>
+                <select class="form-select" id="filter-group">
+                    <option value="-1" selected>Tất cả</option>
+                    <option value="1">Admin</option>
+                    <option value="2">Editer</option>
+                    <option value="3">Reviewer</option>
+                </select>
             </div>
             <div class="p-2">
                 <label class="form-label" for="filter-status">Trạng thái</label>
@@ -135,10 +143,6 @@
                     <option value="1">Hoạt động</option>
                     <option value="0">Tạm khóa</option>
                 </select>
-            </div>
-            <div class="p-2">
-                <label class="form-label" for="search-address">Địa chỉ</label>
-                <input class="form-control" id="search-address" type="search" placeholder="Nhập địa chỉ">
             </div>
             <div class="align-self-end p-2">
                 <button class="btn btn-outline-dark" type="button" onclick="submitSearchFormAjax();">Tìm kiếm</button>
@@ -152,7 +156,7 @@
 
 
     <div class="mt-3" id="pagination-content">
-        @include('admin.pagination-customer-management')
+        @include('admin.pagination-admin-management')
     </div>
 </div>
 
@@ -163,6 +167,6 @@
 
 
 @section('js')
-    <script src="{{asset('assets/js/customer-management.js')}}"></script>
+    <script src="{{asset('assets/js/admin-management.js')}}"></script>
 @endsection
 

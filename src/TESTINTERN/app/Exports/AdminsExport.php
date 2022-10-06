@@ -2,11 +2,11 @@
 
 namespace App\Exports;
 
-use App\Models\CustomersModel;
+use App\Models\AdminModel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class CustomersExport implements FromCollection, WithHeadings
+class AdminsExport implements FromCollection, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -20,7 +20,7 @@ class CustomersExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ["id", "name", "email", "tel", "address", "active", "created_at", "updated_at"];
+        return ["id", "name", "email", "active", "delete", "group", "created_at", "updated_at"];
     }
 
     /**
@@ -28,6 +28,6 @@ class CustomersExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return CustomersModel::select('customer_id','customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at', 'updated_at')->get();
+        return AdminModel::select('admin_id','name', 'email', 'is_active', 'is_delete', 'group_role', 'created_at', 'updated_at')->get();
     }
 }

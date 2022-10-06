@@ -16,6 +16,13 @@ class RegisterController extends Controller
         return view('client.register');
     }
 
+    public function register(RegisterRequest $request)
+    {
+        $this->actionRegister($request);
+
+        return redirect()->route('home');
+    }
+
     public function actionRegister(RegisterRequest $request)
     {
         // dd($request);
@@ -29,6 +36,6 @@ class RegisterController extends Controller
         ];
         $customer->addCustomer($dataCustomer);
 
-        return redirect()->route('home');
+        return "Success";
     }
 }

@@ -2,7 +2,7 @@
     <div>
         <ul class="left-sidebar nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="{{route('admin.adminManagement')}}">Quản lý quản trị viên</a>
+                <a class="nav-link" href="{{route('admin.admin.management')}}">Quản lý quản trị viên</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="{{route('admin.customerManagement')}}">Quản lý khách hàng</a>
@@ -16,7 +16,7 @@
     <div>
         <ul class="left-sidebar nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="{{route('admin.customerManagement')}}">Đăng xuất</a>
+                <a class="nav-link" href="{{route('admin.logoutManagement')}}">Đăng xuất</a>
             </li>
         </ul>
     </div>

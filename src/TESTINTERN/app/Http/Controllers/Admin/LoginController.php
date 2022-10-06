@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterAdminRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\AdminModel;
-use App\Models\CustomersModel;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -48,16 +48,14 @@ class LoginController extends Controller
         return redirect()->route('home');
     }
 
-    public function actionRegister(RegisterRequest $request)
+    public function actionRegister(RegisterAdminRequest $request)
     {
         $data = [
             'name' => $request->name,
             'email' => $request->email,
-            'tel' => $request->tel,
             'pass' => $request->pass,
-            'address' => $request->address
+            'group' => $request->group
         ];
-        $account = new CustomersModel();
-        $account->addCustomer($data);
+        $this->admin->addAdmin($data);
     }
 }
