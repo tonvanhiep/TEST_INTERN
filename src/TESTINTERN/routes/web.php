@@ -50,13 +50,15 @@ Route::prefix('admin')->name('admin.')->group(function ()
     Route::post('/register', [AdminLoginController::class, 'actionRegister'])->name('p_registerManagement');
     Route::get('/logout', [AdminLoginController::class, 'actionLogout'])->name('logoutManagement');
 
-    // Route::get('/customer', [CustomerManagermentController::class, 'index'])->name('customerManagement');
-    // Route::post('/customer', [CustomerManagermentController::class, 'paginationCustomer'])->name('p_paginationCustomerManagement');
-    // Route::post('/customer/edit', [CustomerManagermentController::class, 'editCustomer'])->name('p_editCustomerManagement');
-    // Route::post('/customer/delete', [CustomerManagermentController::class, 'deleteCustomer'])->name('p_deleteCustomerManagement');
-    // Route::post('/customer/search', [CustomerManagermentController::class, 'searchCustomer'])->name('p_searchcustomerManagement');
-    // Route::get('/customer/export', [CustomerManagermentController::class, 'exportCSV'])->name('exportCsvCustomerManagement');
-    // Route::post('/customer/import', [CustomerManagermentController::class, 'importCSV'])->name('p_importCsvCustomerManagement');
+    /*
+        Route::get('/customer', [CustomerManagermentController::class, 'index'])->name('customerManagement');
+        Route::post('/customer', [CustomerManagermentController::class, 'paginationCustomer'])->name('p_paginationCustomerManagement');
+        Route::post('/customer/edit', [CustomerManagermentController::class, 'editCustomer'])->name('p_editCustomerManagement');
+        Route::post('/customer/delete', [CustomerManagermentController::class, 'deleteCustomer'])->name('p_deleteCustomerManagement');
+        Route::post('/customer/search', [CustomerManagermentController::class, 'searchCustomer'])->name('p_searchcustomerManagement');
+        Route::get('/customer/export', [CustomerManagermentController::class, 'exportCSV'])->name('exportCsvCustomerManagement');
+        Route::post('/customer/import', [CustomerManagermentController::class, 'importCSV'])->name('p_importCsvCustomerManagement');
+    */
 
     Route::prefix('customer')->group(function ()
     {
@@ -80,14 +82,12 @@ Route::prefix('admin')->name('admin.')->group(function ()
         Route::post('/importcsv', [AdminManagementController::class, 'importCSV'])->name('p_importCsv');
     });
 
-    Route::prefix('admin')->name('product.')->group(function ()
+    Route::prefix('product')->name('product.')->group(function ()
     {
         Route::get('/', [AdminManagementController::class, 'index'])->name('management');
         Route::post('/', [AdminManagementController::class, 'paginationAdmin'])->name('p_pagination');
         Route::post('/edit', [AdminManagementController::class, 'editAdmin'])->name('p_edit');
         Route::post('/delete', [AdminManagementController::class, 'deleteAdmin'])->name('p_delete');
         Route::post('/search', [AdminManagementController::class, 'searchAdmin'])->name('p_search');
-        Route::get('/exportcsv', [AdminManagementController::class, 'exportCSV'])->name('exportCsv');
-        Route::post('/importcsv', [AdminManagementController::class, 'importCSV'])->name('p_importCsv');
     });
 });
