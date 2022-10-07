@@ -18,6 +18,7 @@ class AdminModel extends Model
 
     public function addAdmin($data = null)
     {
+        if ($data == null) return;
         DB::table($this->table)->insert([
             [
                 'name' => $data['name'],

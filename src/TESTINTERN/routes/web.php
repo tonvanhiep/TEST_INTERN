@@ -3,12 +3,10 @@
 use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\CustomerManagermentController;
 use App\Http\Controllers\Admin\LoginController as AdminLoginController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ProductManagementController;
 use App\Http\Controllers\Client\LoginController;
 use App\Http\Controllers\Client\RegisterController;
 use App\Http\Controllers\TestController;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,7 +46,7 @@ Route::prefix('admin')->name('admin.')->group(function ()
     Route::get('/login', [AdminLoginController::class, 'index'])->name('loginManagement');
     Route::post('/login', [AdminLoginController::class, 'actionLogin'])->name('p_loginManagement');
     Route::post('/register', [AdminLoginController::class, 'actionRegister'])->name('p_registerManagement');
-    Route::get('/logout', [AdminLoginController::class, 'actionLogout'])->name('logoutManagement');
+    Route::get('/logout', [AdminLoginController::class, 'actionLogout'])->name('logout');
 
     /*
         Route::get('/customer', [CustomerManagermentController::class, 'index'])->name('customerManagement');
@@ -84,10 +82,15 @@ Route::prefix('admin')->name('admin.')->group(function ()
 
     Route::prefix('product')->name('product.')->group(function ()
     {
-        Route::get('/', [AdminManagementController::class, 'index'])->name('management');
-        Route::post('/', [AdminManagementController::class, 'paginationAdmin'])->name('p_pagination');
-        Route::post('/edit', [AdminManagementController::class, 'editAdmin'])->name('p_edit');
-        Route::post('/delete', [AdminManagementController::class, 'deleteAdmin'])->name('p_delete');
-        Route::post('/search', [AdminManagementController::class, 'searchAdmin'])->name('p_search');
+        Route::get('/', [ProductManagementController::class, 'index'])->name('management');
+        Route::post('/', [ProductManagementController::class, 'paginationProduct'])->name('p_pagination');
+        Route::post('/edit', [ProductManagementController::class, 'editProduct'])->name('p_edit');
+        Route::post('/delete', [ProductManagementController::class, 'deleteProduct'])->name('p_delete');
+        Route::post('/search', [ProductManagementController::class, 'searchProduct'])->name('p_search');
+        Route::post('/add', [ProductManagementController::class, 'actionAddProduct'])->name('p_add');
+        // Route::get('/{id}', [ProductManagementController::class, 'addProduct'])->name('add');
+        // Route::get('/{id}/edit', [ProductManagementController::class, 'addProduct'])->name('edit');
+        // Route::post('/{id}/edit', [ProductManagementController::class, 'addProduct'])->name('p_edit');
+
     });
 });

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ProductManagementController extends Controller
 {
     private $product;
-    public $productOnPage = 20;
+    public $productOnPage = 10;
 
     public function __construct()
     {
@@ -22,126 +22,138 @@ class ProductManagementController extends Controller
         $condition = array(
             'name' => (!$request->has('name') ? null : $request->name),
             'min_price' => (!$request->has('min_price') ? null : $request->min_price),
-            'max_price' => (!$request->has('max_price') ? null : $request->max_price)
+            'max_price' => (!$request->has('max_price') ? null : $request->max_price),
+            'is_sales' => (!$request->has('is_sales') ? -1 : $request->is_sales)
         );
-        $totalAdmin = $this->admin->getCountAdmin($condition);
-        $totalPage = intval($totalAdmin / $this->adminOnPage + (($totalAdmin % $this->adminOnPage == 0) ? 0 : 1));
+        $totalProduct = $this->product->getCountProduct($condition);
+        $totalPage = intval($totalProduct / $this->productOnPage + (($totalProduct % $this->productOnPage == 0) ? 0 : 1));
         $currentPage = ($page <= $totalPage) ? $page : $totalPage;
 
         $record = [
-            'min' => ($currentPage - 1) * $this->adminOnPage + 1,
-            'max' => ($currentPage * $this->adminOnPage <= $totalAdmin) ? ($currentPage * $this->adminOnPage) : $totalAdmin,
-            'total' => $totalAdmin
+            'min' => ($currentPage - 1) * $this->productOnPage + 1,
+            'max' => ($currentPage * $this->productOnPage <= $totalProduct) ? ($currentPage * $this->productOnPage) : $totalProduct,
+            'total' => $totalProduct
         ];
-        $listAdmin = $this->admin->getAdmin($condition, $currentPage, $this->adminOnPage);
-        return view('admin.admin-management', compact('listAdmin', 'record', 'totalPage', 'currentPage'));
-        return 'index';
+        $listProduct = $this->product->getProduct($condition, $currentPage, $this->productOnPage);
+        return view('admin.product-management', compact('listProduct', 'record', 'totalPage', 'currentPage'));
     }
 
-    public function paginationAdmin(Request $request)
+    public function paginationProduct(Request $request)
     {
-        // $condition = array(
-        //     'is_active' => (!$request->has('is_active') ? -1 : $request->is_active),
-        //     'name' => (!$request->has('name') ? null : $request->name),
-        //     'group' => (!$request->has('group') ? -1 : $request->group),
-        //     'email' => (!$request->has('email') ? null : $request->email)
-        // );
+        $condition = array(
+            'is_sales' => (!$request->has('isSales') ? null : $request->isSales),
+            'name' => (!$request->has('name') ? null : $request->name),
+            'min_price' => (!$request->has('minPrice') ? null : $request->minPrice),
+            'max_price' => (!$request->has('maxPrice') ? null : $request->maxPrice)
+        );
 
-        // $page = ($request->page >= 1) ? $request->page : 1;
-        // $totalAdmin = $this->admin->getCountAdmin($condition);
-        // $totalPage = intval($totalAdmin / $this->adminOnPage + (($totalAdmin % $this->adminOnPage == 0) ? 0 : 1));
-        // $currentPage = ($page <= $totalPage) ? $page : $totalPage;
+        $page = ($request->page >= 1) ? $request->page : 1;
+        $totalProduct = $this->product->getCountProduct($condition);
+        $totalPage = intval($totalProduct / $this->productOnPage + (($totalProduct % $this->productOnPage == 0) ? 0 : 1));
+        $currentPage = ($page <= $totalPage) ? $page : $totalPage;
 
-        // $record = [
-        //     'min' => ($currentPage - 1) * $this->adminOnPage + 1,
-        //     'max' => ($currentPage * $this->adminOnPage <= $totalAdmin) ? ($currentPage * $this->adminOnPage) : $totalAdmin,
-        //     'total' => $totalAdmin
-        // ];
-        // $listAdmin = $this->admin->getAdmin($condition, $currentPage, $this->adminOnPage);
+        $record = [
+            'min' => ($currentPage - 1) * $this->productOnPage + 1,
+            'max' => ($currentPage * $this->productOnPage <= $totalProduct) ? ($currentPage * $this->productOnPage) : $totalProduct,
+            'total' => $totalProduct
+        ];
+        $listProduct = $this->product->getProduct($condition, $currentPage, $this->productOnPage);
 
-        // $returnHTML = view('admin.pagination-admin-management', compact('listAdmin', 'record', 'totalPage', 'currentPage'))->render();
-        // return response()->json($returnHTML);
+        $returnHTML = view('admin.pagination-product-management', compact('listProduct', 'record', 'totalPage', 'currentPage'))->render();
+        return response()->json($returnHTML);
     }
 
-    public function editAdmin(Request $request)
+    public function editProduct(Request $request)
     {
-        // $request->validate([
-        //     'id' => 'required|min:0',
-        //     'name' => 'required',
-        //     'group' => 'required|min:1|max:3',
-        //     'email' => 'required|email',
-        //     'is_active' => 'required|min:0|max:1'
-        //     ]
-        // );
+        $request->validate([
+            'id' => 'required|min:0',
+            'name' => 'required',
+            'price' => 'required|numeric|min:0',
+            'is_sales' => 'required|numeric|min:0|max:1'
+            ]
+        );
 
-        // $id = $request->id;
-        // $data = [
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'group' => $request->group,
-        //     'is_active' => $request->is_active
-        //     ];
-        // $result = $this->admin->updateAdmin($id, $data);
+        $id = $request->id;
+        $data = [
+            'name' => $request->name,
+            'price' => $request->price,
+            'description' => $request->description,
+            'is_sales' => $request->is_sales
+            ];
+        $result = $this->product->updateProduct($id, $data);
 
-        // if($result['success'] == false) {
-        //     return response()->json([
-        //         'message' => $result['message'],
-        //         'errors' => [
-        //             'email' => [$result['message']]
-        //         ]
-        //     ], 422);
-        // }
-        // return 'Success';
-
-        // return 'editAdmin';
+        if($result['success'] == false) {
+            return response()->json([
+                'message' => $result['message'],
+                'errors' => [
+                    'email' => [$result['message']]
+                ]
+            ], 422);
+        }
+        return 'Success';
     }
 
-    public function deleteAdmin(Request $request)
+    public function deleteProduct(Request $request)
     {
-        // $request->validate([
-        //     'id' => 'required|min:0'
-        //     ]
-        // );
-        // $this->admin->deleteAdmin($request->id);
+        $request->validate([
+            'id' => 'required|min:0'
+            ]
+        );
+        $this->product->deleteProduct($request->id);
 
         return 'Success';
     }
 
-    public function searchAdmin(Request $request)
+    public function searchProduct(Request $request)
     {
-        // $condition = array(
-        //     'is_active' => (!$request->has('is_active') ? -1 : $request->is_active),
-        //     'name' => (!$request->has('name') ? null : $request->name),
-        //     'group' => (!$request->has('group') ? -1 : $request->group),
-        //     'email' => (!$request->has('email') ? null : $request->email)
-        // );
-        // $page = ($request->page >= 1) ? $request->page : 1;
-        // $totalAdmin = $this->admin->getCountAdmin($condition);
-        // $totalPage = intval($totalAdmin / $this->adminOnPage + (($totalAdmin % $this->adminOnPage == 0) ? 0 : 1));
-        // $currentPage = ($page <= $totalPage) ? $page : $totalPage;
+        $condition = array(
+            'is_sales' => (!$request->has('isSales') ? -1 : $request->isSales),
+            'max_price' => (!$request->has('maxPrice') ? null : $request->maxPrice),
+            'min_price' => (!$request->has('minPrice') ? null : $request->minPrice),
+            'name' => (!$request->has('name') ? null : $request->name)
+        );
+        $page = ($request->page >= 1) ? $request->page : 1;
+        $totalProduct = $this->product->getCountProduct($condition);
+        $totalPage = intval($totalProduct / $this->productOnPage + (($totalProduct % $this->productOnPage == 0) ? 0 : 1));
+        $currentPage = ($page <= $totalPage) ? $page : $totalPage;
 
-        // $record = [
-        //     'min' => ($currentPage - 1) * $this->adminOnPage + 1,
-        //     'max' => ($currentPage * $this->adminOnPage <= $totalAdmin) ? ($currentPage * $this->adminOnPage) : $totalAdmin,
-        //     'total' => $totalAdmin
-        // ];
-        // $listAdmin = $this->admin->getAdmin($condition, $currentPage, $this->adminOnPage);
+        $record = [
+            'min' => ($currentPage - 1) * $this->productOnPage + 1,
+            'max' => ($currentPage * $this->productOnPage <= $totalProduct) ? ($currentPage * $this->productOnPage) : $totalProduct,
+            'total' => $totalProduct
+        ];
+        $listProduct = $this->product->getProduct($condition, $currentPage, $this->productOnPage);
 
-
-
-        // $returnHTML = view('admin.pagination-admin-management', compact('listAdmin', 'record', 'totalPage', 'currentPage'))->render();
-        // return response()->json($returnHTML);
+        $returnHTML = view('admin.pagination-product-management', compact('listProduct', 'record', 'totalPage', 'currentPage'))->render();
+        return response()->json($returnHTML);
+        return 'Success';
     }
 
-    public function exportCSV()
+    public function actionAddProduct(Request $request)
     {
-        // return Excel::download(new AdminsExport, 'list-admin-'.preg_replace("/[ ]/", "-", date('Y-m-d H:i:s')).'.csv');
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required|numeric|min:0',
+            'is_sales' => 'required|numeric|min:0|max:1',
+            'file' => 'required',
+            'description' => 'required'
+            ]
+        );
+        $data = [
+            'name' => $request->name,
+            'price' => $request->price,
+            'is_sales' => $request->is_sales,
+            'image' => $this->storeImage($request),
+            'description' => $request->description
+        ];
+
+        $this->product->addProduct($data);
+        return 'Success';
     }
 
-    public function importCSV(Request $request)
-    {
-        // Excel::import(new AdminsImport, $request->filecsv);
-
-        // return redirect()->back();
+    protected function storeImage(Request $request) {
+        $fileName = preg_replace("/[ ]/", "_", $request->name) . preg_replace("/[ ]/", "_", date('Y-m-d H:i:s')) . '.' . $request->file('file')->extension();
+        $path = $request->file('file')->storeAs('productImage', $fileName);
+        return substr($path, strlen('public/'));
     }
 }

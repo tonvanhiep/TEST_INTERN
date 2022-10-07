@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AdminModel;
 use App\Models\CustomersModel;
+use App\Models\ProductModel;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
@@ -25,15 +26,15 @@ class TestController extends Controller
         $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
         for($i = 0; $i < 100; $i++) {
-            $admin = new AdminModel();
-            $dataAdmin = [
-                'name' => $this->generate_string('ABCDEFGHIJKLMNOPQRSTUVWXYZ ', 12),
-                'email' => $this->generate_string($permitted_chars, 12).'@gmail.com',
-                'pass' => md5(123456789),
-                'is_active' => rand(0, 1),
-                'group' => rand(1, 3),
+            $product = new ProductModel();
+            $data = [
+                'name' => $this->generate_string('ABCDEFGHIJKLMNOPQRSTUVWXYZ ', rand(10, 50)),
+                'price' => $this->generate_string('0123456789', rand(2, 5)).'0',
+                'is_sales' => rand(0, 1),
+                'image' => 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg',
+                'description' => 'Moo tar cuar sanr phaamr '
             ];
-            $admin->addAdmin($dataAdmin);
+            $product->addProduct($data);
         }
 
         return 'Success';

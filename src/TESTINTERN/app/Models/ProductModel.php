@@ -16,7 +16,7 @@ class ProductModel extends Model
     {
         if($condition == null) return 0;
         $count = DB::table($this->table)
-            ->where('name', 'like', '%'.preg_replace("/[^a-zA-Z0-9]/", "%", (($condition['name'] == null) ? '' : $condition['name'])).'%')
+            ->where('product_name', 'like', '%'.preg_replace("/[^a-zA-Z0-9]/", "%", (($condition['name'] == null) ? '' : $condition['name'])).'%')
             ->where('product_price', '>=', (($condition['min_price'] == null) ? 0 : $condition['min_price']))
             ->where('product_price', '<=', (($condition['max_price'] == null) ? 1000000000000 : $condition['max_price']))
             ->where(function($query) use ($condition) {
@@ -41,5 +41,46 @@ class ProductModel extends Model
                 })
             ->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
         return $result;
+    }
+
+    public function updateProduct($id = -1, $data = null)
+    {
+        if($id == -1 || $data == null) return array('success' => false, 'message' => 'ID sản phẩm không hợp lệ.');
+
+        DB::table($this->table)
+              ->where('product_id', $id)
+              ->update(
+                [
+                    'product_name' => $data['name'],
+                    'description' => $data['description'],
+                    'product_price' => $data['price'],
+                    'is_sales' => $data['is_sales'],
+                    'updated_at' => date('Y-m-d H:i:s')
+                ]
+            );
+        return array('success' => true, 'message' => 'Success');
+    }
+
+    public function addProduct($data = null)
+    {
+        if ($data == null) return;
+        DB::table($this->table)->insert([
+            [
+                'product_name' => $data['name'],
+                'product_image' => $data['image'],
+                'product_price' => $data['price'],
+                'is_sales' => $data['is_sales'],
+                'description' => $data['description'],
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]
+        ]);
+    }
+
+    public function deleteProduct($id = -1)
+    {
+        if ($id == -1 || $id < 0) return;
+
+        DB::table($this->table)->where('product_id', '=', $id)->delete();
     }
 }
