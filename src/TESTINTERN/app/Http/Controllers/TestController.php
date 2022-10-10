@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AdminModel;
-use App\Models\CustomersModel;
-use App\Models\ProductModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class TestController extends Controller
 {
@@ -21,22 +19,9 @@ class TestController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-        for($i = 0; $i < 100; $i++) {
-            $product = new ProductModel();
-            $data = [
-                'name' => $this->generate_string('ABCDEFGHIJKLMNOPQRSTUVWXYZ ', rand(10, 50)),
-                'price' => $this->generate_string('0123456789', rand(2, 5)).'0',
-                'is_sales' => rand(0, 1),
-                'image' => 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg',
-                'description' => 'Moo tar cuar sanr phaamr '
-            ];
-            $product->addProduct($data);
-        }
-
-        return 'Success';
+        $result = $request->session()->get('admin');
+        dd($result);
     }
 }

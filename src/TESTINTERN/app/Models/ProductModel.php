@@ -39,7 +39,8 @@ class ProductModel extends Model
                 $query->where('is_sales', '=' ,(($condition['is_sales'] == -1) ? 0 : $condition['is_sales']))
                       ->orWhere('is_sales', '=', (($condition['is_sales'] == -1) ? 1 : $condition['is_sales']));
                 })
-            ->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
+                ->orderBy('created_at', 'desc')
+                ->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
         return $result;
     }
 
@@ -82,5 +83,14 @@ class ProductModel extends Model
         if ($id == -1 || $id < 0) return;
 
         DB::table($this->table)->where('product_id', '=', $id)->delete();
+    }
+
+    public function product($id = 0)
+    {
+        if ($id < 0) return;
+        $result = DB::table($this->table)->select('product_id', 'product_name', 'product_image', 'product_price', 'description', 'is_sales', 'created_at')
+                    ->where('product_id', $id)
+                    ->get();
+        return $result;
     }
 }

@@ -4,7 +4,7 @@
     <p>Hiển thị từ <strong> {{($record['min'] >= 0) ? $record['min'] : 0}} </strong> đến <strong> {{$record['max']}} </strong> trong tổng số <strong> {{$record['total']}} </strong> khách hàng</p>
 </div>
 
-<div>
+<div style="overflow-x:auto;">
     <table class="table table-hover table-condensed">
         <thead>
             <tr>
@@ -59,6 +59,11 @@
             @endforeach
         </tbody>
     </table>
+    @php
+        if(count($listCustomer) === 0) {
+            echo "Không có dữ liệu";
+        }
+    @endphp
 </div>
 
 @include('components.pagination')

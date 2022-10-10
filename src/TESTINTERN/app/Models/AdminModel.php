@@ -35,7 +35,7 @@ class AdminModel extends Model
     public function checkLogin($data = null)
     {
         $result = DB::table($this->table)
-                    ->select('admin_id')
+                    ->select('admin_id', 'group_role')
                     ->where('email', '=', $data['email'])
                     ->where('password', '=', $data['pass'])
                     ->get();
@@ -80,6 +80,7 @@ class AdminModel extends Model
                 $query->where('is_active', '=' ,(($condition['is_active'] == -1) ? 0 : $condition['is_active']))
                       ->orWhere('is_active', '=', (($condition['is_active'] == -1) ? 1 : $condition['is_active']));
                 })
+            ->orderBy('created_at', 'desc')
             ->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
         // dd($result);
         return $result;
@@ -122,5 +123,19 @@ class AdminModel extends Model
                 ]
             );
         return array('success' => true, 'message' => 'Success');
+    }
+
+    public function updateLastLogin($data = null)
+    {
+        if($data == null) return array('success' => false, 'message' => 'ID admin không hợp lệ.');
+
+        DB::table($this->table)
+            ->where('admin_id', $data['id'])
+            ->update(
+            [
+                'last_login_ip' => $data['ip'],
+                'last_login_at' => $data['time']
+            ]
+        );
     }
 }

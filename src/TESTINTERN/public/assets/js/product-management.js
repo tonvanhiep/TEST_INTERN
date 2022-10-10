@@ -23,7 +23,7 @@
 //                 "is_sales": arrInp[3].value
 //             },
 //             success: function(data) {
-//                 console.log(data);
+//                 // console.log(data);
 //                 for (let index = 0; index < arrInp.length; index++) {
 //                     arrInp[index].disabled = true;
 //                     btnEdit.innerText = "Sửa";
@@ -61,7 +61,7 @@ function deleteProductId(id) {
                 "id": id
             },
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 alert("Xóa sản phẩm thành công!!!");
                 pagination(currentPage);
             },
@@ -115,7 +115,7 @@ function submitSearchFormAjax(delSearch = 0)
             document.getElementById('pagination-content').innerHTML = data;
         },
         error: function(data) {
-            console.log(data);
+            // console.log(data);
         },
     });
 }
@@ -200,7 +200,7 @@ function pagination(page = 1)
             document.getElementById('pagination-content').innerHTML = data;
         },
         error: function(data) {
-            console.log(data);
+            // console.log(data);
         },
     });
 }
@@ -235,6 +235,20 @@ function openModal()
 function addProduct()
 {
     openModal();
+
+    document.getElementById('title-popup').textContent = "Thêm sản phẩm";
+
+    document.getElementById('inp-name').disabled = false;
+    document.getElementById('inp-img').disabled = false;
+    document.getElementById('inp-desciption').disabled = false;
+    document.getElementById('inp-price').disabled = false;
+    document.getElementById('inp-sales').disabled = false;
+    document.getElementById('div-img-product').style.display='flex' ;
+
+    document.getElementById('submit-popup').textContent = "Lưu sản phẩm";
+    document.getElementById('submit-popup').className = 'btn btn-outline-success btn-block';
+    document.getElementById('submit-popup').type = 'submit';
+    document.getElementById('submit-popup').onclick = function() {};
 }
 
 function submitPopup()
@@ -242,53 +256,108 @@ function submitPopup()
 
 }
 
-function editProductId(id) {
+function displayProductId(id)
+{
     openModal();
-    // let btnEdit = document.getElementById('btn-edit-inp-' + id);
-    // let arrInp = document.getElementsByClassName('inp-row-' + id);
+    // lay du lieu va hien thi len trang popup
+    let btnEdit = document.getElementById('btn-edit-inp-' + id);
+    let arrInp = document.getElementsByClassName('inp-row-' + id);
 
-    // if (btnEdit.textContent == "Sửa") {
-    //     for (let index = 0; index < arrInp.length; index++) {
-    //         arrInp[index].disabled = false;
-    //         btnEdit.innerText = "Lưu";
-    //         btnEdit.className = "btn btn-outline-success";
-    //     }
-    // }
-    // else if (btnEdit.textContent == "Lưu") {
-    //     $.ajax({
-    //         type: 'POST',
-    //         cache: false,
-    //         url: document.getElementById('url-edit-product').textContent,
-    //         data: {
-    //             "_token": document.getElementById('token-edit-product').textContent,
-    //             "id": id,
-    //             "name": arrInp[0].value,
-    //             "description": arrInp[1].value,
-    //             "price": arrInp[2].value,
-    //             "is_sales": arrInp[3].value
-    //         },
-    //         success: function(data) {
-    //             console.log(data);
-    //             for (let index = 0; index < arrInp.length; index++) {
-    //                 arrInp[index].disabled = true;
-    //                 btnEdit.innerText = "Sửa";
-    //                 btnEdit.className = "btn btn-outline-warning";
-    //             }
-    //             alert("Cập nhật thông tin thành công!!")
-    //         },
-    //         error: function(data) {
-    //             var errors = data.responseJSON;
-    //             var errorArr = '';
+    document.getElementById('submit-popup').textContent = "Chỉnh sửa sản phẩm";
 
-    //             $.each( errors.errors, function( key, value ) {
-    //                 errorArr += '- ' + value[0] + '\n';
-    //             });
+    document.getElementById('inp-name').disabled = true;
+    document.getElementById('inp-img').disabled = true;
+    document.getElementById('inp-desciption').disabled = true;
+    document.getElementById('inp-price').disabled = true;
+    document.getElementById('inp-sales').disabled = true;
+    document.getElementById('div-img-product').style.display = 'none';
+    document.getElementById('submit-popup').className = 'btn btn-outline-warning btn-block';
+    document.getElementById('submit-popup').type = 'button';
+    document.getElementById('submit-popup').onclick = function () { editProductId(id); };
 
-    //             errorArr = 'Cập nhật thông tin không thành công.\n' + errorArr;
-    //             alert(errorArr);
-    //         },
-    //     });
-    // }
+    $.ajax({
+        type: 'POST',
+        cache: false,
+        url: document.getElementById('url-product').textContent,
+        data: {
+            "_token": document.getElementById('token-product').textContent,
+            "id": id
+        },
+        success: function(data) {
+            document.getElementById('title-popup').textContent = data.name;
+            document.getElementById('inp-name').value = data.name;
+            document.getElementById('img-product').src = data.image;
+            document.getElementById('inp-desciption').value = data.description;
+            document.getElementById('inp-price').value = data.price;
+            document.getElementById('inp-sales').value = data.is_sales;
+
+            let btnEdit = document.getElementById('btn-edit-inp-' + id);
+            let arrInp = document.getElementsByClassName('inp-row-' + id);
+
+            arrInp[0].value = data.name;
+            arrInp[1].value = data.description;
+            arrInp[2].value = data.price;
+            arrInp[3].value = data.is_sales;
+            document.getElementById('img-row-' + id).src = data.image;
+        },
+        error: function(data) {
+            var errors = data.responseJSON;
+            var errorArr = '';
+
+            $.each( errors.errors, function( key, value ) {
+                errorArr += '- ' + value[0] + '\n';
+            });
+
+            errorArr = 'Lỗi.\n' + errorArr;
+            alert(errorArr);
+        },
+    });
+}
+
+function editProductId(id) {
+    document.getElementById('submit-popup').textContent = "Lưu thay đổi";
+
+    document.getElementById('inp-name').disabled = false;
+    document.getElementById('inp-img').disabled = false;
+    document.getElementById('inp-desciption').disabled = false;
+    document.getElementById('inp-price').disabled = false;
+    document.getElementById('inp-sales').disabled = false;
+    document.getElementById('div-img-product').style.display = 'flex';
+    document.getElementById('submit-popup').className = 'btn btn-outline-success btn-block';
+    document.getElementById('submit-popup').type = 'button';
+    document.getElementById('submit-popup').onclick = function () { saveChangeProductId(id); };
+}
+
+function saveChangeProductId(id)
+{
+    $.ajax({
+        type: 'POST',
+        cache: false,
+        url: document.getElementById('url-edit-product').textContent,
+        data: {
+            "_token": document.getElementById('token-edit-product').textContent,
+            "id": id,
+            "name": document.getElementById('inp-name').value,
+            "description": document.getElementById('inp-desciption').value,
+            "price": document.getElementById('inp-price').value,
+            "is_sales": document.getElementById('inp-sales').value
+        },
+        success: function(data) {
+            alert("Chỉnh sửa sản phẩm thành công.");
+            displayProductId(id);
+        },
+        error: function(data) {
+            var errors = data.responseJSON;
+            var errorArr = '';
+
+            $.each( errors.errors, function( key, value ) {
+                errorArr += '- ' + value[0] + '\n';
+            });
+
+            errorArr = 'Cập nhật thông tin không thành công.\n' + errorArr;
+            alert(errorArr);
+        },
+    });
 
 }
 
@@ -306,10 +375,8 @@ $('#product-form').submit(function(e) {
         success: (data) => {
             this.reset();
             alert('File has been uploaded successfully');
-            console.log(data);
         },
         error: function(data){
-            console.log(data);
         }
     });
 });

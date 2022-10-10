@@ -1,6 +1,6 @@
 <div class="col-md-2 div-menu" id="div-menu">
     <div>
-        <ul class="left-sidebar nav flex-column">
+        <ul class="left-sidebar nav flex-column nav-pills nav-fill">
             <li class="nav-item">
                 <a class="nav-link" href="{{route('admin.admin.management')}}">Quản lý quản trị viên</a>
             </li>
@@ -21,3 +21,9 @@
         </ul>
     </div>
 </div>
+
+<style>
+    .nav-fill .nav-item, .nav-fill>.nav-link {
+        text-align: left;
+    }
+</style>

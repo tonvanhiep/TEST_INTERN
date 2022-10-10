@@ -59,6 +59,11 @@
             @endforeach
         </tbody>
     </table>
+    @php
+        if(count($listAdmin) === 0) {
+            echo "Không có dữ liệu";
+        }
+    @endphp
 </div>
 
 @include('components.pagination')

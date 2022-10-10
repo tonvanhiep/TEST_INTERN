@@ -84,7 +84,9 @@ class CustomersModel extends Model
     public function getAllCustomer()
     {
         $result = DB::table($this->table)
-            ->select('customer_id', 'customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at')->get();
+            ->select('customer_id', 'customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get();
         return $result;
     }
 
@@ -101,7 +103,8 @@ class CustomersModel extends Model
                 $query->where('is_active', '=' ,(($condition['is_active'] == -1) ? 0 : $condition['is_active']))
                       ->orWhere('is_active', '=', (($condition['is_active'] == -1) ? 1 : $condition['is_active']));
                 })
-            ->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
+                ->orderBy('created_at', 'desc')
+                ->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
         return $result;
     }
 

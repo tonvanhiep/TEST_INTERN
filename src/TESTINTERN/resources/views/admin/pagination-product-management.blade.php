@@ -41,11 +41,11 @@
             <tr>
                 <th style="width:5%" class="text-center">ID</th>
                 <th style="width:15%" class="text-center">名前</th>
-                <th style="width:35%" class="text-center">Mô tả</th>
-                <th style="width:10%" class="text-center">Giá bán</th>
+                <th style="width:32%" class="text-center">Mô tả</th>
+                <th style="width:8%" class="text-center">Giá bán</th>
                 <th style="width:10%" class="text-center">Trạng thái</th>
                 <th style="width:12%" class="text-center">Ngày tạo</th>
-                <th style="width:4%" class="text-center"></th>
+                <th style="width:9%" class="text-center"></th>
                 <th style="width:4%" class="text-center"></th>
             </tr>
         </thead>
@@ -53,6 +53,7 @@
             <p hidden id="url-edit-product">{{route('admin.product.p_edit')}}</p>
             <p hidden id="url-delete-product">{{route('admin.product.p_delete')}}</p>
             <p hidden id="token-edit-product">{{ csrf_token() }}</p>
+
             @foreach ($listProduct as $item)
             <tr>
                 <td data-th="ID">
@@ -61,7 +62,7 @@
                 <td data-th="Name" class="div-img">
                     <input class="form-control inp-row-{{$item->product_id}} inp-name" value="{{$item->product_name}}" name="name" disabled>
                     <div class="img-product">
-                        <img src="{{$item->product_image}}" alt="{{$item->product_name}}">
+                        <img id="img-row-{{$item->product_id}}" src="{{$item->product_image}}" alt="{{$item->product_name}}">
                     </div>
                 </td>
                 <td data-th="Description">
@@ -81,7 +82,7 @@
                     {{$item->created_at}}
                 </td>
                 <td class="actions" data-th="Edit">
-                    <button class="btn btn-outline-warning" id="btn-edit-inp-{{$item->product_id}}" onclick="editProductId({{$item->product_id}});">Sửa</button>
+                    <button class="btn btn-outline-success" id="btn-edit-inp-{{$item->product_id}}" onclick="displayProductId({{$item->product_id}});">Chi tiết</button>
                 </td>
                 <td class="actions" data-th="Remove">
                     <button class="btn btn-outline-danger" id="btn-edit-inp-{{$item->product_id}}" onclick="deleteProductId({{$item->product_id}});">Xóa</button>
@@ -90,6 +91,11 @@
             @endforeach
         </tbody>
     </table>
+    @php
+        if(count($listProduct) === 0) {
+            echo "Không có dữ liệu";
+        }
+    @endphp
 </div>
 
 @include('components.pagination')

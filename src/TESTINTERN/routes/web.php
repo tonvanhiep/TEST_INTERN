@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\ProductManagementController;
 use App\Http\Controllers\Client\LoginController;
 use App\Http\Controllers\Client\RegisterController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,13 +21,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
 
 Route::get('/test', [TestController::class, 'index'])->name('test');
-
-
 
 Route::prefix('account')->name('account.')->group(function ()
 {
@@ -41,12 +37,19 @@ Route::prefix('account')->name('account.')->group(function ()
 });
 
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
+
+
+
+
 Route::prefix('admin')->name('admin.')->group(function ()
 {
     Route::get('/login', [AdminLoginController::class, 'index'])->name('loginManagement');
     Route::post('/login', [AdminLoginController::class, 'actionLogin'])->name('p_loginManagement');
-    Route::post('/register', [AdminLoginController::class, 'actionRegister'])->name('p_registerManagement');
-    Route::get('/logout', [AdminLoginController::class, 'actionLogout'])->name('logout');
+    Route::post('/register', [AdminLoginController::class, 'actionRegister'])->middleware('adminmiddleware')->name('p_registerManagement');
+    Route::get('/logout', [AdminLoginController::class, 'actionLogout'])->middleware('adminmiddleware')->name('logout');
 
     /*
         Route::get('/customer', [CustomerManagermentController::class, 'index'])->name('customerManagement');
@@ -58,7 +61,7 @@ Route::prefix('admin')->name('admin.')->group(function ()
         Route::post('/customer/import', [CustomerManagermentController::class, 'importCSV'])->name('p_importCsvCustomerManagement');
     */
 
-    Route::prefix('customer')->group(function ()
+    Route::group(['prefix' => 'customer', 'middleware' => 'adminmiddleware'], function ()
     {
         Route::get('/', [CustomerManagermentController::class, 'index'])->name('customerManagement');
         Route::post('/', [CustomerManagermentController::class, 'paginationCustomer'])->name('p_paginationCustomerManagement');
@@ -69,7 +72,7 @@ Route::prefix('admin')->name('admin.')->group(function ()
         Route::post('/import', [CustomerManagermentController::class, 'importCSV'])->name('p_importCsvCustomerManagement');
     });
 
-    Route::prefix('admin')->name('admin.')->group(function ()
+    Route::group(['prefix' => 'admin', 'middleware' => 'adminmiddleware', 'as'=> 'admin.'], function ()
     {
         Route::get('/', [AdminManagementController::class, 'index'])->name('management');
         Route::post('/', [AdminManagementController::class, 'paginationAdmin'])->name('p_pagination');
@@ -80,7 +83,7 @@ Route::prefix('admin')->name('admin.')->group(function ()
         Route::post('/importcsv', [AdminManagementController::class, 'importCSV'])->name('p_importCsv');
     });
 
-    Route::prefix('product')->name('product.')->group(function ()
+    Route::group(['prefix' => 'product', 'middleware' => 'adminmiddleware', 'as'=> 'product.'], function ()
     {
         Route::get('/', [ProductManagementController::class, 'index'])->name('management');
         Route::post('/', [ProductManagementController::class, 'paginationProduct'])->name('p_pagination');
@@ -88,6 +91,7 @@ Route::prefix('admin')->name('admin.')->group(function ()
         Route::post('/delete', [ProductManagementController::class, 'deleteProduct'])->name('p_delete');
         Route::post('/search', [ProductManagementController::class, 'searchProduct'])->name('p_search');
         Route::post('/add', [ProductManagementController::class, 'actionAddProduct'])->name('p_add');
+        Route::post('/product', [ProductManagementController::class, 'product'])->name('p_product');
         // Route::get('/{id}', [ProductManagementController::class, 'addProduct'])->name('add');
         // Route::get('/{id}/edit', [ProductManagementController::class, 'addProduct'])->name('edit');
         // Route::post('/{id}/edit', [ProductManagementController::class, 'addProduct'])->name('p_edit');

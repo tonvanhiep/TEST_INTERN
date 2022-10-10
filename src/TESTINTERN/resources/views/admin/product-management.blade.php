@@ -17,13 +17,14 @@
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 id="title-popup" class="modal-title">Thêm sản phẩm</h5>
+                <div class="modal-header flex">
+                    <h5 id="title-popup" style="max-width:80%" class="modal-title">Thêm sản phẩm</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div id="div-alert"></div>
                     <form id="product-form" enctype="multipart/form-data" action="{{route('admin.product.p_add')}}">
+                        <p hidden id="url-product">{{ route('admin.product.p_product') }}</p>
                         <p hidden id="token-product">{{ csrf_token() }}</p>
                         @csrf
 
@@ -34,7 +35,7 @@
 
                         <div class="form-outline mb-3">
                             <label class="form-label" for="inp-name">Ảnh sản phẩm *</label>
-                            <div class="input-group mb-3">
+                            <div class="input-group mb-3" id="div-img-product">
                                 <input type="file" name="file" class="form-control" id="inp-img" accept="image/*" onchange="onchangeImageFile();" required>
                                 <label class="input-group-text" for="inputGroupFile02">Upload</label>
                             </div>
@@ -66,7 +67,7 @@
                         </div>
 
                         <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-info btn-block" >Lưu sản phẩm</button>
+                            <button id="submit-popup" type="submit" class="btn btn-outline-success btn-block">Lưu sản phẩm</button>
                         </div>
                     </form>
                 </div>

@@ -156,4 +156,23 @@ class ProductManagementController extends Controller
         $path = $request->file('file')->storeAs('productImage', $fileName);
         return substr($path, strlen('public/'));
     }
+
+    public function product(Request $request)
+    {
+        $request->validate([
+            'id' => 'required'
+            ]
+        );
+
+        $result = $this->product->product($request->id);
+
+        return response()->json([
+            'id' => $result[0]->product_id,
+            'name' => $result[0]->product_name,
+            'image' => $result[0]->product_image,
+            'price' => $result[0]->product_price,
+            'description' => $result[0]->description,
+            'is_sales' => $result[0]->is_sales
+        ]);
+    }
 }
