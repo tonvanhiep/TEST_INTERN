@@ -153,7 +153,7 @@ class ProductManagementController extends Controller
 
     protected function storeImage(Request $request) {
         $fileName = preg_replace("/[ ]/", "_", $request->name) . preg_replace("/[ ]/", "_", date('Y-m-d H:i:s')) . '.' . $request->file('file')->extension();
-        $path = $request->file('file')->storeAs('productImage', $fileName);
+        $path = $request->file('file')->storeAs('public/productImage', $fileName);
         return substr($path, strlen('public/'));
     }
 

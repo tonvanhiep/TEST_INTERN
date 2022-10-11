@@ -21,7 +21,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{route('account.p_register')}}">
+    <form method="POST" action="{{route('account.register')}}">
         @csrf
         <div class="form-outline mb-3">
             <label class="form-label" for="inp-name">Họ và tên *</label>

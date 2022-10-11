@@ -6,7 +6,8 @@ use App\Http\Controllers\Admin\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\ProductManagementController;
 use App\Http\Controllers\Client\LoginController;
 use App\Http\Controllers\Client\RegisterController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Client\ProductController;
+use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,8 +39,17 @@ Route::prefix('account')->name('account.')->group(function ()
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/product', [ProductController::class, 'index'])->name('product');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::get('/about-us', [HomeController::class, 'index'])->name('aboutUs');
+Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
+Route::get('/checkout', [HomeController::class, 'checkOut'])->name('checkout');
+Route::get('/thankyou', [HomeController::class, 'thankYou'])->name('thankyou');
+
+Route::post('/loadproduct', [ProductController::class, 'loadMore'])->name('loadMoreProduct');
 
 
+Route::get('/product/{id}', [ProductController::class, 'detailProduct'])->name('detail');
 
 
 

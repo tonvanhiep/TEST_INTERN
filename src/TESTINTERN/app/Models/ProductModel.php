@@ -27,6 +27,18 @@ class ProductModel extends Model
         return $count;
     }
 
+    public function getViewProduct($page = 1, $recordOnPage = 6)
+    {
+        $result = DB::table($this->table)
+            ->select('product_id', 'product_name', 'product_image', 'product_price', 'description', 'is_sales', 'created_at')
+            ->where(function($query) {
+                $query->where('is_sales', '=' , 1);
+                })
+            ->orderBy('product_id', 'desc')
+            ->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
+        return $result;
+    }
+
     public function getProduct($condition = null, $page = 1, $recordOnPage = 20)
     {
         if($condition == null) return 0;
@@ -39,7 +51,7 @@ class ProductModel extends Model
                 $query->where('is_sales', '=' ,(($condition['is_sales'] == -1) ? 0 : $condition['is_sales']))
                       ->orWhere('is_sales', '=', (($condition['is_sales'] == -1) ? 1 : $condition['is_sales']));
                 })
-                ->orderBy('created_at', 'desc')
+                ->orderBy('product_id', 'desc')
                 ->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
         return $result;
     }
