@@ -12,7 +12,7 @@
 </div>
 <div class="album py-5 bg-light">
     <div class="container">
-        <h2 style="background-color:aliceblue; text-align:center" class="mt-3 mb-3 p-3">最新の製品</h2>
+        <h2 style="background-color:aliceblue; text-align:center;" class="mt-3 mb-3 p-3">最新の製品</h2>
         <div class="row">
 
             @include('client.pagination-product')

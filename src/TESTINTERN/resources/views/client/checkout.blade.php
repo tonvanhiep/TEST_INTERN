@@ -11,7 +11,7 @@
     <div class="container">
         <div class="py-5 text-center">
             <h2>Checkout form</h2>
-            <p>.__...__.......__.___.__.._..._.__</p>
+            <p></p>
         </div>
 
         <div class="row">
@@ -20,65 +20,45 @@
                     <span class="text-muted">Your cart</span>
                     <span class="badge badge-secondary badge-pill">3</span>
                 </h4>
-                <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Product name</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">$12</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Second product</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">$8</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Third item</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">$5</span>
-                    </li>
+                <ul class="list-group mb-3" id="cart-checkout">
+
                     <li class="list-group-item d-flex justify-content-between bg-light">
                         <div class="text-success">
-                            <h6 class="my-0">Promo code</h6>
-                            <small>EXAMPLECODE</small>
+                            <h6 class="my-0">Shipping fee</h6>
+                            <small>Free Ship >= 10,000 円</small>
                         </div>
-                        <span class="text-success">-$5</span>
+                        <span class="text-success" id="shipping-fee">300 円</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (USD)</span>
-                        <strong>$20</strong>
+                        <span><strong>Total</strong></span>
+                        <strong id="total-price">0 円</strong>
                     </li>
                 </ul>
 
-                <form class="card p-2">
+                {{-- <form class="card p-2">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Promo code">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-secondary">Redeem</button>
                         </div>
                     </div>
-                </form>
+                </form> --}}
             </div>
 
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Billing address</h4>
-                <form class="needs-validation" novalidate="">
+                <form method="POST" action="{{route('p_checkout')}}">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="RC" value="" required="">
+                            <input type="text" class="form-control" name="firstName" id="firstName" placeholder="RC" value="" required="">
                             <div class="invalid-feedback">
                                 Valid first name is required.
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="VN" value="" required="">
+                            <input type="text" class="form-control" name="lastName" id="lastName" placeholder="VN" value="" required="">
                             <div class="invalid-feedback">
                                 Valid last name is required.
                             </div>
@@ -87,7 +67,7 @@
 
                     <div class="mb-3">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="you@example.com">
                         <div class="invalid-feedback">
                             Please enter a valid email address for shipping updates.
                         </div>
@@ -97,7 +77,7 @@
                     <label for="tel" class="form-label">Phone number</label>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon3">+84</span>
-                        <input type="tel" class="form-control" id="tel" aria-describedby="basic-addon3" placeholder="337480664">
+                        <input type="tel" class="form-control" name="tel" id="tel" aria-describedby="basic-addon3" placeholder="337480664">
                         <div class="invalid-feedback">
                             Please enter a valid phone number for shipping updates.
                         </div>
@@ -105,7 +85,7 @@
 
                     <div class="mb-3">
                         <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
+                        <input type="text" class="form-control" name="address" id="address" placeholder="1234 Main St" required="">
                         <div class="invalid-feedback">
                             Please enter your shipping address.
                         </div>
@@ -117,25 +97,29 @@
 
                     <div class="d-block my-3">
                         <div class="custom-control custom-radio">
-                            <input id="cod" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+                            <input id="cod" name="paymentMethod" type="radio" class="custom-control-input" checked value="1" required>
                             <label class="custom-control-label" for="credit">COD</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input id="visa" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                            <input id="visa" name="paymentMethod" type="radio" class="custom-control-input" value="2" required>
                             <label class="custom-control-label" for="debit">VISA/Mastercard</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input id="momo" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                            <input id="momo" name="paymentMethod" type="radio" class="custom-control-input" value="3" required>
                             <label class="custom-control-label" for="momo">Momo</label>
                         </div>
                     </div>
                     <hr class="mb-4">
                     <div class="d-grid gap-2">
-                        <button class="btn btn-primary" type="button">Finish</button>
-                      </div>
+                        <button class="btn btn-primary" type="submit">Finish</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+    <script src="{{asset('assets/js/checkout.js')}}"></script>
 @endsection

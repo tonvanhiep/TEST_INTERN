@@ -41,9 +41,12 @@ Route::prefix('account')->name('account.')->group(function ()
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/product', [ProductController::class, 'index'])->name('product');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
-Route::get('/about-us', [HomeController::class, 'index'])->name('aboutUs');
+Route::post('/contact', [HomeController::class, 'saveContact'])->name('p_contact');
+Route::get('/search', [ProductController::class, 'searchProduct'])->name('search');
+
 Route::get('/cart', [HomeController::class, 'cart'])->name('cart');
 Route::get('/checkout', [HomeController::class, 'checkOut'])->name('checkout');
+Route::post('/checkout', [HomeController::class, 'saveCartDB'])->name('p_checkout');
 Route::get('/thankyou', [HomeController::class, 'thankYou'])->name('thankyou');
 
 Route::post('/loadproduct', [ProductController::class, 'loadMore'])->name('loadMoreProduct');

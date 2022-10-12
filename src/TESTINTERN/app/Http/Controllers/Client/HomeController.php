@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\ContactModel;
 use App\Models\ProductModel;
 use Illuminate\Http\Request;
 
@@ -33,11 +34,40 @@ class HomeController extends Controller
 
     public function thankYou()
     {
-        return 'Thank you!!!';
+        return view('client.thankyou');
     }
 
     public function contact()
     {
         return view('client.contact');
+    }
+
+    public function saveContact(Request $request)
+    {
+        $request->validate([
+            'fname' => 'required',
+            'lname' => 'required',
+            'phone' => 'required|numeric',
+            'email' => 'required|email',
+            'message' => 'required'
+            ]
+        );
+
+        $data = [
+            'name' => $request->lname . ' ' . $request->fname,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'message' => $request->message
+        ];
+
+        $contact = new ContactModel();
+        $contact->addContact($data);
+
+        return redirect()->back()->with('status', 'Send message success!!!');
+    }
+
+    public function saveCartDB(Request $request)
+    {
+
     }
 }

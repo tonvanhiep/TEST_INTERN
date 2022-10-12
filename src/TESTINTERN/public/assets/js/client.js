@@ -13,12 +13,27 @@ function loadMoreProduct()
         },
         success: function(data) {
             console.log('success');
-            document.getElementById('display-product').innerHTML += data;
+            document.getElementById('display-product').innerHTML += data.data;
+            if(data.loadMore == 0) {
+                document.getElementById("btn-load-more").hidden = true;
+            }
         },
         error: function(data) {
             console.log(data);
         },
     });
+}
+
+function fommatPrice(price) {
+    price += '';
+    var x = price.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2 + ' 円';
 }
 
 function saveToLocalStorage()
