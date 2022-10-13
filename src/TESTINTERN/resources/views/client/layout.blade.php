@@ -35,6 +35,8 @@
             @yield('main')
         </main>
 
+        <button onclick="topFunction()" id="myBtn" title="Go to top">&uarr;</button>
+
         <footer class="text-muted">
             <div class="container">
                 <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
@@ -43,6 +45,7 @@
         </footer>
 
         <script src="{{asset('assets/js/client.js')}}"></script>
+
         @yield('js')
     </body>
 </html>

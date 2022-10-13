@@ -1,10 +1,11 @@
 let totalPrice = 0;
 
-function deCrease(index)
+function deCrease(index, isCart = 1)
 {
     let count = document.getElementById('inp-count-' + index);
     if(parseInt(count.value) <= 1) return;
     count.value = parseInt(count.value) - 1;
+    if (isCart != 1) return;
     cart[index][3] -= 1;
     totalPrice -= cart[index][4];
     document.getElementById('price-row-' + index).textContent = fommatPrice(parseInt(cart[index][3]) * parseInt(cart[index][4]));
@@ -12,10 +13,11 @@ function deCrease(index)
     saveToLocalStorage();
 }
 
-function inCrease(index)
+function inCrease(index, isCart = 1)
 {
     let count = document.getElementById('inp-count-' + index);
     count.value = parseInt(count.value) + 1;
+    if (isCart != 1) return;
     cart[index][3] += 1;
     totalPrice += cart[index][4];
     document.getElementById('price-row-' + index).textContent = fommatPrice(parseInt(cart[index][3]) * parseInt(cart[index][4]));
@@ -41,6 +43,11 @@ function deleteProduct(x, id)
     saveToLocalStorage();
     displayTotalCart();
 
+    let arrRowId = document.getElementsByClassName('row-id');
+    for (let i = index; i < cart.length; i++) {
+        arrRowId[i].textContent = (parseInt(i) + parseInt(1));
+    }
+
     if(cart.length <= 0) {
         document.getElementById('table-cart').innerHTML = '<tr><td colspan="7">No items</td></tr>';
         document.getElementById('btn-checkout').hidden = true;
@@ -61,7 +68,7 @@ function displayCart()
     for (let index = 0; index < cart.length; index++) {
         let price = parseInt(cart[index][3]) * parseInt(cart[index][4]);
         listCart += '<tr>' +
-                '<th scope="row">' + (parseInt(index) + parseInt(1)) +'</th>' +
+                '<th scope="row" class="row-id">' + (parseInt(index) + parseInt(1)) +'</th>' +
                 '<td>' +
                     '<img style="width: 90%; margin:auto;" src="' + cart[index][1] + '">' +
                 '</td>' +
@@ -85,5 +92,3 @@ function displayCart()
     document.getElementById('table-cart').innerHTML = listCart;
     document.getElementById('total-price').textContent = fommatPrice(totalPrice);
 }
-
-displayCart();

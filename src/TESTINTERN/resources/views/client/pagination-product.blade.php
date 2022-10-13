@@ -24,7 +24,7 @@
                         <h4 class="product-row-{{$item->product_id}}">{{number_format($item->product_price)}}  円</h4>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-outline-secondary" onclick="addToCart({{$item->product_id}}, '{{$item->product_image}}', '{{$item->product_name}}', 1, {{$item->product_price}});">カートに入れる</button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="addToCart({{$item->product_id}}, '{{$image}}', '{{$item->product_name}}', 1, {{$item->product_price}});">カートに入れる</button>
                     </div>
                 </div>
             </div>

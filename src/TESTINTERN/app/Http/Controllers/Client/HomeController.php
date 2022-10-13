@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContactModel;
+use App\Models\OrderDetailModel;
+use App\Models\OrderModel;
 use App\Models\ProductModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class HomeController extends Controller
 {
@@ -34,7 +37,10 @@ class HomeController extends Controller
 
     public function thankYou()
     {
-        return view('client.thankyou');
+        if(!session()->has('id_dh'))
+            return redirect()->route('home');
+        $id_dh = session('id_dh');
+        return view('client.thankyou', compact('id_dh'));
     }
 
     public function contact()
@@ -68,6 +74,63 @@ class HomeController extends Controller
 
     public function saveCartDB(Request $request)
     {
+        $request->validate([
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'tel' => 'required|numeric',
+            'email' => 'required|email',
+            'address' => 'required',
+            'paymentMethod' => 'required|numeric|min:1|max:3'
+        ]);
 
+        $cart = $request->cookie('cart');
+        $total = $request->cookie('total');
+        if($cart == null || $total == null) return;
+
+        $arrCart = explode('/', $cart);
+        $arrTotal = explode('-', $total);
+
+        //luu vao database
+        $date = date('Y-m-d H:i:s');
+        $data = [
+            'customer_id' => $request->session()->has('customer_id') ? $request->session('customer_id') : -1,
+            'customer_name' =>  $request->lastName . $request->firstName,
+            'customer_email' => $request->email,
+            'customer_tel' => $request->tel,
+            'address' => $request->address,
+            'total_price' => $arrTotal[2],
+            'payment_method' => $request->paymentMethod,
+            'ship_charge' => $arrTotal[1],
+            'order_date' => $date,
+            'note_customer' => $request->has('massage') ? $request->has('massage') : '',
+            'created_at' => $date,
+            'updated_at' => $date,
+            'order_status' => 0
+        ];
+
+        $order = new OrderModel();
+        $id_dh = $order->addOrder($data);
+
+
+        for ($i = 0; $i < count($arrCart) - 1; $i++) {
+            $item = explode(':', $arrCart[$i]);
+            $data = [
+                'order_id' => $id_dh,
+                'detail_line' =>  $i,
+                'product_id' => $item[0],
+                'price_buy' => $item[1],
+                'quantity' => $item[2],
+                'created_at' => $date,
+                'updated_at' => $date,
+            ];
+
+            $orderDetail = new OrderDetailModel();
+            $orderDetail->addOrderDetail($data);
+        }
+
+        // xoa cookie
+        setcookie('cart', '', time() - 3600);
+        setcookie('total', '', time() - 3600);
+        return redirect()->route('thankyou')->with('id_dh', $id_dh);
     }
 }

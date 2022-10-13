@@ -1,6 +1,26 @@
 let page = 1;
 let cart = Array();
 
+// Get the button:
+let mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
 function loadMoreProduct()
 {
     $.ajax({
@@ -74,11 +94,14 @@ function displayAlert()
 
 function addToCart(id, image, name, count, price)
 {
+    if (count == null) {
+        count = document.getElementById('inp-count-0').value;
+    }
     let index = idProductExisted(id);
-    if(index >= 0) {
-        cart[index][3] += count;
-        if(cart[index][1] != price) cart[index][1] = image;
-        if(cart[index][2] != price) cart[index][2] = name;
+    if (index >= 0) {
+        cart[index][3] = parseInt(parseInt(cart[index][3]) + parseInt(count));
+        if(cart[index][1] != image) cart[index][1] = image;
+        if(cart[index][2] != name) cart[index][2] = name;
         if(cart[index][4] != price) cart[index][4] = price;
     }
     else {

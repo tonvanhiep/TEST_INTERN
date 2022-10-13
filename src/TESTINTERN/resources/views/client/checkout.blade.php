@@ -47,48 +47,58 @@
 
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Billing address</h4>
-                <form method="POST" action="{{route('p_checkout')}}">
+                <form method="POST" action="{{route('p_checkout')}}" onsubmit="saveCartToCookie();">
+                    @csrf
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>
-                            <input type="text" class="form-control" name="firstName" id="firstName" placeholder="RC" value="" required="">
-                            <div class="invalid-feedback">
-                                Valid first name is required.
-                            </div>
+                            <input type="text" class="form-control" name="firstName" id="firstName" placeholder="RC" value="">
+                            @if($errors->has('firstName'))
+                                <div class="error" style="color: red;">{{ $errors->first('firstName') }}</div>
+                            @endif
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" name="lastName" id="lastName" placeholder="VN" value="" required="">
-                            <div class="invalid-feedback">
-                                Valid last name is required.
-                            </div>
+                            <input type="text" class="form-control" name="lastName" id="lastName" placeholder="VN" value="">
+                            @if($errors->has('lastName'))
+                                <div class="error" style="color: red;">{{ $errors->first('lastName') }}</div>
+                            @endif
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="email">Email</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="you@example.com">
-                        <div class="invalid-feedback">
-                            Please enter a valid email address for shipping updates.
-                        </div>
+                        @if($errors->has('email'))
+                            <div class="error" style="color: red;">{{ $errors->first('email') }}</div>
+                        @endif
                     </div>
 
-
-                    <label for="tel" class="form-label">Phone number</label>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon3">+84</span>
-                        <input type="tel" class="form-control" name="tel" id="tel" aria-describedby="basic-addon3" placeholder="337480664">
-                        <div class="invalid-feedback">
-                            Please enter a valid phone number for shipping updates.
+                    <div class="mb-3">
+                        <label for="tel" class="form-label">Phone number</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon3">+84</span>
+                            <input type="tel" class="form-control" name="tel" id="tel" aria-describedby="basic-addon3" placeholder="337480664">
                         </div>
+                        @if($errors->has('tel'))
+                            <div class="error" style="color: red;">{{ $errors->first('tel') }}</div>
+                        @endif
                     </div>
 
                     <div class="mb-3">
                         <label for="address">Address</label>
-                        <input type="text" class="form-control" name="address" id="address" placeholder="1234 Main St" required="">
-                        <div class="invalid-feedback">
-                            Please enter your shipping address.
-                        </div>
+                        <input type="text" class="form-control" name="address" id="address" placeholder="1234 Main St">
+                        @if($errors->has('address'))
+                            <div class="error" style="color: red;">{{ $errors->first('address') }}</div>
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="massage">Message</label>
+                        <textarea type="text" class="form-control" name="massage" id="message" placeholder="..." rows="2"></textarea>
+                        @if($errors->has('massage'))
+                            <div class="error" style="color: red;">{{ $errors->first('massage') }}</div>
+                        @endif
                     </div>
 
                     <hr class="mb-4">
@@ -97,21 +107,24 @@
 
                     <div class="d-block my-3">
                         <div class="custom-control custom-radio">
-                            <input id="cod" name="paymentMethod" type="radio" class="custom-control-input" checked value="1" required>
+                            <input id="cod" name="paymentMethod" type="radio" class="custom-control-input" checked value="1">
                             <label class="custom-control-label" for="credit">COD</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input id="visa" name="paymentMethod" type="radio" class="custom-control-input" value="2" required>
+                            <input id="visa" name="paymentMethod" type="radio" class="custom-control-input" value="2">
                             <label class="custom-control-label" for="debit">VISA/Mastercard</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input id="momo" name="paymentMethod" type="radio" class="custom-control-input" value="3" required>
+                            <input id="momo" name="paymentMethod" type="radio" class="custom-control-input" value="3">
                             <label class="custom-control-label" for="momo">Momo</label>
                         </div>
+                        @if($errors->has('paymentMethod'))
+                            <div class="error" style="color: red;">{{ $errors->first('paymentMethod') }}</div>
+                        @endif
                     </div>
                     <hr class="mb-4">
                     <div class="d-grid gap-2">
-                        <button class="btn btn-primary" type="submit">Finish</button>
+                        <button class="btn btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
@@ -122,4 +135,8 @@
 
 @section('js')
     <script src="{{asset('assets/js/checkout.js')}}"></script>
+    <script>
+        getCartLocalStorage();
+        displayCartCheckout();
+    </script>
 @endsection

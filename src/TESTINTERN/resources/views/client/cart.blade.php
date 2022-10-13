@@ -55,4 +55,7 @@
 
 @section('js')
 <script src="{{asset('assets/js/cart.js')}}"></script>
+<script>
+    displayCart();
+</script>
 @endsection
