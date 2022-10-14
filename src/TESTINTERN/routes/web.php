@@ -70,10 +70,15 @@ Route::get('/product/{id}', [ProductController::class, 'detailProduct'])->name('
 
 Route::prefix('admin')->name('admin.')->group(function ()
 {
-    Route::get('/login', [AdminLoginController::class, 'index'])->name('loginManagement');
-    Route::post('/login', [AdminLoginController::class, 'actionLogin'])->name('p_loginManagement');
-    Route::post('/register', [AdminLoginController::class, 'actionRegister'])->middleware('adminmiddleware')->name('p_registerManagement');
-    Route::get('/logout', [AdminLoginController::class, 'actionLogout'])->middleware('adminmiddleware')->name('logout');
+    Route::group(['middleware' => ['adminmiddleware']], function () {
+        Route::post('/register', [AdminLoginController::class, 'actionRegister'])->middleware('adminmiddleware')->name('p_registerManagement');
+        Route::get('/logout', [AdminLoginController::class, 'actionLogout'])->middleware('adminmiddleware')->name('logout');
+    });
+
+    Route::group(['middleware' => ['adminexistedmiddleware']], function () {
+        Route::get('/login', [AdminLoginController::class, 'index'])->name('loginManagement');
+        Route::post('/login', [AdminLoginController::class, 'actionLogin'])->name('p_loginManagement');
+    });
 
     Route::group(['prefix' => 'customer', 'middleware' => 'adminmiddleware'], function ()
     {
