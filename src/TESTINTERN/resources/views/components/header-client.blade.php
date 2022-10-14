@@ -19,22 +19,22 @@
             <div class="text-end">
                 <button type="button" class="btn btn-outline-success me-4" onclick="location.href='{{route('cart')}}'">Cart (<span id="total-items">0</span>)</button>
 
+                @php
+                    if(session()->has('customer')) {
+                        echo '<div class="dropdown">
+                            <button onclick="dropDown()" class="nut_dropdown btn btn-secondary dropdown-toggle" style="width:100px; text-overflow: ellipsis; overflow:hidden;">'. session()->get('customer')['name'] .'</button>
+                            <div class="noidung_dropdown">
+                                <a href="'. route('account.info') .'">Tài khoản</a>
+                                <a href="'. route('account.logout') . '">Đăng xuất</a>
+                            </div>
+                        </div>';
+                    }
+                    else {
+                        echo '<button type="button" class="btn btn-outline-light me-2" onclick="location.href=\''. route('account.login') .'\'">Login</button>
+                        <button type="button" class="btn btn-outline-warning" onclick="location.href=\''. route('account.register') .'\'">Sign-up</button>';
+                    }
+                @endphp
 
-                {{-- <button type="button" class="btn btn-outline-light me-2" onclick="location.href='{{route('account.login')}}'">Login</button>
-                <button type="button" class="btn btn-outline-warning" onclick="location.href='{{route('account.register')}}'">Sign-up</button> --}}
-
-                <div class="btn-group">
-                    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown-menu" aria-expanded="false">
-                      Action
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Separated link</a></li>
-                    </ul>
-                  </div>
             </div>
         </div>
     </div>

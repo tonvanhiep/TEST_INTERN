@@ -19,8 +19,35 @@ p, h1, h2, h3, h4, h5, h6 { word-break: break-all; }
     padding: 15px; /* Some padding */
     border-radius: 3px; /* Rounded corners */
     font-size: 18px; /* Increase font size */
-  }
+}
 
-  #myBtn:hover {
+#myBtn:hover {
     background-color: #555; /* Add a dark-grey background on hover */
-  }
+}
+
+
+/* Thiết lập vị trí cho thẻ div với class dropdown*/
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+/* Nội dung Dropdown */
+.noidung_dropdown {
+    /*Ẩn nội dụng các đường dẫn*/
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+/* Thiết kế style cho các đường dẫn tronng Dropdown */
+.noidung_dropdown a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.hienThi{
+    display:block;
+}

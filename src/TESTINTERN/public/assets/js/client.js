@@ -5,6 +5,10 @@ let cart = Array();
 let mybutton = document.getElementById("myBtn");
 
 // When the user scrolls down 20px from the top of the document, show the button
+function dropDown() {
+    document.querySelector(".noidung_dropdown").classList.toggle("hienThi");
+}
+
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {

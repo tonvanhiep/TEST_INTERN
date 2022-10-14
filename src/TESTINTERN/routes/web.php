@@ -23,19 +23,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/test', [TestController::class, 'index'])->name('test');
+// Route::get('/test', [TestController::class, 'index'])->name('test');
 
 Route::prefix('account')->name('account.')->group(function ()
 {
-    Route::get('/register', [RegisterController::class, 'index'])->name('register');
-    Route::post('/register', [RegisterController::class, 'register'])->name('p_register');
-    Route::post('/register', [RegisterController::class, 'actionRegister'])->name('p_registerAdmin');
+    Route::group(['middleware' => ['customermiddleware']], function () {
+        Route::get('/info', [LoginController::class, 'infoCustomer'])->name('info');
+        Route::post('/editinfo', [LoginController::class, 'saveInfo'])->name('p_saveInfo');
+        Route::post('/editpass', [LoginController::class, 'savePass'])->name('p_savePass');
 
-    Route::get('/login', [LoginController::class, 'index'])->name('login');
-    Route::post('/login', [LoginController::class, 'actionLogin'])->name('p_login');
+        Route::get('/logout', [LoginController::class, 'actionLogout'])->name('logout');
+    });
 
-    Route::get('/logout', [LoginController::class, 'actionLogout'])->name('logout');
+    Route::group(['middleware' => ['customerexistedmiddleware']], function () {
+        Route::get('/register', [RegisterController::class, 'index'])->name('register');
+        Route::post('/register', [RegisterController::class, 'register'])->name('p_register');
+        Route::post('/register', [RegisterController::class, 'actionRegister'])->name('p_registerAdmin');
+
+        Route::get('/login', [LoginController::class, 'index'])->name('login');
+        Route::post('/login', [LoginController::class, 'actionLogin'])->name('p_login');
+    });
+
 });
+
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -63,16 +74,6 @@ Route::prefix('admin')->name('admin.')->group(function ()
     Route::post('/login', [AdminLoginController::class, 'actionLogin'])->name('p_loginManagement');
     Route::post('/register', [AdminLoginController::class, 'actionRegister'])->middleware('adminmiddleware')->name('p_registerManagement');
     Route::get('/logout', [AdminLoginController::class, 'actionLogout'])->middleware('adminmiddleware')->name('logout');
-
-    /*
-        Route::get('/customer', [CustomerManagermentController::class, 'index'])->name('customerManagement');
-        Route::post('/customer', [CustomerManagermentController::class, 'paginationCustomer'])->name('p_paginationCustomerManagement');
-        Route::post('/customer/edit', [CustomerManagermentController::class, 'editCustomer'])->name('p_editCustomerManagement');
-        Route::post('/customer/delete', [CustomerManagermentController::class, 'deleteCustomer'])->name('p_deleteCustomerManagement');
-        Route::post('/customer/search', [CustomerManagermentController::class, 'searchCustomer'])->name('p_searchcustomerManagement');
-        Route::get('/customer/export', [CustomerManagermentController::class, 'exportCSV'])->name('exportCsvCustomerManagement');
-        Route::post('/customer/import', [CustomerManagermentController::class, 'importCSV'])->name('p_importCsvCustomerManagement');
-    */
 
     Route::group(['prefix' => 'customer', 'middleware' => 'adminmiddleware'], function ()
     {
@@ -105,9 +106,6 @@ Route::prefix('admin')->name('admin.')->group(function ()
         Route::post('/search', [ProductManagementController::class, 'searchProduct'])->name('p_search');
         Route::post('/add', [ProductManagementController::class, 'actionAddProduct'])->name('p_add');
         Route::post('/product', [ProductManagementController::class, 'product'])->name('p_product');
-        // Route::get('/{id}', [ProductManagementController::class, 'addProduct'])->name('add');
-        // Route::get('/{id}/edit', [ProductManagementController::class, 'addProduct'])->name('edit');
-        // Route::post('/{id}/edit', [ProductManagementController::class, 'addProduct'])->name('p_edit');
 
     });
 });

@@ -4,12 +4,8 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
 use App\Models\CustomersModel;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends Controller
 {
@@ -40,16 +36,75 @@ class LoginController extends Controller
             return redirect()->back()->withErrors(['msg' => 'Email hoặc mật khẩu không đúng.']);
         }
         else if(is_int($result[0]->customer_id) && $result[0]->customer_id >= 0) {
-            session()->put('customer_id', ['id' => $result[0]->customer_id]);
+            $active = $this->customer->checkActive($result[0]->customer_id);
+
+            if(count($active) === 0) {
+                return redirect()->back()->withErrors(['msg' => 'Tài khoản của bạn đã bị khóa.']);
+            }
+
+            session()->put('customer', [
+                'id' => $result[0]->customer_id,
+                'name' => $result[0]->customer_name,
+            ]);
             return redirect()->route('home');
         }
     }
 
     public function actionLogout(Request $request)
     {
-        if($request->session()->has('customer_id')) {
-            $request->session()->forget('customer_id');
+        if($request->session()->has('customer')) {
+            $request->session()->forget('customer');
+            return redirect()->route('home');
         }
-        return redirect()->route('home');
+        return redirect()->route('account.login');
+    }
+
+    public function infoCustomer(Request $request)
+    {
+        $info = $this->customer->getInfoCustomer($request->session()->get('customer')['id']);
+        return view('client.info', compact('info'));
+    }
+
+    public function saveInfo(Request $request)
+    {
+        // dd($request);
+        $request->validate([
+            'name' => 'bail|required',
+            'email' => 'bail|required|email',
+            'phone' => 'bail|required|numeric',
+            'address' => 'bail|required'
+        ]);
+        $data = [
+            'id' => $request->session()->get('customer')['id'],
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'date' => date('Y-m-d H:i:s')
+        ];
+
+        $result = $this->customer->editInfoCustomer($data);
+        if ($result == -2) return redirect()->back()->with('error', 'Email is existed.');
+        return redirect()->back()->with('status', 'Update information success!!!');
+    }
+
+    public function savePass(Request $request)
+    {
+        $request->validate([
+            'cpass' => 'bail|required|min:8|max:32',
+            'npass' => 'bail|required|regex:/^[a-zA-Z0-9]+$/u|min:8|max:32',
+            'repass' => 'bail|required|same:npass'
+        ]);
+
+        $data = [
+            'id' => $request->session()->get('customer')['id'],
+            'pass' => md5($request->cpass),
+            'npass' => md5($request->npass),
+            'date' => date('Y-m-d H:i:s')
+        ];
+
+        $result = $this->customer->editPassCustomer($data);
+        if ($result == -2) return redirect()->back()->with('error', 'Password incorrect.');
+        return redirect()->back()->with('status', 'Change password success!!!');
     }
 }

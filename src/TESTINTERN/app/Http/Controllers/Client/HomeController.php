@@ -93,7 +93,7 @@ class HomeController extends Controller
         //luu vao database
         $date = date('Y-m-d H:i:s');
         $data = [
-            'customer_id' => $request->session()->has('customer_id') ? $request->session('customer_id') : -1,
+            'customer_id' => $request->session()->has('customer') ? $request->session()->get('customer')['id'] : -1,
             'customer_name' =>  $request->lastName . $request->firstName,
             'customer_email' => $request->email,
             'customer_tel' => $request->tel,
@@ -102,7 +102,7 @@ class HomeController extends Controller
             'payment_method' => $request->paymentMethod,
             'ship_charge' => $arrTotal[1],
             'order_date' => $date,
-            'note_customer' => $request->has('massage') ? $request->has('massage') : '',
+            'note_customer' => $request->has('massage') ? $request->get('massage') : '',
             'created_at' => $date,
             'updated_at' => $date,
             'order_status' => 0

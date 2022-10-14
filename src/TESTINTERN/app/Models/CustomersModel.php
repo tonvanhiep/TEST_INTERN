@@ -74,9 +74,20 @@ class CustomersModel extends Model
     {
         if($data == null) return;
 
-        $result = DB::table($this->table)->select('customer_id')
+        $result = DB::table($this->table)->select('customer_id', 'customer_name')
                                          ->where('email', '=', $data['email'])
                                          ->where('password', '=', $data['pass'])
+                                         ->get();
+        return $result;
+    }
+
+    public function checkActive($id = null)
+    {
+        if($id == null) return;
+
+        $result = DB::table($this->table)->select('customer_id')
+                                         ->where('customer_id', '=', $id)
+                                         ->where('is_active', '=', 1)
                                          ->get();
         return $result;
     }
@@ -108,6 +119,18 @@ class CustomersModel extends Model
         return $result;
     }
 
+    public function getInfoCustomer($id = null)
+    {
+        if ($id == null) return;
+
+        $result = DB::table($this->table)
+            ->select('customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at')
+            ->where('customer_id', '=', $id)
+            ->where('is_active', '=', 1)
+            ->get();
+        return $result;
+    }
+
     public function getCountCustomer($condition = null)
     {
         if($condition == null) return -1;
@@ -121,5 +144,47 @@ class CustomersModel extends Model
                 })
             ->count();
         return $count;
+    }
+
+    public function editPassCustomer($data = null)
+    {
+        if ($data == null) return -1;
+
+        $result = DB::table($this->table)->select('customer_id')
+            ->where('customer_id', '=', $data['id'])
+            ->where('is_active', '=', 1)
+            ->where('password', '=', $data['pass'])
+            ->get();
+
+        if(count($result) == 0) return -2;
+
+        DB::table($this->table)->where('customer_id', '=', $data['id'])
+            ->update([
+                'password' => $data['npass'],
+                'updated_at' => $data['date']
+            ]);
+        return 0;
+    }
+
+    public function editInfoCustomer($data = null)
+    {
+        if ($data == null) return -1;
+
+        $result = DB::table($this->table)->select('customer_id')
+            ->where('customer_id', '!=', $data['id'])
+            ->where('email', '=', $data['email'])
+            ->get();
+
+        if(count($result) > 0) return -2;
+
+        DB::table($this->table)->where('customer_id', '=', $data['id'])
+            ->update([
+                'customer_name' => $data['name'],
+                'email' => $data['email'],
+                'tel_num' => $data['phone'],
+                'address' => $data['address'],
+                'updated_at' => $data['date']
+            ]);
+        return 0;
     }
 }
