@@ -81,6 +81,13 @@
                             </ul>
                         </div>
                     @endif
+                    @if (session()->get('error'))
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li>{{ session()->get('error') }}</li>
+                            </ul>
+                        </div>
+                    @endif
                     <div class="modal-body">
                         <div id="div-alert"></div>
                         <form id="form-uploadfile" enctype="multipart/form-data" method="POST" action="{{route('admin.admin.p_importCsv')}}">

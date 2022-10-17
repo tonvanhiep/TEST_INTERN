@@ -24,7 +24,7 @@ class ImportCsvFileRequest extends FormRequest
     public function rules()
     {
         return [
-            'filecsv' => 'required|file|size:20|mimes:csv,txt'
+            'filecsv' => 'required|file|max:20|mimes:csv,txt'
         ];
     }
 
@@ -34,7 +34,7 @@ class ImportCsvFileRequest extends FormRequest
             'filecsv.required' => ':attribute は 必要です。',
             'filecsv.file' => ':attributeにはファイルを指定してください。',
             'filecsv.mimes' => ':attributeには:valuesタイプのファイルを指定してください。',
-            'filecsv.size' => ':attributeのファイルは、:sizeキロバイトでなくてはなりません。'
+            'filecsv.max' => ':attributeには、:min kB以上のファイルを指定してください。',
         ];
     }
 

@@ -6,6 +6,7 @@ use App\Exports\AdminsExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ImportCsvFileRequest;
 use App\Imports\AdminsImport;
+use App\Imports\ValidateAdminFile;
 use App\Models\AdminModel;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -146,7 +147,27 @@ class AdminManagementController extends Controller
 
     public function importCSV(ImportCsvFileRequest $request)
     {
-        Excel::import(new AdminsImport, $request->filecsv);
+        // $validator =
+        // Excel::import(new AdminsImport, $request->filecsv);
+
+        // return redirect()->back();
+
+
+        $validator = new ValidateAdminFile();
+        Excel::import($validator, $request->filecsv);
+        if (count($validator->errors)) {
+            $errors = [];
+            foreach ($validator->errors as $key => $error) {
+                $errors[$key] = $key;
+            }
+            (new AdminsImport($errors))->queue($request->filecsv);
+
+            return redirect()->back()->with('error', 'row number ' . implode(',', $errors) . ' contain incorrect data');
+        } elseif (!$validator->isValidFile) {
+            return redirect()->back();
+        }
+
+        (new AdminsImport())->queue($request->filecsv);
 
         return redirect()->back();
     }
