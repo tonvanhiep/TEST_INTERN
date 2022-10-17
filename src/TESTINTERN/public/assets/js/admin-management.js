@@ -2,14 +2,14 @@ function editAdminId(id) {
     let btnEdit = document.getElementById('btn-edit-inp-' + id);
     let arrInp = document.getElementsByClassName('inp-row-' + id);
 
-    if (btnEdit.textContent == "Sửa") {
+    if (btnEdit.textContent == "編集") {
         for (let index = 0; index < arrInp.length; index++) {
             arrInp[index].disabled = false;
-            btnEdit.innerText = "Lưu";
+            btnEdit.innerText = "セーブ";
             btnEdit.className = "btn btn-outline-success";
         }
     }
-    else if (btnEdit.textContent == "Lưu") {
+    else if (btnEdit.textContent == "セーブ") {
         $.ajax({
             type: 'POST',
             cache: false,
@@ -26,10 +26,10 @@ function editAdminId(id) {
                 console.log(data);
                 for (let index = 0; index < arrInp.length; index++) {
                     arrInp[index].disabled = true;
-                    btnEdit.innerText = "Sửa";
+                    btnEdit.innerText = "編集";
                     btnEdit.className = "btn btn-outline-warning";
                 }
-                alert("Cập nhật thông tin thành công!!")
+                alert("アカウント情報が正常に更新されました。")
             },
             error: function(data) {
                 var errors = data.responseJSON;
@@ -39,7 +39,7 @@ function editAdminId(id) {
                     errorArr += '- ' + value[0] + '\n';
                 });
 
-                errorArr = 'Cập nhật thông tin không thành công.\n' + errorArr;
+                errorArr = 'アカウント情報が正常に更新されませんでした。\n' + errorArr;
                 alert(errorArr);
             },
         });
@@ -99,7 +99,7 @@ function submitSearchFormAjax(delSearch = 0)
         is_active = -1;
     }
     else if (email == '' && name == '' && group == -1 && is_active == -1) {
-        alert("Bạn chưa nhập thông tin tìm kiếm");
+        alert("検索情報を入力していません。");
         return;
     }
 
@@ -152,7 +152,7 @@ function submitRegisterFormAjax()
             var success = data.responseJSON;
             console.log(success);
             successHtml = '<div class="alert alert-success"><ul>';
-            successHtml += '<li> Đăng ký tài khoản thành công</li>';
+            successHtml += '<li> アカウント登録成功。</li>';
             successHtml += '</ul></div>';
 
             $( '#div-alert' ).html( successHtml );
@@ -214,4 +214,26 @@ function pagination(page = 1)
             console.log(data);
         },
     });
+}
+
+function exportCsv(urlCsv)
+{
+    var email = document.getElementById('search-email').value;
+    var name = document.getElementById('search-name').value;
+    var group = document.getElementById('filter-group').value;
+    var is_active = document.getElementById('filter-status').value;
+
+    email = email.trim().replace(/^\s+|\s+$/gm,'');
+    name = name.trim().replace(/^\s+|\s+$/gm,'');
+    group = (group >= 1 && group <= 3) ? group : -1;
+    is_active = (is_active == 1 || is_active == 0) ? is_active : -1;
+
+    var url = urlCsv + '?';
+
+    if (name != '' && name != null) url += 'name=' + name;
+    if (email != '' && email != null) url += '&email=' + email;
+    if (group != '-1' && group != null) url += '&group=' + group;
+    if (is_active != '-1' && is_active != null) url += '&is_active=' + is_active;
+
+    location.href = url;
 }

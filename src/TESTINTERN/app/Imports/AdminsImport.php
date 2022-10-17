@@ -24,9 +24,9 @@ class AdminsImport implements ToCollection, WithHeadingRow
                 'name' => $row['name'],
                 'email' => $row['email'],
                 'password' => md5(123456789),
-                'is_active' => ($row['active'] == null) ? 0 : 1,
+                'is_active' => 1,
                 'group_role' => $row['group'],
-                'is_delete' => ($row['delete'] == null) ? 0 : 1,
+                'is_delete' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ]);

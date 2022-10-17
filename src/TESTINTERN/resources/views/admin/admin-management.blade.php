@@ -18,7 +18,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Tạo tài khoản admin</h5>
+                        <h5 class="modal-title">管理者アカウントを登録</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
@@ -26,36 +26,36 @@
                         <form id="register-form" action="{{route('admin.p_registerManagement')}}">
                             <p hidden id="token-register">{{ csrf_token() }}</p>
                             <div class="form-outline mb-3">
-                                <label class="form-label" for="inp-name">Họ và tên *</label>
+                                <label class="form-label" for="inp-name">名前 *</label>
                                 <input type="text" id="inp-name" class="form-control"/>
                             </div>
 
                             <div class="form-outline mb-3">
-                                <label class="form-label" for="inp-email">Email *</label>
+                                <label class="form-label" for="inp-email">メール *</label>
                                 <input type="email" id="inp-email" class="form-control"/>
                             </div>
 
                             <div class="form-outline mb-3">
-                                <label class="form-label" for="inp-pass">Mật khẩu *</label>
+                                <label class="form-label" for="inp-pass">パスワード *</label>
                                 <input type="password" id="inp-pass" class="form-control"/>
                             </div>
 
                             <div class="form-outline mb-3">
-                                <label class="form-label" for="inp-repass">Nhập lại mật khẩu *</label>
+                                <label class="form-label" for="inp-repass">再パスワード *</label>
                                 <input type="password" id="inp-repass" class="form-control"/>
                             </div>
 
                             <div class="form-outline mb-3">
-                                <label class="form-label" for="inp-group">Group *</label>
+                                <label class="form-label" for="inp-group">グループ *</label>
                                 <select class="form-select" name="group" id="inp-group">
-                                    <option value="1" selected>Admin</option>
-                                    <option value="2" >Editer</option>
-                                    <option value="3" >Reviewer</option>
+                                    <option value="1" selected>管理者</option>
+                                    <option value="2" >編集者</option>
+                                    <option value="3" >レビュアー</option>
                                 </select>
                             </div>
 
                             <div class="d-flex justify-content-center">
-                                <button type="button" class="btn btn-info btn-block" onclick="submitRegisterFormAjax();">Đăng ký tài khoản</button>
+                                <button type="button" class="btn btn-info btn-block" onclick="submitRegisterFormAjax();">アカウントを登録</button>
                             </div>
                         </form>
                     </div>
@@ -69,9 +69,18 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Import csv</h5>
+                        <h5 class="modal-title">CSVをインポート</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="modal-body">
                         <div id="div-alert"></div>
                         <form id="form-uploadfile" enctype="multipart/form-data" method="POST" action="{{route('admin.admin.p_importCsv')}}">
@@ -79,8 +88,7 @@
                             @csrf
                             <div class="input-group">
                                 <input name="filecsv" type="file" class="form-control" id="file-csv" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Tải lên</button>
-                                {{-- onclick="importCsv();" --}}
+                                <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">アップロード</button>
                             </div>
                         </form>
                     </div>
@@ -106,13 +114,14 @@
 
     <div class="d-flex flex-row-reverse">
         <div class="p-2">
-            <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#myModal">Tạo tài khoản</button>
+            <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#myModal">アカウントを作成</button>
         </div>
         <div class="p-2">
-            <button class="btn btn-info" onclick="location.href='{{route('admin.admin.exportCsv')}}'">Xuất CSV</button>
+            <button class="btn btn-info" onclick="exportCsv('{{route('admin.admin.exportCsv')}}')" >CSVをエクスポート</button>
+            {{-- onclick="location.href='{{route('admin.admin.exportCsv')}}'" --}}
         </div>
         <div class="p-2">
-            <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#myModal2">Thêm CSV</button>
+            <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#myModal2">CSVをインポート</button>
         </div>
     </div>
 
@@ -120,35 +129,35 @@
         <form class="d-flex flex-row" id="search-form" action="{{route('admin.admin.p_search')}}">
             <p hidden id="token-search">{{ csrf_token() }}</p>
             <div class="p-2">
-                <label class="form-label" for="search-name">Họ và tên</label>
-                <input class="form-control" id="search-name" type="search" placeholder="Nhập họ tên">
+                <label class="form-label" for="search-name">名前</label>
+                <input class="form-control" id="search-name" type="search" placeholder="名前を入力。。。">
             </div>
             <div class="p-2">
-                <label class="form-label" for="search-email">Email</label>
-                <input class="form-control" id="search-email" type="search" placeholder="Nhập email">
+                <label class="form-label" for="search-email">メール</label>
+                <input class="form-control" id="search-email" type="search" placeholder="メールを入力。。。">
             </div>
             <div class="p-2">
-                <label class="form-label" for="filter-group">Group</label>
+                <label class="form-label" for="filter-group">グループ</label>
                 <select class="form-select" id="filter-group">
-                    <option value="-1" selected>Tất cả</option>
-                    <option value="1">Admin</option>
-                    <option value="2">Editer</option>
-                    <option value="3">Reviewer</option>
+                    <option value="-1" selected>全部</option>
+                    <option value="1">管理者</option>
+                    <option value="2">編集者</option>
+                    <option value="3">レビュアー</option>
                 </select>
             </div>
             <div class="p-2">
-                <label class="form-label" for="filter-status">Trạng thái</label>
+                <label class="form-label" for="filter-status">スターテス</label>
                 <select class="form-select" id="filter-status">
-                    <option value="-1" selected>Tất cả</option>
-                    <option value="1">Hoạt động</option>
-                    <option value="0">Tạm khóa</option>
+                    <option value="-1" selected>全部</option>
+                    <option value="1">活動</option>
+                    <option value="0">ロック</option>
                 </select>
             </div>
             <div class="align-self-end p-2">
-                <button class="btn btn-outline-dark" type="button" onclick="submitSearchFormAjax();">Tìm kiếm</button>
+                <button class="btn btn-outline-dark" type="button" onclick="submitSearchFormAjax();">検索</button>
             </div>
             <div class="align-self-end p-2">
-                <button class="btn btn-outline-dark" type="reset" onclick="deleteSearchFormAjax();">Xóa tìm kiếm</button>
+                <button class="btn btn-outline-dark" type="reset" onclick="deleteSearchFormAjax();">検索を削除</button>
             </div>
         </form>
     </div>

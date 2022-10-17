@@ -3,13 +3,13 @@
 
 
 @section('title')
-    Đăng ký tài khoản
+    アカウントを登録
 @endsection
 
 
 
 @section('content')
-    <h2 class="text-uppercase text-center mb-4 mt-4">Đăng ký tài khoản</h2>
+    <h2 class="text-uppercase text-center mb-4 mt-4">アカウントを登録</h2>
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -24,27 +24,27 @@
     <form method="POST" action="{{route('account.register')}}">
         @csrf
         <div class="form-outline mb-3">
-            <label class="form-label" for="inp-name">Họ và tên *</label>
+            <label class="form-label" for="inp-name">名前 *</label>
             <input type="text" id="inp-name" name="name" class="form-control"/>
         </div>
 
         <div class="form-outline mb-3">
-            <label class="form-label" for="inp-email">Email *</label>
+            <label class="form-label" for="inp-email">メール *</label>
             <input type="email" id="inp-email" name="email" class="form-control"/>
         </div>
 
         <div class="form-outline mb-3">
-            <label class="form-label" for="inp-tel">Số điện thoại *</label>
+            <label class="form-label" for="inp-tel">電話番号 *</label>
             <input type="tel" id="inp-tel" name="tel" class="form-control"/>
         </div>
 
         <div class="form-outline mb-3">
-            <label class="form-label" for="inp-pass">Mật khẩu *</label>
+            <label class="form-label" for="inp-pass">パスワード *</label>
             <input type="password" id="inp-pass" name="pass" class="form-control"/>
         </div>
 
         <div class="form-outline mb-3">
-            <label class="form-label" for="inp-repass">Nhập lại mật khẩu *</label>
+            <label class="form-label" for="inp-repass">再パスワード *</label>
             <input type="password" id="inp-repass" name="re-pass" class="form-control"/>
         </div>
 
@@ -61,7 +61,7 @@
         </div>
 
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-info btn-block">Đăng ký tài khoản</button>
+            <button type="submit" class="btn btn-info btn-block">アカウントを登録</button>
         </div>
 
         <p class="text-center text-muted mt-4 mb-0">

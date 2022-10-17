@@ -39,6 +39,15 @@ class AdminModel extends Model
                     ->where('email', '=', $data['email'])
                     ->where('password', '=', $data['pass'])
                     ->get();
+
+        if(count($result) == 1) {
+            DB::table($this->table)->where('admin_id', $result[0]->admin_id)
+            ->update(
+              [
+                'remember_token' => $data['remember']
+              ]
+          );
+        }
         return $result;
     }
 
@@ -47,7 +56,7 @@ class AdminModel extends Model
         if($condition == null) return 0;
         $count = DB::table($this->table)
             ->where('is_delete', '=' , 0)
-            ->where('name', 'like', '%'.preg_replace("/[^a-zA-Z0-9]/", "%", (($condition['name'] == null) ? '' : $condition['name'])).'%')
+            ->where('name', 'like', '%'.$condition['name'].'%')
             ->where('email', 'like', '%'.(($condition['email'] == null) ? '' : $condition['email']).'%')
             ->where(function($query) use ($condition) {
                 $query->where('group_role', '=' ,(($condition['group'] == -1) ? 1 : $condition['group']))
@@ -69,7 +78,7 @@ class AdminModel extends Model
         $result = DB::table($this->table)
             ->select('admin_id', 'name', 'email', 'group_role', 'is_active', 'created_at')
             ->where('is_delete', '=' , 0)
-            ->where('name', 'like', '%'.preg_replace("/[^a-zA-Z0-9]/", "%", (($condition['name'] == null) ? '' : $condition['name'])).'%')
+            ->where('name', 'like', '%'.(($condition['name'] == null) ? '' : $condition['name']).'%')
             ->where('email', 'like', '%'.(($condition['email'] == null) ? '' : $condition['email']).'%')
             ->where(function($query) use ($condition) {
                 $query->where('group_role', '=' ,(($condition['group'] == -1) ? 1 : $condition['group']))
@@ -80,9 +89,8 @@ class AdminModel extends Model
                 $query->where('is_active', '=' ,(($condition['is_active'] == -1) ? 0 : $condition['is_active']))
                       ->orWhere('is_active', '=', (($condition['is_active'] == -1) ? 1 : $condition['is_active']));
                 })
-            ->orderBy('created_at', 'desc')
+            ->orderBy('admin_id', 'desc')
             ->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
-        // dd($result);
         return $result;
     }
 

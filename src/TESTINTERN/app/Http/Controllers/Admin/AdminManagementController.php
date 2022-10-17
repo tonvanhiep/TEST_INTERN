@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\AdminsExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ImportCsvFileRequest;
 use App\Imports\AdminsImport;
 use App\Models\AdminModel;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ class AdminManagementController extends Controller
 
     public function index(Request $request)
     {
+        $nameRoute = $request->route()->getName();
         $page = (!$request->has('page') ? 1 : $request->page);
         $condition = array(
             'is_active' => (!$request->has('is_active') ? -1 : $request->is_active),
@@ -38,7 +40,7 @@ class AdminManagementController extends Controller
             'total' => $totalAdmin
         ];
         $listAdmin = $this->admin->getAdmin($condition, $currentPage, $this->adminOnPage);
-        return view('admin.admin-management', compact('listAdmin', 'record', 'totalPage', 'currentPage'));
+        return view('admin.admin-management', compact('listAdmin', 'record', 'totalPage', 'currentPage', 'nameRoute'));
         return 'index';
     }
 
@@ -137,12 +139,12 @@ class AdminManagementController extends Controller
         return response()->json($returnHTML);
     }
 
-    public function exportCSV()
+    public function exportCSV(Request $request)
     {
-        return Excel::download(new AdminsExport, 'list-admin-'.preg_replace("/[ ]/", "-", date('Y-m-d H:i:s')).'.csv');
+        return Excel::download(new AdminsExport($request), 'list-admin-'.preg_replace("/[ ]/", "-", date('Y-m-d H:i:s')).'.csv');
     }
 
-    public function importCSV(Request $request)
+    public function importCSV(ImportCsvFileRequest $request)
     {
         Excel::import(new AdminsImport, $request->filecsv);
 

@@ -22,6 +22,7 @@ class CustomerManagermentController extends Controller
 
     public function index(Request $request)
     {
+        $nameRoute = $request->route()->getName();
         $page = 1;
         $condition = array(
             'is_active' => (!$request->has('is_active') ? -1 : $request->is_active),
@@ -39,7 +40,7 @@ class CustomerManagermentController extends Controller
             'total' => $totalCustomer
         ];
         $listCustomer = $this->customer->getCustomer($condition, $currentPage, $this->customerOnPage);
-        return view('admin.customer-management', compact('listCustomer', 'record', 'totalPage', 'currentPage'));
+        return view('admin.customer-management', compact('listCustomer', 'record', 'totalPage', 'currentPage', 'nameRoute'));
     }
 
     public function paginationCustomer(Request $request)

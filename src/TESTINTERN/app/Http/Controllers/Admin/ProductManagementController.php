@@ -18,6 +18,7 @@ class ProductManagementController extends Controller
 
     public function index(Request $request)
     {
+        $nameRoute = $request->route()->getName();
         $page = (!$request->has('page') ? 1 : $request->page);
         $condition = array(
             'name' => (!$request->has('name') ? null : $request->name),
@@ -35,7 +36,7 @@ class ProductManagementController extends Controller
             'total' => $totalProduct
         ];
         $listProduct = $this->product->getProduct($condition, $currentPage, $this->productOnPage);
-        return view('admin.product-management', compact('listProduct', 'record', 'totalPage', 'currentPage'));
+        return view('admin.product-management', compact('listProduct', 'record', 'totalPage', 'currentPage', 'nameRoute'));
     }
 
     public function paginationProduct(Request $request)

@@ -375,6 +375,7 @@ $('#product-form').submit(function(e) {
         success: (data) => {
             this.reset();
             alert('File has been uploaded successfully');
+            resetForm();
         },
         error: function(data){
         }

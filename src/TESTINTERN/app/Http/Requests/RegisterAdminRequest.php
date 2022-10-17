@@ -35,21 +35,31 @@ class RegisterAdminRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => ':attribute không được bỏ trống.',
-            'name.min' => ':attribute phải dài hơn :min ký tự.',
-            'name.max' => ':attribute phải không được vượt quá :max ký tự.',
+            'name.required' => ':attribute は 必要です。',
+            'name.min' => ':attribute は :min 文字以上である必要があります。',
+            'name.max' => ':attribute  は :max 文字以内である必要があります。',
 
-            'email.required' => ':attribute không được bỏ trống.',
-            'email.min' => ':attribute phải dài hơn 10 ký tự.',
-            'email.max' => ':attribute phải không được vượt quá 255 ký tự.',
-            'email.unique' => ':attribute đã tồn tại.',
+            'email.required' => ':attribute は 必要です。',
+            'email.min' => ':attribute は :min 文字以上である必要があります。',
+            'email.max' => ':attribute  は :max 文字以内である必要があります。',
+            'email.unique' => ':attributeの値は既に存在しています。',
 
-            'pass.required' => ':attribute không được bỏ trống.',
-            'pass.min' => ':attribute phải dài hơn 8 ký tự.',
-            'pass.max' => ':attribute phải không được vượt quá 32 ký tự.',
+            'pass.required' => ':attribute は 必要です。',
+            'pass.min' => ':attribute は :min 文字以上である必要があります。',
+            'pass.max' => ':attribute  は :max 文字以内である必要があります。',
 
-            're-pass.required' => ':attribute không được bỏ trống.',
-            're-pass.same' => 'Mật khẩu không khớp.',
+            're-pass.required' => ':attribute は 必要です。',
+            're-pass.same' => '正しくないパスワード。',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'email' => 'メール',
+            'name' => '名前',
+            're-pass' => '再パスワード',
+            'pass' => 'パスワード',
         ];
     }
 }

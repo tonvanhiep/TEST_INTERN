@@ -20,7 +20,7 @@ class CustomersExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ["id", "name", "email", "tel", "address", "active", "created_at", "updated_at"];
+        return ["名前", "メール","電話番号", "住所"];
     }
 
     /**
@@ -28,6 +28,6 @@ class CustomersExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return CustomersModel::select('customer_id','customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at', 'updated_at')->get();
+        return CustomersModel::select('customer_name', 'email', 'tel_num', 'address')->get();
     }
 }

@@ -32,15 +32,25 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => ':attribute không được bỏ trống.',
-            'email.email' => ':attribute không phải là địa chỉ email.',
-            'email.min' => ':attribute  phải dài hơn 10 ký tự.',
-            'email.max' => ':attribute  phải không được vượt quá 255 ký tự.',
+            'email.required' => ':attribute は 必要です。',
+            'email.email' => ':attributeは有効な電子メール アドレスである必要があります。',
+            'email.min' => ':attributeは :min 文字以上である必要があります。',
+            'email.max' => ':attributeは :max 文字以内である必要があります。',
 
-            'pass.required' => ':attribute không được bỏ trống.',
-            'pass.min' => ':attribute  phải dài hơn 8 ký tự.',
-            'pass.max' => ':attribute  phải không được vượt quá 32 ký tự.',
-            'pass.regex' => ':attribute chỉ bao gồm chữ cái viết hoa, viết thường và chữ số.'
+            'pass.required' => ':attribute は 必要です。',
+            'pass.min' => ':attribute は :min 文字以上である必要があります。',
+            'pass.max' => ':attribute は :max 文字以内である必要があります。',
+            'pass.regex' => ':attribute は 形式が無効です。'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'email' => 'メール',
+            'name' => '名前',
+            're-pass' => '再パスワード',
+            'pass' => 'パスワード',
         ];
     }
 }
