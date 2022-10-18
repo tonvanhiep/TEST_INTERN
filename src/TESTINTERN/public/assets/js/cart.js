@@ -49,7 +49,7 @@ function deleteProduct(x, id)
     }
 
     if(cart.length <= 0) {
-        document.getElementById('table-cart').innerHTML = '<tr><td colspan="7">No items</td></tr>';
+        document.getElementById('table-cart').innerHTML = '<tr><td colspan="7">項目がありません</td></tr>';
         document.getElementById('btn-checkout').hidden = true;
     }
 }
@@ -59,7 +59,7 @@ function displayCart()
     let listCart = '';
 
     if(cart.length <= 0) {
-        listCart = '<tr><td colspan="7">No items</td></tr>';
+        listCart = '<tr><td colspan="7">項目がありません</td></tr>';
     }
     else {
         document.getElementById('btn-checkout').hidden = false;

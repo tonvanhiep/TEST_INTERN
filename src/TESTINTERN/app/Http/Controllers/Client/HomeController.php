@@ -53,11 +53,17 @@ class HomeController extends Controller
         $request->validate([
             'fname' => 'required',
             'lname' => 'required',
-            'phone' => 'required|numeric',
-            'email' => 'required|email',
+            'phone' => 'required|numeric|digits_between:9,15',
+            'email' => 'required|email|min:10',
             'message' => 'required'
-            ]
-        );
+            ], [
+                'required' => ':attribute は 必要です。',
+                'email' => ':attributeは有効な電子メール アドレスである必要があります。',
+                'min' => ':attributeは :min 文字以上である必要があります。',
+                'max' => ':attributeは :max 文字以内である必要があります。',
+                'numeric' => ':attributeには、数字を指定してください。',
+                'digits_between' => ':attributeは:min桁から:max桁の間で指定してください。',
+            ]);
 
         $data = [
             'name' => $request->lname . ' ' . $request->fname,
@@ -77,10 +83,17 @@ class HomeController extends Controller
         $request->validate([
             'firstName' => 'required',
             'lastName' => 'required',
-            'tel' => 'required|numeric',
-            'email' => 'required|email',
+            'tel' => 'required|numeric|digits_between:9,15',
+            'email' => 'required|email|min:10',
             'address' => 'required',
             'paymentMethod' => 'required|numeric|min:1|max:3'
+        ], [
+            'required' => ':attribute は 必要です。',
+            'email' => ':attributeは有効な電子メール アドレスである必要があります。',
+            'min' => ':attributeは :min 文字以上である必要があります。',
+            'max' => ':attributeは :max 文字以内である必要があります。',
+            'numeric' => ':attributeには、数字を指定してください。',
+            'digits_between' => ':attributeは:min桁から:max桁の間で指定してください。',
         ]);
 
         $cart = $request->cookie('cart');

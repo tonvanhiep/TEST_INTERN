@@ -49,14 +49,14 @@
         </div>
 
         <div class="form-outline mb-3">
-            <label class="form-label" for="inp-address">Địa chỉ</label>
+            <label class="form-label" for="inp-address">住所</label>
             <input type="text" id="inp-address" name="address" class="form-control"/>
         </div>
 
         <div class="form-check d-flex justify-content mb-4">
             <input class="form-check-input me-2" type="checkbox" name="agree-rule" value="agree" id="agree-rule"/>
             <label class="form-check-label" for="agree-rule">
-                Tôi đã đọc và đồng ý với các <a href="#!" class="text-body"><u>điều khoản</u></a>
+                <a href="#!" class="text-body"><u>利用規約を読み、同意します</u></a>
             </label>
         </div>
 
@@ -65,7 +65,7 @@
         </div>
 
         <p class="text-center text-muted mt-4 mb-0">
-            Bạn đã có tài khoản? <a href="{{route('account.login')}}" class="fw-bold text-body"><u>Đăng nhập</u></a>
+            アカウントを持っていますか？ <a href="{{route('account.login')}}" class="fw-bold text-body"><u>ログイン</u></a>
         </p>
     </form>
 @endsection

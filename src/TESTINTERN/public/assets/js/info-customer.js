@@ -1,7 +1,7 @@
 function editInfo(x)
 {
     if (x.className == 'btn btn-outline-secondary mb-3') {
-        x.textContent = "Save";
+        x.textContent = "セーブ";
         x.className = "btn btn-primary mb-3";
 
         document.getElementById('btn-cancel').hidden = false;

@@ -22,7 +22,7 @@
                 @php
                     if(session()->has('customer')) {
                         echo '<div class="dropdown">
-                            <button onclick="dropDown()" class="nut_dropdown btn btn-secondary dropdown-toggle" style="width:100px; text-overflow: ellipsis; overflow:hidden;">'. session()->get('customer')['name'] .'</button>
+                            <button onclick="dropDown()" class="nut_dropdown btn btn-secondary dropdown-toggle" style="width:120px; text-overflow: ellipsis; overflow:hidden;">'. session()->get('customer')['name'] .'</button>
                             <div class="noidung_dropdown">
                                 <a href="'. route('account.info') .'">アカウント</a>
                                 <a href="'. route('account.logout') . '">ログアウト</a>

@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: mysql
--- Thời gian đã tạo: Th10 14, 2022 lúc 08:44 AM
--- Phiên bản máy phục vụ: 8.0.30
--- Phiên bản PHP: 8.0.19
+-- Host: mysql
+-- Generation Time: Oct 18, 2022 at 11:26 AM
+-- Server version: 8.0.30
+-- PHP Version: 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,51 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `WEBBANHANG`
+-- Database: `WEBBANHANG`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `MST_ADMIN`
+-- Table structure for table `failed_jobs`
+--
+
+CREATE TABLE `failed_jobs` (
+  `id` bigint UNSIGNED NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_resets_table', 1),
+(3, '2019_08_19_000000_create_failed_jobs_table', 1),
+(4, '2019_12_14_000001_create_personal_access_tokens_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `MST_ADMIN`
 --
 
 CREATE TABLE `MST_ADMIN` (
@@ -44,11 +82,11 @@ CREATE TABLE `MST_ADMIN` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `MST_ADMIN`
+-- Dumping data for table `MST_ADMIN`
 --
 
 INSERT INTO `MST_ADMIN` (`admin_id`, `name`, `email`, `password`, `remember_token`, `verify_email`, `is_active`, `is_delete`, `group_role`, `last_login_at`, `last_login_ip`, `created_at`, `updated_at`) VALUES
-(1, 'Hiệp Tôn Văn', 'hiepvanton@quanly.com', 'e807f1fcf82d132f9bb018ca6738a19f', NULL, NULL, 1, 0, 1, '2022-10-14 14:44:22', '127.0.0.1', '2022-09-30 10:24:43', '2022-10-06 11:46:37'),
+(1, 'Hiệp Tôn Văn', 'hiepvanton@quanly.com', 'e807f1fcf82d132f9bb018ca6738a19f', 'cCvHQX00gojzXyUYh2RoqC21NWhVuPK9yDZngkWT', NULL, 1, 0, 1, '2022-10-18 08:09:24', '127.0.0.1', '2022-09-30 10:24:43', '2022-10-06 11:46:37'),
 (2, 'Nguyen Nhu Nhut', 'nguyennhunhut@quanly.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 0, 0, 1, NULL, NULL, '2022-10-06 11:40:53', '2022-10-06 11:43:45'),
 (3, 'Le Phi Yen', 'lethiphiyen@quanly.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 0, 0, 1, NULL, NULL, '2022-10-06 11:40:53', '2022-10-06 11:44:37'),
 (4, 'Ngo Thanh Tuan', 'ngothanhtuan@quanly.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 0, 0, 2, NULL, NULL, '2022-10-06 11:40:53', '2022-10-06 11:47:07'),
@@ -71,7 +109,7 @@ INSERT INTO `MST_ADMIN` (`admin_id`, `name`, `email`, `password`, `remember_toke
 (21, 'ILSSZXGDZKNX', 'zg6sbIhXDf2r@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 3, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
 (22, 'PFOGVFGKDTLQ', 'uj4WSj35hApN@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
 (23, 'PKBNQZFLAWVM', '78nhFNyTMZSf@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
-(24, 'YLGSIOM NQM', 'yAq4JcWiNPlt@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-06 13:12:15', '2022-10-14 15:02:14'),
+(24, '田中', 'yAq4JcWiNPlt@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-06 13:12:15', '2022-10-17 08:52:15'),
 (25, 'MNWYUCSGAKTZ', 'A7L4WkOQ4Cs8@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
 (26, 'SCMJBW PSMOG', 'RJ6Ift5cEL5M@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
 (27, 'LLODYGTWMIOC', 'dli6c9nWBZQw@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
@@ -133,9 +171,9 @@ INSERT INTO `MST_ADMIN` (`admin_id`, `name`, `email`, `password`, `remember_toke
 (83, 'MMXLOAXOF BW', 'ETthF9yL5awW@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
 (84, 'VWWYBO ZCKWU', 'fkd6PBdfnsWJ@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
 (85, 'DYSLEKXBDTVK', '4GTGokeKXf8a@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
-(86, 'DQILKUXPRFGB', 'gF6SO8wYLIdo@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
+(86, 'DQILKUXPRFGB', 'gF6SO8wYLIdo@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-06 13:12:15', '2022-10-17 11:33:36'),
 (87, 'PNCPRVA XDVY', 'dy9dxcc3kBdt@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
-(88, 'RMCSYRNYKWFK', 'Ql4wtlbwPtQB@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 3, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
+(88, 'RMCSYRNYKWFK', 'Ql4wtlbwPtQB@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-06 13:12:15', '2022-10-17 11:12:23'),
 (89, 'OV YZHVAYEEH', '5LthZLcf02M9@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 3, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
 (90, 'ZWJ BFCTQZPC', 'mcCSIP1qyqCz@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
 (91, 'HBSISYHSBJVQ', 'Rf0gs7qB7xEj@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 1, 2, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
@@ -149,16 +187,59 @@ INSERT INTO `MST_ADMIN` (`admin_id`, `name`, `email`, `password`, `remember_toke
 (99, 'GKFENWKJKVNA', 'NNOiZEEU4KyF@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
 (100, 'WDHQPOMOSBPK', 'BAfGoUdPE310@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
 (101, 'GDIJZJLQYWGS', 'M66zj425Tjro@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 1, 1, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
-(102, 'NSJGWQOPRJOA', 'Hl2wWQEqb9lY@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
-(103, 'DWYKFEZEO TO', 'BMNFmCgSo6Th@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
-(104, 'MKTTKWPQCYNQ', 'WhJuADXOaN8p@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
+(102, 'NSJGWQOPRJOA', 'Hl2wWQEqb9lY@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 0, 0, 2, NULL, NULL, '2022-10-06 13:12:15', '2022-10-17 11:17:51'),
+(103, 'DWYKFEZEO TO', 'tonvanhiep@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 3, NULL, NULL, '2022-10-06 13:12:15', '2022-10-17 11:32:43'),
+(104, 'トンヴァン', 'WhJuADXOaN8p@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 0, 0, 1, NULL, NULL, '2022-10-06 13:12:15', '2022-10-17 10:51:03'),
 (105, 'QLFOAFQSXB N', 'ORNkDmjnpZH8@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-06 13:12:15', '2022-10-06 13:12:15'),
-(106, 'Tôn Văn Hiệp', 'gon@gmail.com', 'actionRegister', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-06 15:38:34', '2022-10-06 15:38:34');
+(106, 'トンヴァンヒエップ', 'gon@gmail.com', 'actionRegister', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-06 15:38:34', '2022-10-17 11:13:45'),
+(107, 'DE FE EFEF', 'rberv@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 14:21:58', '2022-10-17 14:21:58'),
+(108, 'TYJ UUM SFEV BT', 'wfwfsc@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 1, 1, NULL, NULL, '2022-10-17 14:21:58', '2022-10-17 14:21:58'),
+(109, 'O EVM EOFK', 'egegege@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 14:21:58', '2022-10-17 14:21:58'),
+(110, 'MM DKEF TO', 'efewf@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 3, NULL, NULL, '2022-10-17 14:21:58', '2022-10-17 14:21:58'),
+(111, 'WEF WEF REF', 'dwdmmwl@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-17 14:21:58', '2022-10-17 14:21:58'),
+(112, 'Nguyễn Thị Kiều Tiên', 'nuyenthikieutien@gmail.com', '123321123', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 14:25:03', '2022-10-17 14:25:03'),
+(113, 'Hà Thị B', 'hathib@gmail.com', '123456654321', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 14:26:30', '2022-10-17 14:26:30'),
+(114, 'PEPSI KHONG GA', 'trysdsfy@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 16:46:05', '2022-10-17 16:47:00'),
+(115, 'COCA COLA KHONG VI', 'dvsdvfer@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 16:46:05', '2022-10-17 16:47:10'),
+(120, 'PEPSI', 'tryjyjmy@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 16:47:19', '2022-10-17 16:47:19'),
+(121, 'COCA COLA', 'rgregrregerfer@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 16:47:19', '2022-10-17 16:47:19'),
+(126, 'PEPSI', 'trysfsfwefwefwefjmy@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 16:49:51', '2022-10-17 16:49:51'),
+(127, 'COCA COLA', 'rgrưefwefwefwefwer@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 16:49:51', '2022-10-17 16:49:51'),
+(128, 'PEPSI', 'mnmnmnmnmnktgbmkf@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 16:50:40', '2022-10-17 16:50:40'),
+(129, 'COCA COLA', 'oirwoirwroiwr@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 16:50:40', '2022-10-17 16:50:40'),
+(130, 'KHONG CO GI', 'vfvfvfvfvfvffvfvffvf@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 16:53:20', '2022-10-17 16:53:20'),
+(131, 'NGUYEN VAN AB', 'nguyenvanab@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 16:56:57', '2022-10-17 16:56:57'),
+(133, 'OLALA', 'olalala@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-17 17:01:21', '2022-10-17 17:01:21'),
+(168, 'OLA BLA MML', 'dwfwqfwqfwqfwqfwf@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-18 00:06:18', '2022-10-18 00:06:18'),
+(169, 'NGUYEN VAN AB', 'fwefwfwfwfwfwf@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-18 00:06:18', '2022-10-18 00:06:18'),
+(170, 'NGUYEN VAN AB', 'lkjhgcfhvjklkjbhvbjn@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-18 00:07:57', '2022-10-18 00:07:57'),
+(181, 'Man Hinh May Tinh', 'manhinhmaytinhaoc@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-18 08:30:50', '2022-10-18 08:30:50'),
+(199, 'rgrg KHGK', 'hreighneoinviodje@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 3, NULL, NULL, '2022-10-18 09:26:16', '2022-10-18 09:26:16'),
+(204, 'NGUYEN TAT THANH', 'nguyentatthanh@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 1, 1, NULL, NULL, '2022-10-18 09:31:39', '2022-10-18 09:31:39'),
+(205, 'NGUYEN THI B', 'nguyenthib@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 1, 3, NULL, NULL, '2022-10-18 09:31:39', '2022-10-18 09:31:39'),
+(210, 'NGUYEN TAT THANH', 'nguyentatthanh1981@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-18 10:12:54', '2022-10-18 10:12:54'),
+(211, 'TRAN VAN A', 'tranvanb@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-18 10:12:55', '2022-10-18 10:12:55'),
+(212, 'NGUYEN THI B', 'nguyenthib2001@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 3, NULL, NULL, '2022-10-18 10:12:55', '2022-10-18 10:12:55'),
+(213, 'TRAN TRUONG B', 'trantruongb@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-18 10:12:55', '2022-10-18 10:12:55'),
+(214, 'LE HA BAO AN', 'lehabaoan@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-18 10:12:55', '2022-10-18 10:12:55'),
+(215, 'NGUYEN TAT THANH01', 'nguyentatthanh198101@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-18 10:16:50', '2022-10-18 10:16:50'),
+(216, 'TRAN VAN A01', 'tranvanb01@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-18 10:16:50', '2022-10-18 10:16:50'),
+(217, 'NGUYEN THI B01', 'nguyenthib200101@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 3, NULL, NULL, '2022-10-18 10:16:50', '2022-10-18 10:16:50'),
+(218, 'TRAN TRUONG B01', 'trantruongb01@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-18 10:16:50', '2022-10-18 10:16:50'),
+(219, 'LE HA BAO AN01', 'lehabaoan01@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-18 10:16:50', '2022-10-18 10:16:50'),
+(220, 'NGUYEN TAT THANH02', 'nguyentatthanh198102@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-18 10:20:33', '2022-10-18 10:20:33'),
+(221, 'TRAN VAN A02', 'tranvanb02@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-18 10:20:33', '2022-10-18 10:20:33'),
+(222, 'NGUYEN THI B02', 'nguyenthib200202@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 3, NULL, NULL, '2022-10-18 10:20:33', '2022-10-18 10:20:33'),
+(223, 'TRAN TRUONG B02', 'trantruongb02@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 1, NULL, NULL, '2022-10-18 10:20:33', '2022-10-18 10:20:33'),
+(224, 'LE HA BAO AN02', 'lehabaoan02@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-18 10:20:33', '2022-10-18 17:06:46'),
+(225, 'NGUYEN THI B03', 'nguyenthib200203@gmail.com', '25f9e794323b453885f5181f1b624d0b', NULL, NULL, 1, 0, 3, NULL, NULL, '2022-10-18 10:21:19', '2022-10-18 10:21:19'),
+(226, 'Trần Phú Phong', 'tranphuphong@quanly.com', '1234567890', NULL, NULL, 1, 0, 2, NULL, NULL, '2022-10-18 10:23:11', '2022-10-18 10:23:11'),
+(227, 'しんかいまこと', 'shinkaimakoto@review.com', '1234567890', NULL, NULL, 1, 0, 3, NULL, NULL, '2022-10-18 10:24:36', '2022-10-18 10:24:36');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `MST_CONTACT`
+-- Table structure for table `MST_CONTACT`
 --
 
 CREATE TABLE `MST_CONTACT` (
@@ -171,7 +252,7 @@ CREATE TABLE `MST_CONTACT` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `MST_CONTACT`
+-- Dumping data for table `MST_CONTACT`
 --
 
 INSERT INTO `MST_CONTACT` (`contact_id`, `name`, `phone`, `email`, `message`, `created_at`) VALUES
@@ -181,7 +262,7 @@ INSERT INTO `MST_CONTACT` (`contact_id`, `name`, `phone`, `email`, `message`, `c
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `MST_CUSTOMER`
+-- Table structure for table `MST_CUSTOMER`
 --
 
 CREATE TABLE `MST_CUSTOMER` (
@@ -197,11 +278,11 @@ CREATE TABLE `MST_CUSTOMER` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `MST_CUSTOMER`
+-- Dumping data for table `MST_CUSTOMER`
 --
 
 INSERT INTO `MST_CUSTOMER` (`customer_id`, `customer_name`, `email`, `password`, `tel_num`, `address`, `is_active`, `created_at`, `updated_at`) VALUES
-(3, 'Tôn Văn Hiệp', 'tonvanhiepdragon@gmail.com', 'e807f1fcf82d132f9bb018ca6738a19f', '0934848322', '01/1 Nguyễn Văn Trỗi, Tiên Hội, Nhơn Thành, An Nhơn, Bình Định', 1, '2022-09-30 08:50:14', '2022-10-14 13:46:40'),
+(3, 'Tôn Văn Hiệp', 'tonvanhiepdragon@gmail.com', 'e807f1fcf82d132f9bb018ca6738a19f', '0934848322', '01/1 Nguyễn Văn Trỗi, Tiên Hội, Nhơn Thành, An Nhơn, Bình Định', 1, '2022-09-30 08:50:14', '2022-10-18 18:18:57'),
 (5, 'NAVE LOPI HANUI', 'I3LWgIDir0viyUOA@gmail.com', 'e807f1fcf82d132f9bb018ca6738a19f', '0496588949', 'ktx b', 0, '2022-10-03 13:06:18', '2022-10-05 08:12:45'),
 (10, 'NAVE LOPI HANUI', 'epdragon@gmail.com', 'e807f1fcf82d132f9bb018ca6738a19f', '0997026433', 'ABC XYZ, ABC MNG, CDN WOP, FGH CSV', 1, '2022-10-03 13:06:18', '2022-10-05 08:31:09'),
 (11, 'NAVE LOPI HANUI', 'tonsssvanhiepdragon@gmail.com', 'e807f1fcf82d132f9bb018ca6738a19f', '0440985734', 'ABC XYZ, ABC MNG, CDN WOP, FGH CSV', 0, '2022-10-03 13:06:18', '2022-10-05 08:33:39'),
@@ -448,75 +529,32 @@ INSERT INTO `MST_CUSTOMER` (`customer_id`, `customer_name`, `email`, `password`,
 (269, 'TRH GRH RGT', 'N4gIWIh8bSutw@gmail.com', 'd597db2ba107fce0ca147dd2085d98c5', '304557438', 'Tầng 8, Tháp A, Trung tâm hành chính tỉnh, P. Hòa Phú, Tp. Thủ Dầu Một, T. Bình Dương', 1, '2022-10-06 08:57:56', '2022-10-06 08:57:56'),
 (270, 'TRHRT GRGR', 'jffI1gZGntn5z8@gmail.com', '1503ff910e9da956c0c0ede055b63edb', '761321542', '07 Lý Thái Tổ, P. Suối Hoa, Tp. Bắc Ninh, T. Bắc Ninh', 1, '2022-10-06 08:57:56', '2022-10-06 08:57:56'),
 (271, 'RHR RTH RGH', 'ffF0YsnI7MNbqq@gmail.com', 'f28a57a1402817724d0551ae5b6e5e78', '673898505', 'ABC XYZ, ABC MNG, CDN WOP, FGH CSV', 1, '2022-10-06 08:57:56', '2022-10-06 08:57:56'),
-(272, 'GERG TJYB 6JNY', 'qpeUlc7IG8G8@gmail.com', 'b14574d9ba64723f1c347bfadcb0aa97', '799057787', 'ABC XYZ, ABC MNG, CDN WOP, FGH CSV', 0, '2022-10-06 08:57:56', '2022-10-06 08:57:56'),
-(273, 'TRH EW BTGT', 'ik8eQIQhwzrb@gmail.com', 'ebea2291fb1d501c493232e51d764d3b', '958948080', 'Regular Expression', 1, '2022-10-06 08:57:56', '2022-10-06 08:57:56'),
+(273, 'TRH EW BTGT', 'tonvanhiep@gmail.com', 'ebea2291fb1d501c493232e51d764d3b', '958948080', 'Regular Expression', 1, '2022-10-06 08:57:56', '2022-10-18 11:42:38'),
 (274, 'TIRJ OJVRO', '7Bay22UWtWtW@gmail.com', '52a1c620969138acb330ebf3308a4590', '97598263', 'ABC XYZ, ABC MNG, CDN WOP, FGH CSV', 1, '2022-10-06 08:57:56', '2022-10-06 08:57:56'),
 (275, 'RTH TR RGB', 'dKK4AcJKgX46Z@gmail.com', '5b0314eeea229899d958d9c401993b86', '522614172', '238 Thủ Khoa Huân, Tp. Phan Thiết, T. Bình Thuận', 1, '2022-10-06 08:57:56', '2022-10-06 08:57:56'),
-(276, 'RN RKNG RLMG', 'Ywee3W87DS@gmail.com', '7a9760f08eb52630e85ccc552dd1c8af', '472014296', 'Đường Hùng Vương, P. Tân Bình, Tx. Đồng Xoài, T. Bình Phước', 1, '2022-10-06 08:57:56', '2022-10-06 08:57:56'),
+(276, 'RN RK VVF FNG RLMG', 'dfsvdxdDS@gmail.com', '7a9760f08eb52630e85ccc552dd1c8af', '472014296', 'Đường Hùng Vương, P. Tân Bình, Tx. Đồng Xoài, T. Bình Phước', 1, '2022-10-06 08:57:56', '2022-10-18 11:42:17'),
 (277, 'GRTJNO VRLKR RGKM', 'dridcgTxQntmz@gmail.com', '7b82071cfcd454ed6cf70fcd0a3c1800', '770315902', 'ABC XYZ, ABC MNG, CDN WOP, FGH CSV', 1, '2022-10-06 08:57:56', '2022-10-06 08:57:56'),
 (278, 'RTOGRU ERGHNIEU VER', 'ex7eDeA4cjmHDX@gmail.com', '46c0d31e98390b163db6f39e0e7057ea', '866578643', '290 Trần Hưng Đạo, P.5, Tp. Cà Mau, T.Cà Mau', 1, '2022-10-06 08:57:56', '2022-10-06 08:57:56'),
 (279, 'Tran Ngoc Han', 'tranngochan@gmail.com', 'b76d7a7785e89f94c2a8a6de039b2052', '0938776266', '45/2 An Duong Vuong, Q5, TpHCM', 0, '2022-10-06 09:06:46', '2022-10-06 09:06:46'),
 (280, 'Nguyen Van Tam', 'nguyenvantam@gmail.com', '7175865d310a718c626f6a402e7a3816', '0876668904', '34/34B Nguyen Trai, Q1, TpHCM', 1, '2022-10-06 09:06:46', '2022-10-06 09:06:46'),
 (281, 'Le Hoai Thuong', 'lehoaithuong@gmail.com', '0a7f4d581486530348bb1f520a267cfc', '0916783565', '34/34B Nguyen Trai, Q1, TpHCM', 1, '2022-10-06 09:06:46', '2022-10-06 09:06:46'),
-(282, 'Tôn Văn Hiệp', 'tonvanhaaaaaaaaiepdragon@gmail.com', 'e3ccabf20bc425d209c4b96804b9fa32', '0363038485', '0363038485', 1, '2022-10-06 15:01:58', '2022-10-06 15:01:58');
+(282, 'Tôn Văn Hiệp', 'tonvanhaaaaaaaaiepdragon@gmail.com', 'e3ccabf20bc425d209c4b96804b9fa32', '0363038485', '0363038485', 1, '2022-10-06 15:01:58', '2022-10-18 10:37:59'),
+(283, 'しんかいまこと', 'saikinmokota@gmail.com', 'e807f1fcf82d132f9bb018ca6738a19f', '0363038485', '東京、日本', 1, '2022-10-18 11:01:01', '2022-10-18 11:01:01'),
+(284, 'HUYNH TRUC F', 'huynhtrucf@gmail.com', '46c0d31e98390b163db6f39e0e7057ea', '866578643', 'binh thanh', 1, '2022-10-18 13:02:09', '2022-10-18 13:02:09'),
+(285, 'DO TRAN VAN E', 'dotranvane@gmail.com', '7b82071cfcd454ed6cf70fcd0a3c1800', '770315902', 'thu duc', 1, '2022-10-18 13:02:09', '2022-10-18 13:02:09'),
+(286, 'TRAN VAN B', 'tranvanb@gmail.com', 'a641679f4d5df519cdded74106b88591', '997026433', 'sai gon', 1, '2022-10-18 13:02:09', '2022-10-18 13:02:09'),
+(287, 'HUYNH TRUC F001', 'huynhtrucf001@gmail.com', '46c0d31e98390b163db6f39e0e7057ea', '866578643', 'da nang', 1, '2022-10-18 13:07:10', '2022-10-18 13:07:10'),
+(288, 'DO TRAN VAN E001', 'dotranvane001@gmail.com', '7b82071cfcd454ed6cf70fcd0a3c1800', '770315902', 'sss', 1, '2022-10-18 13:07:10', '2022-10-18 13:24:18');
+INSERT INTO `MST_CUSTOMER` (`customer_id`, `customer_name`, `email`, `password`, `tel_num`, `address`, `is_active`, `created_at`, `updated_at`) VALUES
+(289, 'LA THI D001', 'lathid001@gmail.com', '7a9760f08eb52630e85ccc552dd1c8af', '472014296', 'vung tau', 1, '2022-10-18 13:07:10', '2022-10-18 16:54:42'),
+(290, 'NGUYEN VAN C001', 'nguyenvanc001@gmail.com', '0e837ebbdc0f29862d021e31d827067d', '702088579', 'binh dinh', 1, '2022-10-18 13:07:10', '2022-10-18 13:07:10'),
+(291, 'TRAN VAN B001', 'tranvanb001@gmail.com', 'a641679f4d5df519cdded74106b88591', '997026433', 'ho chi minh', 1, '2022-10-18 13:07:10', '2022-10-18 13:07:10'),
+(292, 'NGUYEN VAN C001', 'nguyeeeenvanc001@gmail.com', '0e837ebbdc0f29862d021e31d827067d', '702088579', 'binh dinh', 1, '2022-10-18 13:22:46', '2022-10-18 13:22:46');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `MST_IMAGE`
---
-
-CREATE TABLE `MST_IMAGE` (
-  `image_id` int NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `MST_IMAGE_PRODUCT`
---
-
-CREATE TABLE `MST_IMAGE_PRODUCT` (
-  `image_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `index` int NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `MST_OPTION`
---
-
-CREATE TABLE `MST_OPTION` (
-  `option_id` int NOT NULL,
-  `product_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `price` decimal(10,0) NOT NULL DEFAULT '0',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `MST_OPTION_PRODUCT`
---
-
-CREATE TABLE `MST_OPTION_PRODUCT` (
-  `option_id` int DEFAULT NULL,
-  `product_id` int DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `MST_ORDER`
+-- Table structure for table `MST_ORDER`
 --
 
 CREATE TABLE `MST_ORDER` (
@@ -542,7 +580,7 @@ CREATE TABLE `MST_ORDER` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `MST_ORDER`
+-- Dumping data for table `MST_ORDER`
 --
 
 INSERT INTO `MST_ORDER` (`order_id`, `order_shop`, `customer_id`, `customer_name`, `customer_email`, `customer_tel`, `address`, `total_price`, `payment_method`, `ship_charge`, `tax`, `order_date`, `shipment_date`, `cancel_date`, `order_status`, `note_customer`, `error_code_api`, `created_at`, `updated_at`) VALUES
@@ -553,12 +591,14 @@ INSERT INTO `MST_ORDER` (`order_id`, `order_shop`, `customer_id`, `customer_name
 (5, NULL, -1, 'HiệpTôn', 'tonvanhiepdragon@gmail.com', 363038485, '01/1 Nguyễn Văn Trỗi, Tiên Hội, Nhơn Thành, An Nhơn, Bình Định', 171870, 3, 0, NULL, '2022-10-14 08:29:16', NULL, NULL, 0, '1', NULL, '2022-10-14 08:29:16', '2022-10-14 08:29:16'),
 (6, NULL, 3, 'HiệpTôn', 'tonvanhiepdragon@gmail.com', 363038485, '01/1 Nguyễn Văn Trỗi, Tiên Hội, Nhơn Thành, An Nhơn, Bình Định', 442380, 1, 0, NULL, '2022-10-14 10:04:31', NULL, NULL, 0, '1', NULL, '2022-10-14 10:04:31', '2022-10-14 10:04:31'),
 (7, NULL, 35, 'VNRC', 'tonvanhiepdragon@gmail.com', 363038485, '01/1 Nguyễn Văn Trỗi, Tiên Hội, Nhơn Thành, An Nhơn, Bình Định', 101810, 2, 0, NULL, '2022-10-14 13:50:48', NULL, NULL, 0, '1', NULL, '2022-10-14 13:50:48', '2022-10-14 13:50:48'),
-(8, NULL, 35, 'HiệpTôn', 'tonvanhiepdragon@gmail.com', 363038485, '01/1 Nguyễn Văn Trỗi, Tiên Hội, Nhơn Thành, An Nhơn, Bình Định', 96740, 1, 0, NULL, '2022-10-14 13:54:24', NULL, NULL, 0, 'gul,kjhnki', NULL, '2022-10-14 13:54:24', '2022-10-14 13:54:24');
+(8, NULL, 35, 'HiệpTôn', 'tonvanhiepdragon@gmail.com', 363038485, '01/1 Nguyễn Văn Trỗi, Tiên Hội, Nhơn Thành, An Nhơn, Bình Định', 96740, 1, 0, NULL, '2022-10-14 13:54:24', NULL, NULL, 0, 'gul,kjhnki', NULL, '2022-10-14 13:54:24', '2022-10-14 13:54:24'),
+(9, NULL, -1, 'HiệpTôn', 'tonvanhiepdragon@gmail.com', 363038485, '01/1 Nguyễn Văn Trỗi, Tiên Hội, Nhơn Thành, An Nhơn, Bình Định', 2300, 1, 300, NULL, '2022-10-18 18:01:34', NULL, NULL, 0, 'ssss', NULL, '2022-10-18 18:01:34', '2022-10-18 18:01:34'),
+(10, NULL, -1, 'HiệpTôn', 'tonvanhiepdragon@gmail.com', 363038485, '01/1 Nguyễn Văn Trỗi, Tiên Hội, Nhơn Thành, An Nhơn, Bình Định', 1300, 1, 300, NULL, '2022-10-18 18:03:08', NULL, NULL, 0, 'dđ', NULL, '2022-10-18 18:03:08', '2022-10-18 18:03:08');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `MST_ORDER_DETAIL`
+-- Table structure for table `MST_ORDER_DETAIL`
 --
 
 CREATE TABLE `MST_ORDER_DETAIL` (
@@ -574,7 +614,7 @@ CREATE TABLE `MST_ORDER_DETAIL` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `MST_ORDER_DETAIL`
+-- Dumping data for table `MST_ORDER_DETAIL`
 --
 
 INSERT INTO `MST_ORDER_DETAIL` (`order_id`, `detail_line`, `product_id`, `price_buy`, `quantity`, `shop_id`, `receiver_id`, `created_at`, `updated_at`) VALUES
@@ -606,12 +646,14 @@ INSERT INTO `MST_ORDER_DETAIL` (`order_id`, `detail_line`, `product_id`, `price_
 (7, 3, '397', 5070, 1, NULL, NULL, '2022-10-14 13:50:48', '2022-10-14 13:50:48'),
 (8, 0, '402', 17340, 1, NULL, NULL, '2022-10-14 13:54:24', '2022-10-14 13:54:24'),
 (8, 1, '401', 5990, 1, NULL, NULL, '2022-10-14 13:54:24', '2022-10-14 13:54:24'),
-(8, 2, '400', 73410, 1, NULL, NULL, '2022-10-14 13:54:24', '2022-10-14 13:54:24');
+(8, 2, '400', 73410, 1, NULL, NULL, '2022-10-14 13:54:24', '2022-10-14 13:54:24'),
+(9, 0, '442', 1000, 2, NULL, NULL, '2022-10-18 18:01:34', '2022-10-18 18:01:34'),
+(10, 0, '442', 1000, 1, NULL, NULL, '2022-10-18 18:03:08', '2022-10-18 18:03:08');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `MST_PRODUCT`
+-- Table structure for table `MST_PRODUCT`
 --
 
 CREATE TABLE `MST_PRODUCT` (
@@ -626,7 +668,7 @@ CREATE TABLE `MST_PRODUCT` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `MST_PRODUCT`
+-- Dumping data for table `MST_PRODUCT`
 --
 
 INSERT INTO `MST_PRODUCT` (`product_id`, `product_name`, `product_image`, `product_price`, `is_sales`, `description`, `created_at`, `updated_at`) VALUES
@@ -647,7 +689,7 @@ INSERT INTO `MST_PRODUCT` (`product_id`, `product_name`, `product_image`, `produ
 (116, 'PHQ FGZGMNKPCPC', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '130', 1, 'Moo tar cuar sanr phaamr PHQ FGZGMNKPCPC', '2022-10-07 10:10:17', '2022-10-07 10:10:17'),
 (117, 'OCEBHOHLPXYZWUNPWITBGSKYPLFFOYWE NTOJEVMD NQQDDROS', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '780290', 1, 'Moo tar cuar sanr phaamr OCEBHOHLPXYZWUNPWITBGSKYPLFFOYWE NTOJEVMD NQQDDROS', '2022-10-07 10:10:17', '2022-10-07 10:10:17'),
 (118, 'KIOHZZYVZHDJYUUXOHNHIINGZOAAXPAVOQMQLV PTTHHC', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '571480', 1, 'Moo tar cuar sanr phaamr KIOHZZYVZHDJYUUXOHNHIINGZOAAXPAVOQMQLV PTTHHC', '2022-10-07 10:10:17', '2022-10-07 10:10:17'),
-(119, 'LVEVVODDEOHSGACTAROIIS', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '480', 1, 'Moo tar cuar sanr phaamr LVEVVODDEOHSGACTAROIIS', '2022-10-07 10:10:17', '2022-10-07 10:10:17'),
+(119, 'ddddddddddddddddd', 'productImage/ddddddddddddddddd1666085009.jpg', '480', 1, 'Moo tar cuar sanr phaamr LVEVVODDEOHSGACTAROIIS', '2022-10-07 10:10:17', '2022-10-18 16:23:29'),
 (120, 'GXPDEIWSOYMDMKXWVOVADVKBIVTJIGJBUJ', 'https://img.nhandan.com.vn/Files/Images/2020/07/26/nhat_cay-1595747664059.jpg', '15570', 1, 'Moo tar cuar sanr phaamr GXPDEIWSOYMDMKXWVOVADVKBIVTJIGJBUJ', '2022-10-07 10:10:17', '2022-10-07 10:10:17'),
 (121, 'JJVBE SUAU FUZVJ', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '61620', 1, 'Moo tar cuar sanr phaamr JJVBE SUAU FUZVJ', '2022-10-07 10:10:17', '2022-10-07 10:10:17'),
 (122, 'QBVTWTPFMETIPAQHQIVZRDLYSYGNPTO OSB', 'https://cdn.nguyenkimmall.com/images/detailed/555/may-anh-cho-nguoi-moi.jpg', '730', 1, 'Moo tar cuar sanr phaamr QBVTWTPFMETIPAQHQIVZRDLYSYGNPTO OSB', '2022-10-07 10:10:17', '2022-10-07 10:10:17'),
@@ -830,7 +872,7 @@ INSERT INTO `MST_PRODUCT` (`product_id`, `product_name`, `product_image`, `produ
 (299, 'HCRNWENPFEBPJCMDYN', 'https://cdn.nguyenkimmall.com/images/detailed/555/may-anh-cho-nguoi-moi.jpg', '670', 1, 'Moo tar cuar sanr phaamr HCRNWENPFEBPJCMDYN', '2022-10-07 10:14:13', '2022-10-07 10:14:13'),
 (300, 'RQ QH MRZN GCBPWXM UT', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '210800', 1, 'Moo tar cuar sanr phaamr RQ QH MRZN GCBPWXM UT', '2022-10-07 10:14:13', '2022-10-07 10:14:13'),
 (301, 'SC NVCDN LERXGLOCDSCDQSSCWWCEXSJPEILH', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '7450', 0, 'Moo tar cuar sanr phaamr SC NVCDN LERXGLOCDSCDQSSCWWCEXSJPEILH', '2022-10-07 10:14:13', '2022-10-07 10:14:13'),
-(302, 'Tôn Văn Hiệp', 'Image/Tôn_Văn_Hiệp.jpg', '111', 1, 'priceTôn Văn Hiệp', '2022-10-07 16:22:45', '2022-10-07 16:22:45'),
+(302, 'Tôn Văn Hiệp', 'productImage/dkdkdkdkdkdkdk1666086566.jpg', '111', 1, 'priceTôn Văn Hiệp', '2022-10-07 16:22:45', '2022-10-07 16:22:45'),
 (303, 'IKIABRCFVFQFLY', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '939370', 1, 'Moo tar cuar sanr phaamr ', '2022-10-10 14:24:21', '2022-10-10 14:24:21'),
 (304, 'SOZHCJLYVOQDDTQFLWFNOCUY LKLM', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '3410', 1, 'Moo tar cuar sanr phaamr ', '2022-10-10 14:24:21', '2022-10-10 14:24:21');
 INSERT INTO `MST_PRODUCT` (`product_id`, `product_name`, `product_image`, `product_price`, `is_sales`, `description`, `created_at`, `updated_at`) VALUES
@@ -924,18 +966,22 @@ INSERT INTO `MST_PRODUCT` (`product_id`, `product_name`, `product_image`, `produ
 (393, 'JGCGCMFDNFZBBGOXTVJNPPXHNAP NKNEDYTTUKXMGBM', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '31180', 1, 'Moo tar cuar sanr phaamr ', '2022-10-10 14:24:22', '2022-10-10 14:24:22'),
 (394, 'ABFDBYRUEGPRRWKBHRZPLTBTVZSHFVT N', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '408980', 0, 'Moo tar cuar sanr phaamr ', '2022-10-10 14:24:22', '2022-10-10 14:24:22'),
 (395, 'TB VKXTQEERHGJEKWNKEIZAITJJITKITCDTVXTRMUJSHTV', 'https://thumbs.dreamstime.com/b/landscape-nature-mountan-alps-rainbow-76824355.jpg', '8010', 1, 'Moo tar cuar sanr phaamr ', '2022-10-10 14:24:22', '2022-10-10 14:24:22'),
-(396, 'JL A CJRBGSOMANGDOBDFQLKIHALHOMXLOTKC', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '34370', 1, 'Moo tar cuar sanr phaamr ', '2022-10-10 14:24:22', '2022-10-10 14:24:22'),
+(396, 'JL A CJRBGSOMANGDOBDFQLKIHALHOMXLOTKC', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '34370', 1, 'Moo tar cuar sanr phaamr', '2022-10-10 14:24:22', '2022-10-18 15:24:46'),
 (397, 'QLIQESYVEXPLNGMKFZTZLGZUAHKF FRT', 'https://images.hdrsoft.com/images/lighthouse/thumbs/hdr-vibrant.jpg', '5070', 1, 'Moo tar cuar sanr phaamr ', '2022-10-10 14:24:22', '2022-10-10 14:24:22'),
-(398, 'RYSVCGZKCTUZTPRITMDYSLCVOT IP HKVAL EKWJKKEU', 'https://shotkit.com/wp-content/uploads/2021/02/guide-to-hdr-photography-seascape.jpg', '269590', 1, 'Moo tar cuar sanr phaamr ', '2022-10-10 14:24:22', '2022-10-10 14:24:22'),
-(399, 'NMOJEZCVLNAJZYODUPI YQYGQKWLHURBOTDG', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '960', 0, 'Moo tar cuar sanr phaamr ', '2022-10-10 14:24:22', '2022-10-10 14:24:22'),
-(400, 'ANCHUGOU PXMWLTELULYGTYNIOSDGWRGZN', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '73410', 1, '<script>\nalert(\"loi\");\n</script>', '2022-10-10 14:24:22', '2022-10-12 09:52:52'),
-(401, 'QWNXRKLNEDQVTRUTLVAII', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '5990', 1, 'Moo tar cuar sanr phaamr', '2022-10-10 14:24:22', '2022-10-11 14:52:56'),
-(402, 'PYFYSVZJNFHS JYLDSRLPMINMJK', 'https://shotkit.com/wp-content/uploads/2021/02/guide-to-hdr-photography-seascape.jpg', '17340', 1, 'Moo tar cuar sanr phaamr', '2022-10-10 14:24:22', '2022-10-11 14:52:40');
+(398, 'RYSVCGZKCTUZTPRITMDYSLCVOT IP HKVAL EKWJKKEU', 'https://shotkit.com/wp-content/uploads/2021/02/guide-to-hdr-photography-seascape.jpg', '269590', 1, 'Moo tar cuar sanr phaamr', '2022-10-10 14:24:22', '2022-10-18 15:13:38'),
+(399, 'miii niii onnn 3', 'productImage/miii_niii_onnn_31666084641.jpg', '870000', 0, 'miii niii onnn 2', '2022-10-10 14:24:22', '2022-10-18 16:17:21'),
+(400, 'mi ni on 2', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '5000', 1, '<script>alert(\"loi\");</script>', '2022-10-10 14:24:22', '2022-10-18 16:05:46'),
+(401, 'miii niii onnn 2', 'https://cdn.motor1.com/images/mgl/8AAPg2/s1/audi-a6-e-tron-rendering-by-kolesa-front.jpg', '1000', 1, 'minion', '2022-10-10 14:24:22', '2022-10-18 16:03:07'),
+(402, 'PYFYSVZJNFHS JYLDSRLPMINMJK', 'https://shotkit.com/wp-content/uploads/2021/02/guide-to-hdr-photography-seascape.jpg', '17340', 1, 'Moo tar cuar sanr phaamr', '2022-10-10 14:24:22', '2022-10-11 14:52:40'),
+(440, 'HIEP VAN TON', 'productImage/HIEP_VAN_TON1666079872.jpg', '200000', 1, 'qqqqqqqqqqqq', '2022-10-18 14:57:52', '2022-10-18 14:57:52'),
+(441, 'aoc rcvn mo0029', 'productImage/aoc_rcvn_mo00291666080773.jpg', '200', 1, 'qqqqq', '2022-10-18 15:12:53', '2022-10-18 15:12:53'),
+(442, 'webike emoo0059', 'productImage/webike_emoo00591666083512.jpg', '1000', 1, 'webike emoo0059', '2022-10-18 15:58:32', '2022-10-18 15:58:32'),
+(443, 'dkdkdkdkdkdkdk', 'productImage/dkdkdkdkdkdkdk1666086566.jpg', '110', 1, 'qqqqqqqqqq', '2022-10-18 16:49:26', '2022-10-18 16:49:26');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `MST_SHOP`
+-- Table structure for table `MST_SHOP`
 --
 
 CREATE TABLE `MST_SHOP` (
@@ -945,12 +991,73 @@ CREATE TABLE `MST_SHOP` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Chỉ mục cho các bảng đã đổ
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personal_access_tokens`
+--
+
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `MST_ADMIN`
+-- Indexes for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `MST_ADMIN`
 --
 ALTER TABLE `MST_ADMIN`
   ADD PRIMARY KEY (`admin_id`),
@@ -958,104 +1065,125 @@ ALTER TABLE `MST_ADMIN`
   ADD KEY `email_user` (`email`);
 
 --
--- Chỉ mục cho bảng `MST_CONTACT`
+-- Indexes for table `MST_CONTACT`
 --
 ALTER TABLE `MST_CONTACT`
   ADD PRIMARY KEY (`contact_id`);
 
 --
--- Chỉ mục cho bảng `MST_CUSTOMER`
+-- Indexes for table `MST_CUSTOMER`
 --
 ALTER TABLE `MST_CUSTOMER`
   ADD PRIMARY KEY (`customer_id`);
 
 --
--- Chỉ mục cho bảng `MST_IMAGE`
---
-ALTER TABLE `MST_IMAGE`
-  ADD PRIMARY KEY (`image_id`);
-
---
--- Chỉ mục cho bảng `MST_IMAGE_PRODUCT`
---
-ALTER TABLE `MST_IMAGE_PRODUCT`
-  ADD PRIMARY KEY (`image_id`,`product_id`);
-
---
--- Chỉ mục cho bảng `MST_OPTION`
---
-ALTER TABLE `MST_OPTION`
-  ADD PRIMARY KEY (`option_id`);
-
---
--- Chỉ mục cho bảng `MST_ORDER`
+-- Indexes for table `MST_ORDER`
 --
 ALTER TABLE `MST_ORDER`
   ADD PRIMARY KEY (`order_id`);
 
 --
--- Chỉ mục cho bảng `MST_ORDER_DETAIL`
+-- Indexes for table `MST_ORDER_DETAIL`
 --
 ALTER TABLE `MST_ORDER_DETAIL`
   ADD PRIMARY KEY (`order_id`,`detail_line`);
 
 --
--- Chỉ mục cho bảng `MST_PRODUCT`
+-- Indexes for table `MST_PRODUCT`
 --
 ALTER TABLE `MST_PRODUCT`
   ADD PRIMARY KEY (`product_id`);
 
 --
--- Chỉ mục cho bảng `MST_SHOP`
+-- Indexes for table `MST_SHOP`
 --
 ALTER TABLE `MST_SHOP`
   ADD PRIMARY KEY (`shop_id`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `MST_ADMIN`
+-- AUTO_INCREMENT for table `failed_jobs`
+--
+ALTER TABLE `failed_jobs`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `MST_ADMIN`
 --
 ALTER TABLE `MST_ADMIN`
-  MODIFY `admin_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `admin_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=228;
 
 --
--- AUTO_INCREMENT cho bảng `MST_CONTACT`
+-- AUTO_INCREMENT for table `MST_CONTACT`
 --
 ALTER TABLE `MST_CONTACT`
   MODIFY `contact_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT cho bảng `MST_CUSTOMER`
+-- AUTO_INCREMENT for table `MST_CUSTOMER`
 --
 ALTER TABLE `MST_CUSTOMER`
-  MODIFY `customer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=283;
+  MODIFY `customer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=293;
 
 --
--- AUTO_INCREMENT cho bảng `MST_OPTION`
---
-ALTER TABLE `MST_OPTION`
-  MODIFY `option_id` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT cho bảng `MST_ORDER`
+-- AUTO_INCREMENT for table `MST_ORDER`
 --
 ALTER TABLE `MST_ORDER`
-  MODIFY `order_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `order_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT cho bảng `MST_PRODUCT`
+-- AUTO_INCREMENT for table `MST_PRODUCT`
 --
 ALTER TABLE `MST_PRODUCT`
-  MODIFY `product_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=409;
+  MODIFY `product_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=444;
 
 --
--- AUTO_INCREMENT cho bảng `MST_SHOP`
+-- AUTO_INCREMENT for table `MST_SHOP`
 --
 ALTER TABLE `MST_SHOP`
   MODIFY `shop_id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

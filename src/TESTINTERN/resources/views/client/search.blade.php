@@ -2,7 +2,7 @@
 
 
 @section('title')
-    Search product: {{$nameProduct}}
+    製品を検索: {{$nameProduct}}
 @endsection
 
 @section('css')
@@ -16,13 +16,13 @@
 
 @section('main')
 <div class="alert alert-success" style="position: fixed; bottom: 0px; right:0px; z-index:1; width:40vw; min-width:400px;" id="div-alert" hidden role="alert">
-    Product added to cart successfully!!
+    商品がカートに追加されました。
 </div>
 
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Result : "{{$nameProduct}}"</h2>
+            <h2>結果 : "{{$nameProduct}}"</h2>
         </div>
 
         <div class="row" id="display-product">
@@ -34,7 +34,7 @@
         </div>
 
         <div class="d-flex justify-content-center">
-            <button id="btn-load-more" style="width: 100px" class="btn btn-block btn-outline-secondary" onclick="loadMoreProduct();" {{ ($loadMore == 1) ? '' : 'hidden'}}>More...</button>
+            <button id="btn-load-more" style="width: 120px" class="btn btn-block btn-outline-secondary" onclick="loadMoreProduct();" {{ ($loadMore == 1) ? '' : 'hidden'}}>もっと。。。</button>
         </div>
 
     </div>

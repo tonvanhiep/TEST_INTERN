@@ -69,10 +69,17 @@ class LoginController extends Controller
     {
         // dd($request);
         $request->validate([
-            'name' => 'bail|required',
+            'name' => 'bail|required|min:6',
             'email' => 'bail|required|email',
-            'phone' => 'bail|required|numeric',
+            'phone' => 'bail|required|numeric|digits_between:9,15',
             'address' => 'bail|required'
+        ], [
+            'required' => ':attribute は 必要です。',
+            'email' => ':attributeは有効な電子メール アドレスである必要があります。',
+            'min' => ':attributeは :min 文字以上である必要があります。',
+            'max' => ':attributeは :max 文字以内である必要があります。',
+            'numeric' => ':attributeには、数字を指定してください。',
+            'digits_between' => ':attributeは:min桁から:max桁の間で指定してください。'
         ]);
         $data = [
             'id' => $request->session()->get('customer')['id'],
@@ -84,8 +91,8 @@ class LoginController extends Controller
         ];
 
         $result = $this->customer->editInfoCustomer($data);
-        if ($result == -2) return redirect()->back()->with('error', 'Email is existed.');
-        return redirect()->back()->with('status', 'Update information success!!!');
+        if ($result == -2) return redirect()->back()->with('error', 'メールの値は既に存在しています。');
+        return redirect()->back()->with('status', '情報の更新が成功しました。');
     }
 
     public function savePass(Request $request)
@@ -94,6 +101,15 @@ class LoginController extends Controller
             'cpass' => 'bail|required|min:8|max:32',
             'npass' => 'bail|required|regex:/^[a-zA-Z0-9]+$/u|min:8|max:32',
             'repass' => 'bail|required|same:npass'
+        ], [
+            'required' => ':attribute は 必要です。',
+            'email' => ':attributeは有効な電子メール アドレスである必要があります。',
+            'min' => ':attributeは :min 文字以上である必要があります。',
+            'max' => ':attributeは :max 文字以内である必要があります。',
+            'numeric' => ':attributeには、数字を指定してください。',
+            'digits_between' => ':attributeは:min桁から:max桁の間で指定してください。',
+            'same' => '正しくないパスワード。',
+            'regex' => ':attribute は 形式が無効です。'
         ]);
 
         $data = [
@@ -104,7 +120,7 @@ class LoginController extends Controller
         ];
 
         $result = $this->customer->editPassCustomer($data);
-        if ($result == -2) return redirect()->back()->with('error', 'Password incorrect.');
-        return redirect()->back()->with('status', 'Change password success!!!');
+        if ($result == -2) return redirect()->back()->with('error', '正しくないパスワード。');
+        return redirect()->back()->with('status', 'パスワードの変更が成功しました。');
     }
 }
