@@ -74,6 +74,20 @@ class ProductModel extends Model
         return array('success' => true, 'message' => 'Success');
     }
 
+    public function updateImageProduct($id = -1, $image = null)
+    {
+        if($id == -1 || $image == null) return array('success' => false, 'message' => 'ID sản phẩm không hợp lệ.');
+
+        DB::table($this->table)
+              ->where('product_id', $id)
+              ->update(
+                [
+                    'product_image' => $image
+                ]
+            );
+        return array('success' => true, 'message' => 'Success');
+    }
+
     public function addProduct($data = null)
     {
         if ($data == null) return;

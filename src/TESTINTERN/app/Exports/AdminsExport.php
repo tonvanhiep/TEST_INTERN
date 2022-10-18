@@ -31,7 +31,7 @@ class AdminsExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ["名前", "メール", "グループ",];
+        return ["name", "email", "group",];
     }
 
     /**

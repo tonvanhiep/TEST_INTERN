@@ -13,7 +13,7 @@
                     $image = $item->product_image;
                 }
                 else {
-                    $image = asset('storage/product'.$item->product_image);
+                    $image = asset('storage/'.$item->product_image);
                 }
             @endphp
             <img class="card-img-top figure-img img-fluid rounded" src="{{$image}}" alt="Card image cap" style="cursor: pointer;" onclick="location.href='{{route('detail', ['id' => $item->product_id])}}'">

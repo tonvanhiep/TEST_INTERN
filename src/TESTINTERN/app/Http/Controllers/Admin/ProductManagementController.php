@@ -68,11 +68,19 @@ class ProductManagementController extends Controller
     {
         $request->validate([
             'id' => 'required|min:0',
-            'name' => 'required',
+            'name' => 'required|min:10',
             'price' => 'required|numeric|min:0',
-            'is_sales' => 'required|numeric|min:0|max:1'
-            ]
-        );
+            'is_sales' => 'required|numeric|min:0|max:1',
+            'description' => 'required',
+            'image' => 'mimes:jpeg,jpg,png,gif|max:10000'
+        ], [
+            'min' => ':attribute は :min 文字以上である必要があります。',
+            'max' => ':attribute  は :max 文字以内である必要があります。',
+            'unique' => ':attributeの値は既に存在しています。',
+            'required' => ':attribute は 必要です。',
+            'numeric' => ':attributeには、数字を指定してください。',
+            'mimes' => ':attributeには:valuesタイプのファイルを指定してください。'
+        ]);
 
         $id = $request->id;
         $data = [
@@ -82,6 +90,10 @@ class ProductManagementController extends Controller
             'is_sales' => $request->is_sales
             ];
         $result = $this->product->updateProduct($id, $data);
+
+        if($request->has('image')) {
+            $this->product->updateImageProduct($id, $this->storeImage($request));
+        }
 
         if($result['success'] == false) {
             return response()->json([
@@ -130,16 +142,23 @@ class ProductManagementController extends Controller
         return 'Success';
     }
 
-    public function actionAddProduct(Request $request)
+    public function addProduct(Request $request)
     {
+
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|min:10',
             'price' => 'required|numeric|min:0',
             'is_sales' => 'required|numeric|min:0|max:1',
-            'file' => 'required',
-            'description' => 'required'
-            ]
-        );
+            'description' => 'required',
+            'image' => 'required|mimes:jpeg,jpg,png,gif|max:10000'
+        ], [
+            'min' => ':attribute は :min 文字以上である必要があります。',
+            'max' => ':attribute  は :max 文字以内である必要があります。',
+            'unique' => ':attributeの値は既に存在しています。',
+            'required' => ':attribute は 必要です。',
+            'numeric' => ':attributeには、数字を指定してください。',
+            'mimes' => ':attributeには:valuesタイプのファイルを指定してください。',
+        ]);
         $data = [
             'name' => $request->name,
             'price' => $request->price,
@@ -152,9 +171,11 @@ class ProductManagementController extends Controller
         return 'Success';
     }
 
-    protected function storeImage(Request $request) {
-        $fileName = preg_replace("/[ ]/", "_", $request->name) . preg_replace("/[ ]/", "_", date('Y-m-d H:i:s')) . '.' . $request->file('file')->extension();
-        $path = $request->file('file')->storeAs('public/productImage', $fileName);
+    protected function storeImage(Request $request)
+    {
+        $fileName = preg_replace("/[ ]/", "_", $request->name) . preg_replace("/[ ]/", "_", time()) . '.' . $request->file('image')->extension();
+
+        $path = $request->file('image')->storeAs('public/productImage', $fileName , 'local');
         return substr($path, strlen('public/'));
     }
 
@@ -166,11 +187,17 @@ class ProductManagementController extends Controller
         );
 
         $result = $this->product->product($request->id);
-
+        $image = '';
+        if (strlen(strstr($result[0]->product_image, 'http')) > 0) {
+            $image = $result[0]->product_image;
+        }
+        else {
+            $image = asset('storage/'.$result[0]->product_image);
+        }
         return response()->json([
             'id' => $result[0]->product_id,
             'name' => $result[0]->product_name,
-            'image' => $result[0]->product_image,
+            'image' => $image,
             'price' => $result[0]->product_price,
             'description' => $result[0]->description,
             'is_sales' => $result[0]->is_sales

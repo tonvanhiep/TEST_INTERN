@@ -61,7 +61,7 @@
     </table>
     @php
         if(count($listAdmin) === 0) {
-            echo "Không có dữ liệu";
+            echo "データがありません";
         }
     @endphp
 </div>

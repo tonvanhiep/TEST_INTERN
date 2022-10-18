@@ -4,14 +4,24 @@ namespace App\Imports;
 
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
-
-
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithStartRow;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
-class ValidateAdminFile implements ToCollection, WithStartRow, WithHeadingRow
+// class ValidateCustomerFile implements ToCollection
+// {
+//     /**
+//     * @param Collection $collection
+//     */
+//     public function collection(Collection $collection)
+//     {
+//         //
+//     }
+// }
+
+
+class ValidateCustomerFile implements ToCollection, WithStartRow, WithHeadingRow
 {
   /**
      * @var errors
@@ -50,13 +60,15 @@ class ValidateAdminFile implements ToCollection, WithStartRow, WithHeadingRow
                         'email',
                         'min:10',
                         'max:255',
-                        Rule::unique('MST_ADMIN', 'email'),
+                        Rule::unique('MST_CUSTOMER', 'email'),
                     ],
-                    'group' => [
+                    'tel_num' => [
                         'required',
                         'numeric',
-                        'min:1',
-                        'max:3',
+                        'digits_between:9,15',
+                    ],
+                    'address' => [
+                        'required',
                     ],
                 ], [
                     'min' => ':attribute は :min 文字以上である必要があります。',
@@ -65,6 +77,7 @@ class ValidateAdminFile implements ToCollection, WithStartRow, WithHeadingRow
                     'required' => ':attribute は 必要です。',
                     'email' => ':attributeには、有効なメールアドレスを指定してください。',
                     'numeric' => ':attributeには、数字を指定してください。',
+                    'digits_between' => ':attributeは:min桁から:max桁の間で指定してください。'
                 ]);
 
                 if ($validator->fails()) {

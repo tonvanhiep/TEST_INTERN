@@ -109,7 +109,7 @@ Route::prefix('admin')->name('admin.')->group(function ()
         Route::post('/edit', [ProductManagementController::class, 'editProduct'])->name('p_edit');
         Route::post('/delete', [ProductManagementController::class, 'deleteProduct'])->name('p_delete');
         Route::post('/search', [ProductManagementController::class, 'searchProduct'])->name('p_search');
-        Route::post('/add', [ProductManagementController::class, 'actionAddProduct'])->name('p_add');
+        Route::post('/add', [ProductManagementController::class, 'addProduct'])->name('p_add');
         Route::post('/product', [ProductManagementController::class, 'product'])->name('p_product');
 
     });

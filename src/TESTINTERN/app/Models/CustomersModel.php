@@ -22,7 +22,7 @@ class CustomersModel extends Model
     {
         if($data == null) return;
         $result = DB::table($this->table)->where('email', 'like', $data['email'])->get();
-        if(count($result) > 0) return array('success' => false, 'message' => 'Email đã tồn tại.');
+        if(count($result) > 0) return array('success' => false, 'message' => 'メールの値は既に存在しています。');
 
         DB::table($this->table)->insert([
             [
@@ -45,9 +45,9 @@ class CustomersModel extends Model
 
     public function updateCustomer($id = -1, $data)
     {
-        if($id == -1 || $data == null) return array('success' => false, 'message' => 'ID khách hàng không hợp lệ.');
+        if($id == -1 || $data == null) return array('success' => false, 'message' => 'IDは正しくない。');
         $result = DB::table($this->table)->where('customer_id', '!=', $id)->where('email', 'like', $data['email'])->get();
-        if(count($result) > 0) return array('success' => false, 'message' => 'Email đã tồn tại.');
+        if(count($result) > 0) return array('success' => false, 'message' => 'メールの値は既に存在しています。');
 
         DB::table($this->table)
               ->where('customer_id', $id)
@@ -96,7 +96,7 @@ class CustomersModel extends Model
     {
         $result = DB::table($this->table)
             ->select('customer_id', 'customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('customer_id', 'desc')
             ->get();
         return $result;
     }
@@ -107,14 +107,14 @@ class CustomersModel extends Model
 
         $result = DB::table($this->table)
             ->select('customer_id', 'customer_name', 'email', 'tel_num', 'address', 'is_active', 'created_at')
-            ->where('customer_name', 'like', '%'.preg_replace("/[^a-zA-Z0-9]/", "%", (($condition['name'] == null) ? '' : $condition['name'])).'%')
-            ->where('email', 'like', '%'.(($condition['email'] == null) ? '' : $condition['email']).'%')
-            ->where('address', 'like', '%'.preg_replace("/[^a-zA-Z0-9]/", "%", (($condition['address'] == null) ? '' : $condition['address'])).'%')
+            ->where('customer_name', 'like', '%' . $condition['name'] . '%')
+            ->where('email', 'like', '%' . $condition['email'] . '%')
+            ->where('address', 'like', '%' . $condition['address'] . '%')
             ->where(function($query) use ($condition) {
                 $query->where('is_active', '=' ,(($condition['is_active'] == -1) ? 0 : $condition['is_active']))
                       ->orWhere('is_active', '=', (($condition['is_active'] == -1) ? 1 : $condition['is_active']));
                 })
-                ->orderBy('created_at', 'desc')
+                ->orderBy('customer_id', 'desc')
                 ->paginate($perPage = $recordOnPage, $columns = ['*'], $pageName = 'page', $page = $page);
         return $result;
     }
@@ -135,9 +135,9 @@ class CustomersModel extends Model
     {
         if($condition == null) return -1;
         $count = DB::table($this->table)
-            ->where('customer_name', 'like', '%'.preg_replace("/[^a-zA-Z0-9]/", "%", (($condition['name'] == null) ? '' : $condition['name'])).'%')
-            ->where('email', 'like', '%'.(($condition['email'] == null) ? '' : $condition['email']).'%')
-            ->where('address', 'like', '%'.preg_replace("/[^a-zA-Z0-9]/", "%", (($condition['address'] == null) ? '' : $condition['address'])).'%')
+            ->where('customer_name', 'like', '%' . $condition['name'] . '%')
+            ->where('email', 'like', '%' . $condition['email'] . '%')
+            ->where('address', 'like', '%' . $condition['address'] . '%')
             ->where(function($query) use ($condition) {
                 $query->where('is_active', '=' ,(($condition['is_active'] == -1) ? 0 : $condition['is_active']))
                       ->orWhere('is_active', '=', (($condition['is_active'] == -1) ? 1 : $condition['is_active']));

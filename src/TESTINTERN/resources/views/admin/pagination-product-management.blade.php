@@ -1,7 +1,7 @@
 @include('components.pagination')
 
 <div class="d-flex justify-content-end">
-    <p>Hiển thị từ <strong> {{($record['min'] >= 0) ? $record['min'] : 0}} </strong> đến <strong> {{$record['max']}} </strong> trong tổng số <strong> {{$record['total']}} </strong> sản phẩm</p>
+    <p><strong> {{$record['total']}} </strong> 行で <strong> {{($record['min'] >= 0) ? $record['min'] : 0}} </strong> 行から <strong> {{$record['max']}} </strong> 行まで表示</p>
 </div>
 
 
@@ -39,14 +39,14 @@
     <table class="table table-hover table-condensed">
         <thead>
             <tr>
-                <th style="width:5%" class="text-center">ID</th>
+                <th style="width:6%" class="text-center">ID</th>
                 <th style="width:15%" class="text-center">名前</th>
-                <th style="width:32%" class="text-center">Mô tả</th>
-                <th style="width:8%" class="text-center">Giá bán</th>
-                <th style="width:10%" class="text-center">Trạng thái</th>
-                <th style="width:12%" class="text-center">Ngày tạo</th>
-                <th style="width:9%" class="text-center"></th>
-                <th style="width:4%" class="text-center"></th>
+                <th style="width:32%" class="text-center">説明</th>
+                <th style="width:8%" class="text-center">値段</th>
+                <th style="width:10%" class="text-center">スターテス</th>
+                <th style="width:12%" class="text-center">作成日</th>
+                <th style="width:6%" class="text-center"></th>
+                <th style="width:6%" class="text-center"></th>
             </tr>
         </thead>
         <tbody>
@@ -61,8 +61,17 @@
                 </td>
                 <td data-th="Name" class="div-img">
                     <input class="form-control inp-row-{{$item->product_id}} inp-name" value="{{$item->product_name}}" name="name" disabled>
+                    @php
+                        $image = '';
+                        if (strlen(strstr($item->product_image, 'http')) > 0) {
+                            $image = $item->product_image;
+                        }
+                        else {
+                            $image = asset('storage/'.$item->product_image);
+                        }
+                    @endphp
                     <div class="img-product">
-                        <img id="img-row-{{$item->product_id}}" src="{{$item->product_image}}" alt="{{$item->product_name}}">
+                        <img id="img-row-{{$item->product_id}}" src="{{$image}}" alt="{{$item->product_name}}">
                     </div>
                 </td>
                 <td data-th="Description">
@@ -74,18 +83,18 @@
                 </td>
                 <td class="actions" data-th="Status">
                     <select class="form-select inp-row-{{$item->product_id}} inp-status" name="status" aria-label="Disabled select example" disabled>
-                        <option value="1" {{($item->is_sales == 1)?'selected':''}}>Đang bán</option>
-                        <option value="0" {{($item->is_sales == 0)?'selected':''}}>Tạm ngừng</option>
+                        <option value="1" {{($item->is_sales == 1)?'selected':''}}>活動</option>
+                        <option value="0" {{($item->is_sales == 0)?'selected':''}}>ロック</option>
                     </select>
                 </td>
                 <td class="actions" data-th="CreatedAt">
                     {{$item->created_at}}
                 </td>
                 <td class="actions" data-th="Edit">
-                    <button class="btn btn-outline-success" id="btn-edit-inp-{{$item->product_id}}" onclick="displayProductId({{$item->product_id}});">Chi tiết</button>
+                    <button class="btn btn-outline-success" id="btn-edit-inp-{{$item->product_id}}" onclick="displayProductId('{{route('admin.product.p_edit')}}', {{$item->product_id}});">詳細</button>
                 </td>
                 <td class="actions" data-th="Remove">
-                    <button class="btn btn-outline-danger" id="btn-edit-inp-{{$item->product_id}}" onclick="deleteProductId({{$item->product_id}});">Xóa</button>
+                    <button class="btn btn-outline-danger" id="btn-edit-inp-{{$item->product_id}}" onclick="deleteProductId({{$item->product_id}});">削除</button>
                 </td>
             </tr>
             @endforeach
@@ -93,7 +102,7 @@
     </table>
     @php
         if(count($listProduct) === 0) {
-            echo "Không có dữ liệu";
+            echo "データがありません";
         }
     @endphp
 </div>

@@ -8,7 +8,7 @@
 
 @section('main')
 <div class="alert alert-success" style="position: fixed; bottom: 0px; right:0px; z-index:1; width:40vw; min-width:400px;" id="div-alert" hidden role="alert">
-    Product added to cart successfully!!
+    商品がカートに追加されました。
 </div>
 
 <div class="album py-5 bg-light">
@@ -21,7 +21,7 @@
                         $image = $item[0]->product_image;
                     }
                     else {
-                        $image = asset('storage/product'.$item[0]->product_image);
+                        $image = asset('storage/'.$item[0]->product_image);
                     }
                 @endphp
                 <img style="width: 95%" src="{{$image}}" alt="{{$item[0]->product_name}}">
@@ -29,7 +29,7 @@
             <div class="col-lg-6">
                 <h2>{{$item[0]->product_name}}</h2>
 
-                <h2 class="mt-5">Price :  {{number_format($item[0]->product_price)}}  円</h2>
+                <h2 class="mt-5">値段 :  {{number_format($item[0]->product_price)}}  円</h2>
 
 
                 @php
@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <div class=\"d-grid gap-2 mt-5 col-lg-8\">
-                                <button type=\"button\" class=\"btn btn-outline-success\" onclick=\"addToCart(" . $item[0]->product_id . ", '$image', '" . $item[0]->product_name . "', null, " . $item[0]->product_price . ");\">Add to Cart</button>
+                                <button type=\"button\" class=\"btn btn-outline-success\" onclick=\"addToCart(" . $item[0]->product_id . ", '$image', '" . $item[0]->product_name . "', null, " . $item[0]->product_price . ");\">カートに入れる</button>
                             </div>
                         </div>";
                     }
@@ -60,7 +60,7 @@
 
         <div class="mt-5 mb-5">
             <div class="text-center">
-                <h2>Description</h2>
+                <h2>説明</h2>
             </div>
             <p class="mt-2">{{$item[0]->description}}</p>
         </div>

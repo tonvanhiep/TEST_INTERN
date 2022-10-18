@@ -2,14 +2,14 @@ function editCustomerId(id) {
     let btnEdit = document.getElementById('btn-edit-inp-' + id);
     let arrInp = document.getElementsByClassName('inp-row-' + id);
 
-    if (btnEdit.textContent == "Sửa") {
+    if (btnEdit.textContent == "編集") {
         for (let index = 0; index < arrInp.length; index++) {
             arrInp[index].disabled = false;
-            btnEdit.innerText = "Lưu";
+            btnEdit.innerText = "セーブ";
             btnEdit.className = "btn btn-outline-success";
         }
     }
-    else if (btnEdit.textContent == "Lưu") {
+    else if (btnEdit.textContent == "セーブ") {
         $.ajax({
             type: 'POST',
             cache: false,
@@ -27,10 +27,10 @@ function editCustomerId(id) {
                 console.log(data);
                 for (let index = 0; index < arrInp.length; index++) {
                     arrInp[index].disabled = true;
-                    btnEdit.innerText = "Sửa";
+                    btnEdit.innerText = "編集";
                     btnEdit.className = "btn btn-outline-warning";
                 }
-                alert("Cập nhật thông tin thành công!!")
+                alert("アカウント情報が正常に更新されました。")
             },
             error: function(data) {
                 var errors = data.responseJSON;
@@ -40,7 +40,7 @@ function editCustomerId(id) {
                     errorArr += '- ' + value[0] + '\n';
                 });
 
-                errorArr = 'Cập nhật thông tin không thành công.\n' + errorArr;
+                errorArr = 'アカウント情報が正常に更新されませんでした。\n' + errorArr;
                 alert(errorArr);
             },
         });
@@ -51,7 +51,7 @@ function editCustomerId(id) {
 function deleteCustomerId(id) {
     var currentPage = document.getElementById('current-page').textContent;
 
-    var result = confirm("Bạn có chắc chắn xóa người dùng #" + id + "?");
+    var result = confirm("顧客アカウントの #" + id + " を削除してもよろしいですか?");
     if (result == true) {
         $.ajax({
             type: 'POST',
@@ -63,7 +63,7 @@ function deleteCustomerId(id) {
             },
             success: function(data) {
                 console.log(data);
-                alert("Xóa người dùng thành công!!!");
+                alert("顧客アカウントを削除しました。");
                 page(currentPage);
             },
             error: function(data) {
@@ -74,7 +74,7 @@ function deleteCustomerId(id) {
                     errorArr += '- ' + value[0] + '\n';
                 });
 
-                errorArr = 'Xóa người dùng không thành công!\n' + errorArr;
+                errorArr = '顧客アカウントを削除できませんでした。\n' + errorArr;
                 alert(errorArr);
             },
         });
@@ -184,24 +184,26 @@ function deleteSearchFormAjax()
     submitSearchFormAjax(1);
 }
 
-function importCsv()
+function exportCsv(urlCsv)
 {
-    // $.ajax({
-    //     type: 'POST',
-    //     cache: false,
-    //     url: document.getElementById('form-uploadfile').action,
-    //     data: {
-    //         "_token": document.getElementById('token-uploadfile').textContent,
-    //         "file": document.getElementById('file-csv').value
-    //     },
-    //     success: function(data) {
-    //         console.log('success');
-    //         page(1);
-    //     },
-    //     error: function(data) {
-    //         console.log(data);
-    //     },
-    // });
+    var email = document.getElementById('search-email').value;
+    var name = document.getElementById('search-name').value;
+    var is_active = document.getElementById('filter-status').value;
+    var address = document.getElementById('search-address').value;
+
+    email = email.trim().replace(/^\s+|\s+$/gm,'');
+    name = name.trim().replace(/^\s+|\s+$/gm,'');
+    is_active = (is_active >= 0 && is_active <= 1) ? is_active : -1;
+    address = address.trim().replace(/^\s+|\s+$/gm,'');
+
+    var url = urlCsv + '?';
+
+    if (name != '' && name != null) url += 'name=' + name;
+    if (email != '' && email != null) url += '&email=' + email;
+    if (is_active != '-1' && is_active != null) url += '&is_active=' + is_active;
+    if (address != '' && address != null) url += '&address=' + address;
+
+    location.href = url;
 }
 
 function pagination(page = 1)

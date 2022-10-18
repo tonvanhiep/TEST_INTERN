@@ -2,13 +2,13 @@
 
 
 @section('title')
-    Home
+ホームページ
 @endsection
 
 
 @section('main')
 <div class="alert alert-success" style="position: fixed; bottom: 0px; right:0px; z-index:1; width:40vw; min-width:400px;" id="div-alert" hidden role="alert">
-    Product added to cart successfully!!
+    商品がカートに追加されました。
 </div>
 <div class="album py-5 bg-light">
     <div class="container">

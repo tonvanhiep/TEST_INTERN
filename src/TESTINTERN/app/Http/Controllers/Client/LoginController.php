@@ -33,13 +33,13 @@ class LoginController extends Controller
         $result = $this->customer->checkLogin($infoLogin);
 
         if(count($result) === 0) {
-            return redirect()->back()->withErrors(['msg' => 'Email hoặc mật khẩu không đúng.']);
+            return redirect()->back()->withErrors(['msg' => 'パスワード は 形式が無効です。']);
         }
         else if(is_int($result[0]->customer_id) && $result[0]->customer_id >= 0) {
             $active = $this->customer->checkActive($result[0]->customer_id);
 
             if(count($active) === 0) {
-                return redirect()->back()->withErrors(['msg' => 'Tài khoản của bạn đã bị khóa.']);
+                return redirect()->back()->withErrors(['msg' => 'アカウントがロックされました。']);
             }
 
             session()->put('customer', [

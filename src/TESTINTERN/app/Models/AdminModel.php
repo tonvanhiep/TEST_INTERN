@@ -96,9 +96,9 @@ class AdminModel extends Model
 
     public function updateAdmin($id = -1, $data = null)
     {
-        if($id == -1 || $data == null) return array('success' => false, 'message' => 'ID admin không hợp lệ.');
+        if($id == -1 || $data == null) return array('success' => false, 'message' => 'IDは正しくない。');
         $result = DB::table($this->table)->where('admin_id', '!=', $id)->where('email', 'like', $data['email'])->get();
-        if(count($result) > 0) return array('success' => false, 'message' => 'Email đã tồn tại.');
+        if(count($result) > 0) return array('success' => false, 'message' => 'メールの値は既に存在しています。');
 
         DB::table($this->table)
               ->where('admin_id', $id)
@@ -130,12 +130,12 @@ class AdminModel extends Model
                     'is_delete' => 1
                 ]
             );
-        return array('success' => true, 'message' => 'Success');
+        return array('success' => true, 'message' => '成功');
     }
 
     public function updateLastLogin($data = null)
     {
-        if($data == null) return array('success' => false, 'message' => 'ID admin không hợp lệ.');
+        if($data == null) return array('success' => false, 'message' => 'IDは正しくない。');
 
         DB::table($this->table)
             ->where('admin_id', $data['id'])

@@ -1,52 +1,3 @@
-// function editProductId(id) {
-//     let btnEdit = document.getElementById('btn-edit-inp-' + id);
-//     let arrInp = document.getElementsByClassName('inp-row-' + id);
-
-//     if (btnEdit.textContent == "Sửa") {
-//         for (let index = 0; index < arrInp.length; index++) {
-//             arrInp[index].disabled = false;
-//             btnEdit.innerText = "Lưu";
-//             btnEdit.className = "btn btn-outline-success";
-//         }
-//     }
-//     else if (btnEdit.textContent == "Lưu") {
-//         $.ajax({
-//             type: 'POST',
-//             cache: false,
-//             url: document.getElementById('url-edit-product').textContent,
-//             data: {
-//                 "_token": document.getElementById('token-edit-product').textContent,
-//                 "id": id,
-//                 "name": arrInp[0].value,
-//                 "description": arrInp[1].value,
-//                 "price": arrInp[2].value,
-//                 "is_sales": arrInp[3].value
-//             },
-//             success: function(data) {
-//                 // console.log(data);
-//                 for (let index = 0; index < arrInp.length; index++) {
-//                     arrInp[index].disabled = true;
-//                     btnEdit.innerText = "Sửa";
-//                     btnEdit.className = "btn btn-outline-warning";
-//                 }
-//                 alert("Cập nhật thông tin thành công!!")
-//             },
-//             error: function(data) {
-//                 var errors = data.responseJSON;
-//                 var errorArr = '';
-
-//                 $.each( errors.errors, function( key, value ) {
-//                     errorArr += '- ' + value[0] + '\n';
-//                 });
-
-//                 errorArr = 'Cập nhật thông tin không thành công.\n' + errorArr;
-//                 alert(errorArr);
-//             },
-//         });
-//     }
-
-// }
-
 function deleteProductId(id) {
     var currentPage = document.getElementById('current-page').textContent;
 
@@ -232,12 +183,13 @@ function openModal()
     resetForm();
 }
 
-function addProduct()
+function addProduct(urlAdd)
 {
     openModal();
 
-    document.getElementById('title-popup').textContent = "Thêm sản phẩm";
+    document.getElementById('title-popup').textContent = "製品を作成";
 
+    document.getElementById('product-form').action = urlAdd;
     document.getElementById('inp-name').disabled = false;
     document.getElementById('inp-img').disabled = false;
     document.getElementById('inp-desciption').disabled = false;
@@ -245,10 +197,11 @@ function addProduct()
     document.getElementById('inp-sales').disabled = false;
     document.getElementById('div-img-product').style.display='flex' ;
 
-    document.getElementById('submit-popup').textContent = "Lưu sản phẩm";
+    document.getElementById('submit-popup').textContent = "商品を保存";
     document.getElementById('submit-popup').className = 'btn btn-outline-success btn-block';
     document.getElementById('submit-popup').type = 'submit';
     document.getElementById('submit-popup').onclick = function() {};
+    document.getElementById('id-product').value = null;
 }
 
 function submitPopup()
@@ -256,15 +209,16 @@ function submitPopup()
 
 }
 
-function displayProductId(id)
+function displayProductId(urlEdit, id)
 {
     openModal();
     // lay du lieu va hien thi len trang popup
     let btnEdit = document.getElementById('btn-edit-inp-' + id);
     let arrInp = document.getElementsByClassName('inp-row-' + id);
 
-    document.getElementById('submit-popup').textContent = "Chỉnh sửa sản phẩm";
+    document.getElementById('submit-popup').textContent = "商品の編集";
 
+    document.getElementById('product-form').action = urlEdit;
     document.getElementById('inp-name').disabled = true;
     document.getElementById('inp-img').disabled = true;
     document.getElementById('inp-desciption').disabled = true;
@@ -274,6 +228,7 @@ function displayProductId(id)
     document.getElementById('submit-popup').className = 'btn btn-outline-warning btn-block';
     document.getElementById('submit-popup').type = 'button';
     document.getElementById('submit-popup').onclick = function () { editProductId(id); };
+    document.getElementById('id-product').value = id;
 
     $.ajax({
         type: 'POST',
@@ -308,14 +263,14 @@ function displayProductId(id)
                 errorArr += '- ' + value[0] + '\n';
             });
 
-            errorArr = 'Lỗi.\n' + errorArr;
+            errorArr = 'エラー。\n' + errorArr;
             alert(errorArr);
         },
     });
 }
 
 function editProductId(id) {
-    document.getElementById('submit-popup').textContent = "Lưu thay đổi";
+    document.getElementById('submit-popup').textContent = "セーブ";
 
     document.getElementById('inp-name').disabled = false;
     document.getElementById('inp-img').disabled = false;
@@ -324,41 +279,14 @@ function editProductId(id) {
     document.getElementById('inp-sales').disabled = false;
     document.getElementById('div-img-product').style.display = 'flex';
     document.getElementById('submit-popup').className = 'btn btn-outline-success btn-block';
-    document.getElementById('submit-popup').type = 'button';
     document.getElementById('submit-popup').onclick = function () { saveChangeProductId(id); };
+
+
 }
 
 function saveChangeProductId(id)
 {
-    $.ajax({
-        type: 'POST',
-        cache: false,
-        url: document.getElementById('url-edit-product').textContent,
-        data: {
-            "_token": document.getElementById('token-edit-product').textContent,
-            "id": id,
-            "name": document.getElementById('inp-name').value,
-            "description": document.getElementById('inp-desciption').value,
-            "price": document.getElementById('inp-price').value,
-            "is_sales": document.getElementById('inp-sales').value
-        },
-        success: function(data) {
-            alert("Chỉnh sửa sản phẩm thành công.");
-            displayProductId(id);
-        },
-        error: function(data) {
-            var errors = data.responseJSON;
-            var errorArr = '';
-
-            $.each( errors.errors, function( key, value ) {
-                errorArr += '- ' + value[0] + '\n';
-            });
-
-            errorArr = 'Cập nhật thông tin không thành công.\n' + errorArr;
-            alert(errorArr);
-        },
-    });
-
+    document.getElementById('submit-popup').type = 'submit';
 }
 
 
@@ -373,11 +301,26 @@ $('#product-form').submit(function(e) {
         contentType: false,
         processData: false,
         success: (data) => {
-            this.reset();
-            alert('File has been uploaded successfully');
-            resetForm();
+            if(document.getElementById('product-form').action.includes('add')) {
+                alert("製品が正常に追加されました。");
+                this.reset();
+                resetForm();
+            }
+            else if(document.getElementById('product-form').action.includes('edit')) {
+                alert("製品を正常に更新されました。");
+                displayProductId(document.getElementById('product-form').action, document.getElementById('id-product').value);
+            }
         },
         error: function(data){
+            var errors = data.responseJSON;
+            var errorArr = '';
+
+            $.each( errors.errors, function( key, value ) {
+                errorArr += '- ' + value[0] + '\n';
+            });
+
+            errorArr = 'エラー\n' +  errorArr;
+            alert(errorArr);
         }
     });
 });

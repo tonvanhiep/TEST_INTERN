@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 // class AdminsImport implements ToCollection, WithHeadingRow
 // {
@@ -39,7 +40,7 @@ use Maatwebsite\Excel\Concerns\Importable;
 //     }
 // }
 
-class AdminsImport implements ToModel, ShouldQueue, WithChunkReading, WithStartRow
+class AdminsImport implements ToModel, ShouldQueue, WithChunkReading, WithStartRow, WithHeadingRow
 {
     use Importable;
 
@@ -64,17 +65,17 @@ class AdminsImport implements ToModel, ShouldQueue, WithChunkReading, WithStartR
 
     public function model(array $row)
     {
-        if (array_key_exists(++$this->row, $this->errors)) {
+        if (array_key_exists($this->row++, $this->errors)) {
             return null;
         }
         DB::beginTransaction();
         try {
             AdminModel::create([
-                'name' => $row[0],
-                'email' => $row[1],
+                'name' => $row['name'],
+                'email' => $row['email'],
                 'password' => md5(123456789),
                 'is_active' => 1,
-                'group_role' => $row[2],
+                'group_role' => $row['group'],
                 'is_delete' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\CustomersExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ImportCsvFileRequest;
 use App\Imports\CustomersImport;
+use App\Imports\ValidateCustomerFile;
 use App\Models\CustomersModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -74,10 +76,19 @@ class CustomerManagermentController extends Controller
             'id' => 'required|min:0',
             'name' => 'required',
             'tel' => 'required',
-            'email' => 'required|email',
-            'is_active' => 'required|min:0|max:1'
-            ]
-        );
+            'email' => 'required|email|min:10|max:255',
+            'is_active' => 'required|min:0|max:1',
+            'address' => 'required',
+            'tel' => 'required|numeric|digits_between:9,15'
+        ], [
+            'min' => ':attribute は :min 文字以上である必要があります。',
+            'max' => ':attribute  は :max 文字以内である必要があります。',
+            'unique' => ':attributeの値は既に存在しています。',
+            'required' => ':attribute は 必要です。',
+            'email' => ':attributeには、有効なメールアドレスを指定してください。',
+            'numeric' => ':attributeには、数字を指定してください。',
+            'digits_between' => ':attributeは:min桁から:max桁の間で指定してください。'
+        ]);
 
         $id = $request->id;
         $data = [
@@ -135,16 +146,33 @@ class CustomerManagermentController extends Controller
         return response()->json($returnHTML);
     }
 
-    public function exportCSV()
+    public function exportCSV(Request $request)
     {
-        return Excel::download(new CustomersExport, 'list-customers-'.preg_replace("/[ ]/", "-", date('Y-m-d H:i:s')).'.csv');
+        return Excel::download(new CustomersExport($request), 'list-customers-'.preg_replace("/[ ]/", "-", date('Y-m-d H:i:s')).'.csv');
     }
 
-    public function importCSV(Request $request)
+    public function importCSV(ImportCsvFileRequest $request)
     {
-        Excel::import(new CustomersImport, $request->filecsv);
+        // Excel::import(new CustomersImport, $request->filecsv);
 
-        return redirect()->back();
-        // return 'Success';
+        // return redirect()->back();
+
+
+        $validator = new ValidateCustomerFile();
+        Excel::import($validator, $request->filecsv);
+        if (count($validator->errors)) {
+            $errors = [];
+            foreach ($validator->errors as $key => $error) {
+                $errors[$key] = $error;
+            }
+            (new CustomersImport($errors))->queue($request->filecsv);
+            return redirect()->back()->with('error', $errors);
+        } elseif (!$validator->isValidFile) {
+            return redirect()->back()->with('success', 'ファイルのアップロード成功');
+        }
+
+        (new CustomersImport())->queue($request->filecsv);
+
+        return redirect()->back()->with('success', 'ファイルのアップロード成功');
     }
 }

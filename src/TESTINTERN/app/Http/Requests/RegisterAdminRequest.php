@@ -25,7 +25,7 @@ class RegisterAdminRequest extends FormRequest
     {
         return [
             'name' => 'bail|required|min:5|max:100',
-            'email' => 'bail|required|unique:MST_ADMIN|min:10|max:255',
+            'email' => 'bail|required|email|unique:MST_ADMIN|min:10|max:255',
             'pass' => 'bail|required|regex:/^[a-zA-Z0-9]+$/u|min:8|max:32',
             're-pass' => 'bail|required|regex:/^[a-zA-Z0-9]+$/u|min:8|max:32|same:pass',
             'group' => 'bail|required||min:1|max:3'
@@ -43,6 +43,7 @@ class RegisterAdminRequest extends FormRequest
             'email.min' => ':attribute は :min 文字以上である必要があります。',
             'email.max' => ':attribute  は :max 文字以内である必要があります。',
             'email.unique' => ':attributeの値は既に存在しています。',
+            'email.email' => ':attributeには、有効なメールアドレスを指定してください。',
 
             'pass.required' => ':attribute は 必要です。',
             'pass.min' => ':attribute は :min 文字以上である必要があります。',

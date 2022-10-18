@@ -72,6 +72,11 @@
                         <h5 class="modal-title">CSVをインポート</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
+                    @if (session()->get('success'))
+                        <div class="alert alert-success">
+                            <ul> <li> {{session()->get('success')}} </li> </ul>
+                        </div>
+                    @endif
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -83,9 +88,20 @@
                     @endif
                     @if (session()->get('error'))
                         <div class="alert alert-danger">
-                            <ul>
-                                <li>{{ session()->get('error') }}</li>
-                            </ul>
+                            @php
+                                $error = session()->get('error');
+                                $errorStr = '';
+                                foreach ($error as $key => $value) {
+                                    $errorStr = 'Row' . strval($key) . '{';
+                                    foreach ($value as $name => $message) {
+
+                                        $errorStr = $errorStr . $name . ':' . implode(',', $message) . ';';
+                                    }
+                                    $errorStr = $errorStr . '}';
+                                    echo "<ul> <li> " . $errorStr . "</li> </ul>";
+                                }
+                            @endphp
+
                         </div>
                     @endif
                     <div class="modal-body">

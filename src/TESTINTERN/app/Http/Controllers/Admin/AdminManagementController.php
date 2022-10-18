@@ -74,12 +74,17 @@ class AdminManagementController extends Controller
     {
         $request->validate([
             'id' => 'required|min:0',
-            'name' => 'required',
+            'name' => 'required|min:6|max:255',
             'group' => 'required|min:1|max:3',
-            'email' => 'required|email',
-            'is_active' => 'required|min:0|max:1'
-            ]
-        );
+            'email' => 'required|email|min:10|max:255',
+            'is_active' => 'required|min:0|max:1',
+        ], [
+            'min' => ':attribute は :min 文字以上である必要があります。',
+            'max' => ':attribute  は :max 文字以内である必要があります。',
+            'unique' => ':attributeの値は既に存在しています。',
+            'required' => ':attribute は 必要です。',
+            'email' => ':attributeには、有効なメールアドレスを指定してください。',
+        ]);
 
         $id = $request->id;
         $data = [
@@ -147,28 +152,21 @@ class AdminManagementController extends Controller
 
     public function importCSV(ImportCsvFileRequest $request)
     {
-        // $validator =
-        // Excel::import(new AdminsImport, $request->filecsv);
-
-        // return redirect()->back();
-
-
         $validator = new ValidateAdminFile();
         Excel::import($validator, $request->filecsv);
         if (count($validator->errors)) {
             $errors = [];
             foreach ($validator->errors as $key => $error) {
-                $errors[$key] = $key;
+                $errors[$key] = $error;
             }
             (new AdminsImport($errors))->queue($request->filecsv);
-
-            return redirect()->back()->with('error', 'row number ' . implode(',', $errors) . ' contain incorrect data');
+            return redirect()->back()->with('error', $errors);
         } elseif (!$validator->isValidFile) {
-            return redirect()->back();
+            return redirect()->back()->with('success', 'ファイルのアップロード成功');
         }
 
         (new AdminsImport())->queue($request->filecsv);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'ファイルのアップロード成功');
     }
 }
