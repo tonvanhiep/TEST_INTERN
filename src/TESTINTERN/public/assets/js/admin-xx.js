@@ -19,14 +19,12 @@ btnMenuExtend.onclick = function()
 
 function openPopUp()
 {
-    alert("Mở");
     document.getElementById('pop-up').style.display == "block";
 
 }
 
 function closePopUp()
 {
-    alert("Đóng");
     document.getElementById('pop-up').style.display == "none";
 }
 

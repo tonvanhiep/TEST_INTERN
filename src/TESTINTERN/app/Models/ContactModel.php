@@ -12,7 +12,7 @@ class ContactModel extends Model
 
     public function addContact($data = null)
     {
-        if($data == null) return;
+        if($data === null) return;
 
         DB::table($this->table)->insert([
             [

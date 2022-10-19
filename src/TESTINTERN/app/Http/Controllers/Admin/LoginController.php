@@ -32,10 +32,9 @@ class LoginController extends Controller
         ];
         $result = $this->admin->checkLogin($infoLogin);
 
-        if(count($result) === 0) {
+        if (count($result) === 0) {
             return redirect()->back()->withErrors(['msg' => 'メールアドレスまたはパスワードが正しくありません']);
-        }
-        else if(count($result) === 1 && is_int($result[0]->admin_id) && $result[0]->admin_id >= 0) {
+        } elseif (count($result) === 1 && is_int($result[0]->admin_id) && $result[0]->admin_id >= 0) {
             session()->put('admin', ['id' => $result[0]->admin_id, 'role' => $result[0]->group_role]);
 
             $data = [
@@ -53,7 +52,7 @@ class LoginController extends Controller
 
     public function actionLogout(Request $request)
     {
-        if($request->session()->has('admin')) {
+        if ($request->session()->has('admin')) {
             $request->session()->forget('admin');
         }
         return redirect()->route('home');

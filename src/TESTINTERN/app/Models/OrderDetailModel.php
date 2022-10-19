@@ -14,7 +14,7 @@ class OrderDetailModel extends Model
 
     public function addOrderDetail($data = null)
     {
-        if($data == null) return -1;
+        if($data === null) return -1;
 
         DB::table($this->table)->insert([
             [

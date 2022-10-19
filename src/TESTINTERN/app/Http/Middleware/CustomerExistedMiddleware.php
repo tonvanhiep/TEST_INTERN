@@ -16,10 +16,10 @@ class CustomerExistedMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!$request->session()->has('customer')) return $next($request);
+        if (! $request->session()->has('customer')) return $next($request);
 
         $result = $request->session()->get('customer');
-        if(is_int($result['id']) && $result['id'] > 0) {
+        if (is_int($result['id']) && $result['id'] > 0) {
             return redirect()->route('home');
         }
         return $next($request);

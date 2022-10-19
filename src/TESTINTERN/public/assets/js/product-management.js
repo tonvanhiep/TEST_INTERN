@@ -1,7 +1,8 @@
-function deleteProductId(id) {
+function deleteProductId(id)
+{
     var currentPage = document.getElementById('current-page').textContent;
 
-    var result = confirm("Bạn có chắc chắn xóa sản phẩm #" + id + "?");
+    var result = confirm("製品 #" + id + " を削除してもよろしいですか?");
     if (result == true) {
         $.ajax({
             type: 'POST',
@@ -13,7 +14,7 @@ function deleteProductId(id) {
             },
             success: function(data) {
                 // console.log(data);
-                alert("Xóa sản phẩm thành công!!!");
+                alert("製品を正常に削除。");
                 pagination(currentPage);
             },
             error: function(data) {
@@ -24,7 +25,7 @@ function deleteProductId(id) {
                     errorArr += '- ' + value[0] + '\n';
                 });
 
-                errorArr = 'Xóa sản phẩm không thành công!\n' + errorArr;
+                errorArr = '製品を削除できませんでした。\n' + errorArr;
                 alert(errorArr);
             },
         });
@@ -46,7 +47,7 @@ function submitSearchFormAjax(delSearch = 0)
         is_active = -1;
     }
     else if (minPrice == '' && name == '' && maxPrice == '' && isSales == -1) {
-        alert("Bạn chưa nhập thông tin tìm kiếm");
+        alert("検索情報を入力していません。");
         return;
     }
 
@@ -99,7 +100,7 @@ function submitProductFormAjax()
             var success = data.responseJSON;
             console.log(success);
             successHtml = '<div class="alert alert-success"><ul>';
-            successHtml += '<li> Thêm sản phẩm thành công</li>';
+            successHtml += '<li> 製品を正常に追加する。</li>';
             successHtml += '</ul></div>';
 
             $( '#div-alert' ).html( successHtml );
@@ -158,10 +159,10 @@ function pagination(page = 1)
 
 function onchangeImageFile()
 {
-    let file = document.getElementById('inp-img').files;
+    var file = document.getElementById('inp-img').files;
     if (file.length > 0) {
-        let fileLoad = file[0];
-        let fileReader = new FileReader();
+        var fileLoad = file[0];
+        var fileReader = new FileReader();
         fileReader.onload = function(fileLoaderEvent)
         {
             var srcImg = fileLoaderEvent.target.result;
@@ -213,8 +214,8 @@ function displayProductId(urlEdit, id)
 {
     openModal();
     // lay du lieu va hien thi len trang popup
-    let btnEdit = document.getElementById('btn-edit-inp-' + id);
-    let arrInp = document.getElementsByClassName('inp-row-' + id);
+    var btnEdit = document.getElementById('btn-edit-inp-' + id);
+    var arrInp = document.getElementsByClassName('inp-row-' + id);
 
     document.getElementById('submit-popup').textContent = "商品の編集";
 
@@ -246,8 +247,8 @@ function displayProductId(urlEdit, id)
             document.getElementById('inp-price').value = data.price;
             document.getElementById('inp-sales').value = data.is_sales;
 
-            let btnEdit = document.getElementById('btn-edit-inp-' + id);
-            let arrInp = document.getElementsByClassName('inp-row-' + id);
+            var btnEdit = document.getElementById('btn-edit-inp-' + id);
+            var arrInp = document.getElementsByClassName('inp-row-' + id);
 
             arrInp[0].value = data.name;
             arrInp[1].value = data.description;
@@ -280,8 +281,6 @@ function editProductId(id) {
     document.getElementById('div-img-product').style.display = 'flex';
     document.getElementById('submit-popup').className = 'btn btn-outline-success btn-block';
     document.getElementById('submit-popup').onclick = function () { saveChangeProductId(id); };
-
-
 }
 
 function saveChangeProductId(id)

@@ -27,10 +27,10 @@ class CustomerManagermentController extends Controller
         $nameRoute = $request->route()->getName();
         $page = 1;
         $condition = array(
-            'is_active' => (!$request->has('is_active') ? -1 : $request->is_active),
-            'name' => (!$request->has('name') ? null : $request->name),
-            'address' => (!$request->has('address') ? null : $request->address),
-            'email' => (!$request->has('email') ? null : $request->email)
+            'is_active' => (! $request->has('is_active') ? -1 : $request->is_active),
+            'name' => (! $request->has('name') ? null : $request->name),
+            'address' => (! $request->has('address') ? null : $request->address),
+            'email' => (! $request->has('email') ? null : $request->email)
         );
         $totalCustomer = $this->customer->getCountCustomer($condition);
         $totalPage = intval($totalCustomer / $this->customerOnPage + (($totalCustomer % $this->customerOnPage == 0) ? 0 : 1));
@@ -48,10 +48,10 @@ class CustomerManagermentController extends Controller
     public function paginationCustomer(Request $request)
     {
         $condition = array(
-            'is_active' => (!$request->has('is_active') ? -1 : $request->is_active),
-            'name' => (!$request->has('name') ? null : $request->name),
-            'address' => (!$request->has('address') ? null : $request->address),
-            'email' => (!$request->has('email') ? null : $request->email)
+            'is_active' => (! $request->has('is_active') ? -1 : $request->is_active),
+            'name' => (! $request->has('name') ? null : $request->name),
+            'address' => (! $request->has('address') ? null : $request->address),
+            'email' => (! $request->has('email') ? null : $request->email)
         );
 
         $page = ($request->page >= 1) ? $request->page : 1;
@@ -114,19 +114,22 @@ class CustomerManagermentController extends Controller
     public function deleteCustomer(Request $request)
     {
         $request->validate([
-            'id' => 'required|min:0'
-            ]
-        );
+            'id' => 'required|numeric|min:0'
+        ], [
+            'min' => ':attribute は :min 文字以上である必要があります。',
+            'required' => ':attribute は 必要です。',
+            'numeric' => ':attributeには、数字を指定してください。',
+        ]);
         $this->customer->deleteCustomer($request->id);
     }
 
     public function searchCustomer(Request $request)
     {
         $condition = array(
-            'is_active' => (!$request->has('is_active') ? -1 : $request->is_active),
-            'name' => (!$request->has('name') ? null : $request->name),
-            'address' => (!$request->has('address') ? null : $request->address),
-            'email' => (!$request->has('email') ? null : $request->email)
+            'is_active' => (! $request->has('is_active') ? -1 : $request->is_active),
+            'name' => (! $request->has('name') ? null : $request->name),
+            'address' => (! $request->has('address') ? null : $request->address),
+            'email' => (! $request->has('email') ? null : $request->email)
         );
         $page = ($request->page >= 1) ? $request->page : 1;
         $totalCustomer = $this->customer->getCountCustomer($condition);
@@ -153,11 +156,6 @@ class CustomerManagermentController extends Controller
 
     public function importCSV(ImportCsvFileRequest $request)
     {
-        // Excel::import(new CustomersImport, $request->filecsv);
-
-        // return redirect()->back();
-
-
         $validator = new ValidateCustomerFile();
         Excel::import($validator, $request->filecsv);
         if (count($validator->errors)) {
@@ -167,7 +165,7 @@ class CustomerManagermentController extends Controller
             }
             (new CustomersImport($errors))->queue($request->filecsv);
             return redirect()->back()->with('error', $errors);
-        } elseif (!$validator->isValidFile) {
+        } elseif (! $validator->isValidFile) {
             return redirect()->back()->with('success', 'ファイルのアップロード成功');
         }
 

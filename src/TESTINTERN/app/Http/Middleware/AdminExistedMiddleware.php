@@ -16,10 +16,10 @@ class AdminExistedMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!$request->session()->has('admin')) return $next($request);
+        if (! $request->session()->has('admin')) return $next($request);
 
         $result = $request->session()->get('admin');
-        if(is_int($result['id']) && $result['id'] > 0 && is_int($result['role']) && $result['role'] >= 1 && $result['role'] <= 3) {
+        if (is_int($result['id']) && $result['id'] > 0 && is_int($result['role']) && $result['role'] >= 1 && $result['role'] <= 3) {
             return redirect()->route('admin.product.management');
         }
         return $next($request);

@@ -1,4 +1,5 @@
-function editCustomerId(id) {
+function editCustomerId(id)
+{
     let btnEdit = document.getElementById('btn-edit-inp-' + id);
     let arrInp = document.getElementsByClassName('inp-row-' + id);
 
@@ -48,7 +49,8 @@ function editCustomerId(id) {
 
 }
 
-function deleteCustomerId(id) {
+function deleteCustomerId(id)
+{
     var currentPage = document.getElementById('current-page').textContent;
 
     var result = confirm("顧客アカウントの #" + id + " を削除してもよろしいですか?");
@@ -100,7 +102,7 @@ function submitSearchFormAjax(delSearch)
         is_active = -1;
     }
     else if (email == '' && name == '' && address == '' && is_active == -1) {
-        alert("Bạn chưa nhập thông tin tìm kiếm");
+        alert("検索情報を入力していません。");
         return;
     }
 
@@ -156,7 +158,7 @@ function submitRegisterFormAjax()
             var success = data.responseJSON;
             console.log(success);
             successHtml = '<div class="alert alert-success"><ul>';
-            successHtml += '<li> Đăng ký tài khoản thành công</li>';
+            successHtml += '<li> アカウント登録成功。</li>';
             successHtml += '</ul></div>';
 
             $( '#div-alert' ).html( successHtml );

@@ -61,7 +61,7 @@ class ProductController extends Controller
 
     public function detailProduct($id = null)
     {
-        if($id == null) redirect()->route('product');
+        if ($id === null) redirect()->route('product');
         $product = new ProductModel();
         $item = $product->product($id);
         return view('client.detail', compact('item'));

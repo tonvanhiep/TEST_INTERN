@@ -5,7 +5,7 @@ function displayCartCheckout()
     let listCart = '';
     let totalPrice = 0;
     if(cart.length <= 0) {
-        listCart = '<li class="list-group-item d-flex justify-content-between lh-condensed"><div><h6 class="my-0">No items</h6><small class="text-muted"></div></li>';
+        listCart = '<li class="list-group-item d-flex justify-content-between lh-condensed"><div><h6 class="my-0">項目がありません</h6><small class="text-muted"></div></li>';
     }
 
     for (let index = 0; index < cart.length; index++) {

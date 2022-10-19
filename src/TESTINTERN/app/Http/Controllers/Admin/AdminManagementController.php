@@ -24,12 +24,12 @@ class AdminManagementController extends Controller
     public function index(Request $request)
     {
         $nameRoute = $request->route()->getName();
-        $page = (!$request->has('page') ? 1 : $request->page);
+        $page = (! $request->has('page') ? 1 : $request->page);
         $condition = array(
-            'is_active' => (!$request->has('is_active') ? -1 : $request->is_active),
-            'name' => (!$request->has('name') ? null : $request->name),
-            'group' => (!$request->has('group') ? -1 : $request->group),
-            'email' => (!$request->has('email') ? null : $request->email)
+            'is_active' => (! $request->has('is_active') ? -1 : $request->is_active),
+            'name' => (! $request->has('name') ? null : $request->name),
+            'group' => (! $request->has('group') ? -1 : $request->group),
+            'email' => (! $request->has('email') ? null : $request->email)
         );
         $totalAdmin = $this->admin->getCountAdmin($condition);
         $totalPage = intval($totalAdmin / $this->adminOnPage + (($totalAdmin % $this->adminOnPage == 0) ? 0 : 1));
@@ -48,10 +48,10 @@ class AdminManagementController extends Controller
     public function paginationAdmin(Request $request)
     {
         $condition = array(
-            'is_active' => (!$request->has('is_active') ? -1 : $request->is_active),
-            'name' => (!$request->has('name') ? null : $request->name),
-            'group' => (!$request->has('group') ? -1 : $request->group),
-            'email' => (!$request->has('email') ? null : $request->email)
+            'is_active' => (! $request->has('is_active') ? -1 : $request->is_active),
+            'name' => (! $request->has('name') ? null : $request->name),
+            'group' => (! $request->has('group') ? -1 : $request->group),
+            'email' => (! $request->has('email') ? null : $request->email)
         );
 
         $page = ($request->page >= 1) ? $request->page : 1;
@@ -73,7 +73,7 @@ class AdminManagementController extends Controller
     public function editAdmin(Request $request)
     {
         $request->validate([
-            'id' => 'required|min:0',
+            'id' => 'required|numeric|min:0',
             'name' => 'required|min:6|max:255',
             'group' => 'required|min:1|max:3',
             'email' => 'required|email|min:10|max:255',
@@ -84,6 +84,7 @@ class AdminManagementController extends Controller
             'unique' => ':attributeの値は既に存在しています。',
             'required' => ':attribute は 必要です。',
             'email' => ':attributeには、有効なメールアドレスを指定してください。',
+            'numeric' => ':attributeには、数字を指定してください。',
         ]);
 
         $id = $request->id;
@@ -111,9 +112,12 @@ class AdminManagementController extends Controller
     public function deleteAdmin(Request $request)
     {
         $request->validate([
-            'id' => 'required|min:0'
-            ]
-        );
+            'id' => 'required|numeric|min:0',
+        ], [
+            'min' => ':attribute は :min 文字以上である必要があります。',
+            'required' => ':attribute は 必要です。',
+            'numeric' => ':attributeには、数字を指定してください。',
+        ]);
         $this->admin->deleteAdmin($request->id);
 
         return 'Success';
@@ -122,10 +126,10 @@ class AdminManagementController extends Controller
     public function searchAdmin(Request $request)
     {
         $condition = array(
-            'is_active' => (!$request->has('is_active') ? -1 : $request->is_active),
-            'name' => (!$request->has('name') ? null : $request->name),
-            'group' => (!$request->has('group') ? -1 : $request->group),
-            'email' => (!$request->has('email') ? null : $request->email)
+            'is_active' => (! $request->has('is_active') ? -1 : $request->is_active),
+            'name' => (! $request->has('name') ? null : $request->name),
+            'group' => (! $request->has('group') ? -1 : $request->group),
+            'email' => (! $request->has('email') ? null : $request->email)
         );
         $page = ($request->page >= 1) ? $request->page : 1;
         $totalAdmin = $this->admin->getCountAdmin($condition);
@@ -138,8 +142,6 @@ class AdminManagementController extends Controller
             'total' => $totalAdmin
         ];
         $listAdmin = $this->admin->getAdmin($condition, $currentPage, $this->adminOnPage);
-
-
 
         $returnHTML = view('admin.pagination-admin-management', compact('listAdmin', 'record', 'totalPage', 'currentPage'))->render();
         return response()->json($returnHTML);
@@ -161,7 +163,7 @@ class AdminManagementController extends Controller
             }
             (new AdminsImport($errors))->queue($request->filecsv);
             return redirect()->back()->with('error', $errors);
-        } elseif (!$validator->isValidFile) {
+        } elseif (! $validator->isValidFile) {
             return redirect()->back()->with('success', 'ファイルのアップロード成功');
         }
 

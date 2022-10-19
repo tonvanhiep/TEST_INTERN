@@ -1,4 +1,5 @@
-function editAdminId(id) {
+function editAdminId(id)
+{
     let btnEdit = document.getElementById('btn-edit-inp-' + id);
     let arrInp = document.getElementsByClassName('inp-row-' + id);
 
@@ -47,10 +48,12 @@ function editAdminId(id) {
 
 }
 
-function deleteAdminId(id) {
+
+function deleteAdminId(id)
+{
     var currentPage = document.getElementById('current-page').textContent;
 
-    var result = confirm("Bạn có chắc chắn xóa người dùng #" + id + "?");
+    var result = confirm("管理者アカウント #" + id + " を削除してもよろしいですか?");
     if (result == true) {
         $.ajax({
             type: 'POST',
@@ -62,7 +65,7 @@ function deleteAdminId(id) {
             },
             success: function(data) {
                 console.log(data);
-                alert("Xóa người dùng thành công!!!");
+                alert("管理者アカウントを正常に削除。");
                 pagination(currentPage);
             },
             error: function(data) {
@@ -73,12 +76,13 @@ function deleteAdminId(id) {
                     errorArr += '- ' + value[0] + '\n';
                 });
 
-                errorArr = 'Xóa người dùng không thành công!\n' + errorArr;
+                errorArr = '管理者アカウントを削除できませんでした。\n' + errorArr;
                 alert(errorArr);
             },
         });
     }
 }
+
 
 function submitSearchFormAjax(delSearch = 0)
 {
@@ -123,6 +127,7 @@ function submitSearchFormAjax(delSearch = 0)
         },
     });
 }
+
 
 function submitRegisterFormAjax()
 {

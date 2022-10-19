@@ -16,10 +16,10 @@ class CustomerMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!$request->session()->has('customer')) return redirect()->route('account.login');
+        if (! $request->session()->has('customer')) return redirect()->route('account.login');
 
         $result = $request->session()->get('customer');
-        if(is_int($result['id']) && $result['id'] > 0) {
+        if (is_int($result['id']) && $result['id'] > 0) {
             return $next($request);
         }
         return redirect()->route('account.login');

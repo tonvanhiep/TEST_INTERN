@@ -31,7 +31,7 @@ class AdminsExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ["name", "email", "group",];
+        return ['name', 'email', 'group',];
     }
 
     /**
@@ -48,19 +48,19 @@ class AdminsExport implements FromCollection, WithHeadings
         $group = $this->condition['group'] == null ? -1 : $this->condition['group'];
         $is_active = $this->condition['is_active'] == null ? -1 : $this->condition['is_active'];
         return AdminModel::select('name', 'email', 'group_role')
-                ->where('is_delete', '=' , 0)
-                ->where('name', 'like', '%'.(($this->condition['name'] == null) ? '' : $this->condition['name']).'%')
-                ->where('email', 'like', '%'.(($this->condition['email'] == null) ? '' : $this->condition['email']).'%')
-                ->where(function($query) use ($group) {
-                    $query->where('group_role', '=' ,(($group == -1) ? 1 : $group))
-                        ->orWhere('group_role', '=', (($group == -1) ? 2 : $group))
-                        ->orWhere('group_role', '=', (($group == -1) ? 3 : $group));
-                    })
-                ->where(function($query) use ($is_active) {
-                    $query->where('is_active', '=' ,(($is_active == -1) ? 0 : $is_active))
-                        ->orWhere('is_active', '=', (($is_active == -1) ? 1 : $is_active));
-                    })
-                ->orderBy('admin_id', 'desc')
+            ->where('is_delete', '=' , 0)
+            ->where('name', 'like', '%'.(($this->condition['name'] == null) ? '' : $this->condition['name']).'%')
+            ->where('email', 'like', '%'.(($this->condition['email'] == null) ? '' : $this->condition['email']).'%')
+            ->where(function($query) use ($group) {
+                $query->where('group_role', '=' ,(($group == -1) ? 1 : $group))
+                    ->orWhere('group_role', '=', (($group == -1) ? 2 : $group))
+                    ->orWhere('group_role', '=', (($group == -1) ? 3 : $group));
+                })
+            ->where(function($query) use ($is_active) {
+                $query->where('is_active', '=' ,(($is_active == -1) ? 0 : $is_active))
+                    ->orWhere('is_active', '=', (($is_active == -1) ? 1 : $is_active));
+                })
+            ->orderBy('admin_id', 'desc')
             ->get();
     }
 }

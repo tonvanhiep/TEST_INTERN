@@ -16,10 +16,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!$request->session()->has('admin')) return redirect()->route('admin.loginManagement');
+        if (! $request->session()->has('admin')) return redirect()->route('admin.loginManagement');
 
         $result = $request->session()->get('admin');
-        if(is_int($result['id']) && $result['id'] > 0 && is_int($result['role']) && $result['role'] >= 1 && $result['role'] <= 3) {
+        if (is_int($result['id']) && $result['id'] > 0 && is_int($result['role']) && $result['role'] >= 1 && $result['role'] <= 3) {
             return $next($request);
         }
         return redirect()->route('admin.loginManagement');

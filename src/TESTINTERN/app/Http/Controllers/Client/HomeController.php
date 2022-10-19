@@ -37,7 +37,7 @@ class HomeController extends Controller
 
     public function thankYou()
     {
-        if(!session()->has('id_dh'))
+        if (! session()->has('id_dh'))
             return redirect()->route('home');
         $id_dh = session('id_dh');
         return view('client.thankyou', compact('id_dh'));
@@ -56,14 +56,14 @@ class HomeController extends Controller
             'phone' => 'required|numeric|digits_between:9,15',
             'email' => 'required|email|min:10',
             'message' => 'required'
-            ], [
-                'required' => ':attribute は 必要です。',
-                'email' => ':attributeは有効な電子メール アドレスである必要があります。',
-                'min' => ':attributeは :min 文字以上である必要があります。',
-                'max' => ':attributeは :max 文字以内である必要があります。',
-                'numeric' => ':attributeには、数字を指定してください。',
-                'digits_between' => ':attributeは:min桁から:max桁の間で指定してください。',
-            ]);
+        ], [
+            'required' => ':attribute は 必要です。',
+            'email' => ':attributeは有効な電子メール アドレスである必要があります。',
+            'min' => ':attributeは :min 文字以上である必要があります。',
+            'max' => ':attributeは :max 文字以内である必要があります。',
+            'numeric' => ':attributeには、数字を指定してください。',
+            'digits_between' => ':attributeは:min桁から:max桁の間で指定してください。',
+        ]);
 
         $data = [
             'name' => $request->lname . ' ' . $request->fname,
@@ -98,7 +98,7 @@ class HomeController extends Controller
 
         $cart = $request->cookie('cart');
         $total = $request->cookie('total');
-        if($cart == null || $total == null) return;
+        if ($cart === null || $total === null) return;
 
         $arrCart = explode('/', $cart);
         $arrTotal = explode('-', $total);
@@ -123,7 +123,6 @@ class HomeController extends Controller
 
         $order = new OrderModel();
         $id_dh = $order->addOrder($data);
-
 
         for ($i = 0; $i < count($arrCart) - 1; $i++) {
             $item = explode(':', $arrCart[$i]);

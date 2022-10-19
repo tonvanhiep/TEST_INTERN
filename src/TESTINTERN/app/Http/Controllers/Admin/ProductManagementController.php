@@ -19,12 +19,12 @@ class ProductManagementController extends Controller
     public function index(Request $request)
     {
         $nameRoute = $request->route()->getName();
-        $page = (!$request->has('page') ? 1 : $request->page);
+        $page = (! $request->has('page') ? 1 : $request->page);
         $condition = array(
-            'name' => (!$request->has('name') ? null : $request->name),
-            'min_price' => (!$request->has('min_price') ? null : $request->min_price),
-            'max_price' => (!$request->has('max_price') ? null : $request->max_price),
-            'is_sales' => (!$request->has('is_sales') ? -1 : $request->is_sales)
+            'name' => (! $request->has('name') ? null : $request->name),
+            'min_price' => (! $request->has('min_price') ? null : $request->min_price),
+            'max_price' => (! $request->has('max_price') ? null : $request->max_price),
+            'is_sales' => (! $request->has('is_sales') ? -1 : $request->is_sales)
         );
         $totalProduct = $this->product->getCountProduct($condition);
         $totalPage = intval($totalProduct / $this->productOnPage + (($totalProduct % $this->productOnPage == 0) ? 0 : 1));
@@ -42,10 +42,10 @@ class ProductManagementController extends Controller
     public function paginationProduct(Request $request)
     {
         $condition = array(
-            'is_sales' => (!$request->has('isSales') ? null : $request->isSales),
-            'name' => (!$request->has('name') ? null : $request->name),
-            'min_price' => (!$request->has('minPrice') ? null : $request->minPrice),
-            'max_price' => (!$request->has('maxPrice') ? null : $request->maxPrice)
+            'is_sales' => (! $request->has('isSales') ? null : $request->isSales),
+            'name' => (! $request->has('name') ? null : $request->name),
+            'min_price' => (! $request->has('minPrice') ? null : $request->minPrice),
+            'max_price' => (! $request->has('maxPrice') ? null : $request->maxPrice)
         );
 
         $page = ($request->page >= 1) ? $request->page : 1;
@@ -91,11 +91,11 @@ class ProductManagementController extends Controller
             ];
         $result = $this->product->updateProduct($id, $data);
 
-        if($request->has('image')) {
+        if ($request->has('image')) {
             $this->product->updateImageProduct($id, $this->storeImage($request));
         }
 
-        if($result['success'] == false) {
+        if ($result['success'] == false) {
             return response()->json([
                 'message' => $result['message'],
                 'errors' => [
@@ -109,9 +109,12 @@ class ProductManagementController extends Controller
     public function deleteProduct(Request $request)
     {
         $request->validate([
-            'id' => 'required|min:0'
-            ]
-        );
+            'id' => 'required|numeric|min:0'
+        ], [
+            'min' => ':attribute は :min 文字以上である必要があります。',
+            'required' => ':attribute は 必要です。',
+            'numeric' => ':attributeには、数字を指定してください。',
+        ]);
         $this->product->deleteProduct($request->id);
 
         return 'Success';
@@ -119,11 +122,22 @@ class ProductManagementController extends Controller
 
     public function searchProduct(Request $request)
     {
+        // $request->validate([
+        //     'name' => 'required',
+        //     'is_sales' => 'required|numeric|min:-1|max:1',
+        //     'max_price' => 'required|numeric|min:0',
+        //     'min_price' => 'required|numeric|min:0'
+        // ], [
+        //     'min' => ':attribute は :min 文字以上である必要があります。',
+        //     'max' => ':attribute  は :max 文字以内である必要があります。',
+        //     'required' => ':attribute は 必要です。',
+        //     'numeric' => ':attributeには、数字を指定してください。',
+        // ]);
         $condition = array(
-            'is_sales' => (!$request->has('isSales') ? -1 : $request->isSales),
-            'max_price' => (!$request->has('maxPrice') ? null : $request->maxPrice),
-            'min_price' => (!$request->has('minPrice') ? null : $request->minPrice),
-            'name' => (!$request->has('name') ? null : $request->name)
+            'is_sales' => (! $request->has('isSales') ? -1 : $request->isSales),
+            'max_price' => (! $request->has('maxPrice') ? null : $request->maxPrice),
+            'min_price' => (! $request->has('minPrice') ? null : $request->minPrice),
+            'name' => (! $request->has('name') ? null : $request->name)
         );
         $page = ($request->page >= 1) ? $request->page : 1;
         $totalProduct = $this->product->getCountProduct($condition);
@@ -182,16 +196,18 @@ class ProductManagementController extends Controller
     public function product(Request $request)
     {
         $request->validate([
-            'id' => 'required'
-            ]
-        );
+            'id' => 'required|numeric|min:0'
+        ], [
+            'min' => ':attribute は :min 文字以上である必要があります。',
+            'required' => ':attribute は 必要です。',
+            'numeric' => ':attributeには、数字を指定してください。',
+        ]);
 
         $result = $this->product->product($request->id);
         $image = '';
         if (strlen(strstr($result[0]->product_image, 'http')) > 0) {
             $image = $result[0]->product_image;
-        }
-        else {
+        } else {
             $image = asset('storage/'.$result[0]->product_image);
         }
         return response()->json([
