@@ -75,9 +75,9 @@ class AdminManagementController extends Controller
         $request->validate([
             'id' => 'required|numeric|min:0',
             'name' => 'required|min:6|max:255',
-            'group' => 'required|min:1|max:3',
-            'email' => 'required|email|min:10|max:255',
-            'is_active' => 'required|min:0|max:1',
+            'group' => 'required|numeric|min:1|max:3',
+            'email' => 'required|regex:/^[a-z0-9]+$/u|email|min:10|max:255',
+            'is_active' => 'required|numeric|min:0|max:1',
         ], [
             'min' => ':attribute は :min 文字以上である必要があります。',
             'max' => ':attribute  は :max 文字以内である必要があります。',
