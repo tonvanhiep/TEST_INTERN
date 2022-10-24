@@ -1,61 +1,65 @@
 version: "3.8"
 services:
 
-    nginx:
-        container_name: nginx
-        build: ./docker/nginx
-        command: nginx -g "daemon off;"
-        links:
-            - "php"
-        ports:
-            - "80:80"
-        volumes:
-            - ./src/TESTINTERN:/var/www/html
-        depends_on:
-            - mysql
-            - php
+  nginx:
+    container_name: nginx
+    build: ./docker/nginx
+    command: nginx -g "daemon off;"
+    links:
+      - "php"
+    ports:
+      - "80:80"
+    volumes:
+      - ./src/TESTINTERN:/var/www/html
+    depends_on:
+      - mysql
+      - php
 
-    php:
-        container_name: php
-        build: ./docker/php
-        volumes:
-            - ./src/TESTINTERN:/var/www/html
-        working_dir: /var/www/html
-        depends_on:
-            - mysql
+  php:
+    container_name: php
+    build: ./docker/php
+    volumes:
+      - ./src/TESTINTERN:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - mysql
 
-    mysql:
-        # Use mysql
-        image: mysql
-        ports:
-            - "3306:3306"
-        # Connect to "my-network" network, as defined below
-        networks:
-            - my-network
-        # Pass a list of environment variables to the container
-        environment:
-            - MYSQL_ROOT_PASSWORD=S3cret
-            - MYSQL_PASSWORD=An0thrS3crt
-            - MYSQL_USER=hiep
+  mysql:
+    # Use mysql
+    image: mysql
+    ports:
+      - "3306:3306"
+    # Connect to "my-network" network, as defined below
+    networks:
+      - my-network
+    # Pass a list of environment variables to the container
+    environment:
+      - MYSQL_ROOT_PASSWORD=S3cret
+      - MYSQL_PASSWORD=An0thrS3crt
+      - MYSQL_USER=hiep
 
   # phpMyAdmin container
-    phpmyadmin:
-        # Use phpmyadmin/phpmyadmin image
-        image: phpmyadmin/phpmyadmin
-        # Connect to "my-network" network, as defined below
-        networks:
-            - my-network
-        # Map port 8080 on the host to port 80 inside the container
-        # Syntax is: "HOST_PORT:CONTAINER_PORT"
-        ports:
-            - "8080:80"
-        # Pass a list of environment variables to the container
-        environment:
-        PMA_HOST: mysql
-        # Wait for "mysql" container to start first
-        depends_on:
-            - mysql
+  phpmyadmin:
+    # Use phpmyadmin/phpmyadmin image
+    image: phpmyadmin/phpmyadmin
+    # Connect to "my-network" network, as defined below
+    networks:
+      - my-network
+    # Map port 8080 on the host to port 80 inside the container
+    # Syntax is: "HOST_PORT:CONTAINER_PORT"
+    ports:
+      - "8080:80"
+    # Pass a list of environment variables to the container
+    environment:
+      PMA_HOST: mysql
+    # Wait for "mysql" container to start first
+    depends_on:
+      - mysql
 
 # Define networks
 networks:
+<<<<<<< HEAD
     my-network:
+=======
+  my-network:
+>>>>>>> ffd5b9f5ab6611250730ed1742921b76bce3d545
