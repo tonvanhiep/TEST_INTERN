@@ -54,7 +54,7 @@ class HomeController extends Controller
             'fname' => 'required',
             'lname' => 'required',
             'phone' => 'required|numeric|digits_between:9,15',
-            'email' => 'required|email|min:10',
+            'email' => 'required|regex:/^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/|email|min:10',
             'message' => 'required'
         ], [
             'required' => ':attribute は 必要です。',
@@ -84,7 +84,7 @@ class HomeController extends Controller
             'firstName' => 'required',
             'lastName' => 'required',
             'tel' => 'required|numeric|digits_between:9,15',
-            'email' => 'required|email|min:10',
+            'email' => 'required|regex:/^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/|email|min:10',
             'address' => 'required',
             'paymentMethod' => 'required|numeric|min:1|max:3'
         ], [
