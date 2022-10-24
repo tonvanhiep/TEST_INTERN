@@ -76,7 +76,7 @@ class CustomerManagermentController extends Controller
             'id' => 'required|min:0',
             'name' => 'required',
             'tel' => 'required',
-            'email' => 'required|email|min:10|max:255',
+            'email' => 'required|regex:/^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/|email|min:10|max:255',
             'is_active' => 'required|min:0|max:1',
             'address' => 'required',
             'tel' => 'required|numeric|digits_between:9,15'

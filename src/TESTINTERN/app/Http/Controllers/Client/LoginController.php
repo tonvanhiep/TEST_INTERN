@@ -69,7 +69,7 @@ class LoginController extends Controller
         // dd($request);
         $request->validate([
             'name' => 'bail|required|min:6',
-            'email' => 'bail|required|email',
+            'email' => 'bail|required|regex:/^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/|email',
             'phone' => 'bail|required|numeric|digits_between:9,15',
             'address' => 'bail|required'
         ], [
@@ -102,11 +102,8 @@ class LoginController extends Controller
             'repass' => 'bail|required|same:npass'
         ], [
             'required' => ':attribute は 必要です。',
-            'email' => ':attributeは有効な電子メール アドレスである必要があります。',
             'min' => ':attributeは :min 文字以上である必要があります。',
             'max' => ':attributeは :max 文字以内である必要があります。',
-            'numeric' => ':attributeには、数字を指定してください。',
-            'digits_between' => ':attributeは:min桁から:max桁の間で指定してください。',
             'same' => '正しくないパスワード。',
             'regex' => ':attribute は 形式が無効です。'
         ]);
