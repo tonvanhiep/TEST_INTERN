@@ -11,8 +11,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
 
 
-  <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}">
-  <link rel="stylesheet" href="{{asset('assets/css/register.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/register.css') }}">
 </head>
 <body style="background-image: url('https://img.freepik.com/free-photo/hand-painted-watercolor-background-with-sky-clouds-shape_24972-1095.jpg?w=1500'); background-attachment:fixed;">
     <section class="bg-image" style="margin: auto;">
@@ -22,7 +22,7 @@
                     <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                         <div class="card" style="border-radius: 15px;">
                             <div class="card-body p-5">
-                                <a href="{{route('home')}}" class="fw-bold text-body">&larr; ホームページに戻る</a>
+                                <a href="{{ route('home') }}" class="fw-bold text-body">&larr; ホームページに戻る</a>
 
                                 <h2 class="text-uppercase text-center mb-4 mt-4">ログイン</h2>
 

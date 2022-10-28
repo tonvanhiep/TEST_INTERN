@@ -122,17 +122,6 @@ class ProductManagementController extends Controller
 
     public function searchProduct(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required',
-        //     'is_sales' => 'required|numeric|min:-1|max:1',
-        //     'max_price' => 'required|numeric|min:0',
-        //     'min_price' => 'required|numeric|min:0'
-        // ], [
-        //     'min' => ':attribute は :min 文字以上である必要があります。',
-        //     'max' => ':attribute  は :max 文字以内である必要があります。',
-        //     'required' => ':attribute は 必要です。',
-        //     'numeric' => ':attributeには、数字を指定してください。',
-        // ]);
         $condition = array(
             'is_sales' => (! $request->has('isSales') ? -1 : $request->isSales),
             'max_price' => (! $request->has('maxPrice') ? null : $request->maxPrice),
@@ -158,7 +147,6 @@ class ProductManagementController extends Controller
 
     public function addProduct(Request $request)
     {
-
         $request->validate([
             'name' => 'required|min:10',
             'price' => 'required|numeric|min:0',
@@ -173,6 +161,7 @@ class ProductManagementController extends Controller
             'numeric' => ':attributeには、数字を指定してください。',
             'mimes' => ':attributeには:valuesタイプのファイルを指定してください。',
         ]);
+
         $data = [
             'name' => $request->name,
             'price' => $request->price,
@@ -189,8 +178,7 @@ class ProductManagementController extends Controller
     {
         $fileName = preg_replace("/[ ]/", "_", $request->name) . preg_replace("/[ ]/", "_", time()) . '.' . $request->file('image')->extension();
 
-        $path = $request->file('image')->storeAs('public/productImage', $fileName , 'local');
-        return substr($path, strlen('public/'));
+        return $request->file('image')->storeAs('productImage', $fileName , 'public');
     }
 
     public function product(Request $request)
@@ -205,11 +193,13 @@ class ProductManagementController extends Controller
 
         $result = $this->product->product($request->id);
         $image = '';
+
         if (strlen(strstr($result[0]->product_image, 'http')) > 0) {
             $image = $result[0]->product_image;
         } else {
             $image = asset('storage/'.$result[0]->product_image);
         }
+
         return response()->json([
             'id' => $result[0]->product_id,
             'name' => $result[0]->product_name,

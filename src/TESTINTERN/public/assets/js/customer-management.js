@@ -16,7 +16,6 @@ function editCustomerId(id)
             cache: false,
             url: document.getElementById('url-edit-customer').textContent,
             data: {
-                "_token": document.getElementById('token-edit-customer').textContent,
                 "id": id,
                 "name": arrInp[0].value,
                 "tel": arrInp[1].value,
@@ -60,7 +59,6 @@ function deleteCustomerId(id)
             cache: false,
             url: document.getElementById('url-delete-customer').textContent,
             data: {
-                "_token": document.getElementById('token-edit-customer').textContent,
                 "id": id
             },
             success: function(data) {
@@ -111,7 +109,6 @@ function submitSearchFormAjax(delSearch)
         cache: false,
         url: document.getElementById('search-form').action,
         data: {
-            "_token": document.getElementById('token-search').textContent,
             "email": (email == '') ? null : email,
             "name": (name == '') ? null : name,
             "address": (address == '') ? null : address,
@@ -132,7 +129,6 @@ function submitRegisterFormAjax()
     var urlAction = document.getElementById('register-form').action;
 
     var currentPage = document.getElementById('current-page').textContent;
-    var token = document.getElementById('token-register').textContent;
     var dataName = document.getElementById('inp-name').value;
     var dataEmail = document.getElementById('inp-email').value;
     var dataTel = document.getElementById('inp-tel').value;
@@ -145,7 +141,6 @@ function submitRegisterFormAjax()
         cache: false,
         url: urlAction,
         data: {
-            "_token": token,
             "name": dataName,
             "email": dataEmail,
             "tel": dataTel,
@@ -210,7 +205,6 @@ function exportCsv(urlCsv)
 
 function pagination(page = 1)
 {
-    var token = document.getElementById('token-pagination').textContent;
     var email = document.getElementById('search-email').value;
     var name = document.getElementById('search-name').value;
     var address = document.getElementById('search-address').value;
@@ -227,7 +221,6 @@ function pagination(page = 1)
         cache: false,
         url: document.getElementById('url-pagination').textContent,
         data: {
-            "_token": token,
             "page": page,
             "email": (email == '') ? null : email,
             "name": (name == '') ? null : name,

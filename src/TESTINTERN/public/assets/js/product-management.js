@@ -4,16 +4,14 @@ function deleteProductId(id)
 
     var result = confirm("製品 #" + id + " を削除してもよろしいですか?");
     if (result == true) {
-        $.ajax({
+        $.ajax ({
             type: 'POST',
             cache: false,
             url: document.getElementById('url-delete-product').textContent,
             data: {
-                "_token": document.getElementById('token-edit-product').textContent,
                 "id": id
             },
             success: function(data) {
-                // console.log(data);
                 alert("製品を正常に削除。");
                 pagination(currentPage);
             },
@@ -34,13 +32,12 @@ function deleteProductId(id)
 
 function submitSearchFormAjax(delSearch = 0)
 {
-    var token = document.getElementById('token-pagination').textContent;
     var minPrice = document.getElementById('search-price-min').value;
     var name = document.getElementById('search-name').value;
     var maxPrice = document.getElementById('search-price-max').value;
     var isSales = document.getElementById('filter-sales').value;
 
-    if(delSearch == 1) {
+    if (delSearch == 1) {
         name = ''
         minPrice = '';
         maxPrice = '';
@@ -51,12 +48,11 @@ function submitSearchFormAjax(delSearch = 0)
         return;
     }
 
-    $.ajax({
+    $.ajax ({
         type: 'POST',
         cache: false,
         url: document.getElementById('search-form').action,
         data: {
-            "_token": token,
             "name": name,
             "minPrice": minPrice,
             "maxPrice": maxPrice,
@@ -66,9 +62,7 @@ function submitSearchFormAjax(delSearch = 0)
             console.log('success');
             document.getElementById('pagination-content').innerHTML = data;
         },
-        error: function(data) {
-            // console.log(data);
-        },
+        error: function(data) {},
     });
 }
 
@@ -77,7 +71,6 @@ function submitProductFormAjax()
     var urlAction = document.getElementById('product-form').action;
 
     var currentPage = document.getElementById('current-page').textContent;
-    var token = document.getElementById('token-product').textContent;
     var dataName = document.getElementById('inp-name').value;
     var dataFile = document.getElementById('inp-img').value;
     var dataPrice = document.getElementById('inp-price').value;
@@ -89,7 +82,6 @@ function submitProductFormAjax()
         cache: false,
         url: urlAction,
         data: {
-            "_token": token,
             "name": dataName,
             "file": dataFile,
             "price": dataPrice,
@@ -99,9 +91,7 @@ function submitProductFormAjax()
         success: function(data){
             var success = data.responseJSON;
             console.log(success);
-            successHtml = '<div class="alert alert-success"><ul>';
-            successHtml += '<li> 製品を正常に追加する。</li>';
-            successHtml += '</ul></div>';
+            successHtml = '<div class="alert alert-success"><ul><li> 製品を正常に追加する。</li></ul></div>';
 
             $( '#div-alert' ).html( successHtml );
             resetForm();
@@ -110,12 +100,12 @@ function submitProductFormAjax()
         },
         error: function(data){
             var errors = data.responseJSON;
-            errorsHtml = '<div class="alert alert-danger"><ul>';
+            var errorsHtml = '';
 
             $.each( errors.errors, function( key, value ) {
                 errorsHtml += '<li>' + value[0] + '</li>';
             });
-            errorsHtml += '</ul></div>';
+            errorsHtml = '<div class="alert alert-danger"><ul>' + errorsHtml + '</ul></div>';
 
             $( '#div-alert' ).html( errorsHtml );
         },
@@ -129,7 +119,6 @@ function deleteSearchFormAjax()
 
 function pagination(page = 1)
 {
-    var token = document.getElementById('token-pagination').textContent;
     var minPrice = document.getElementById('search-price-min').value;
     var name = document.getElementById('search-name').value;
     var maxPrice = document.getElementById('search-price-max').value;
@@ -140,7 +129,6 @@ function pagination(page = 1)
         cache: false,
         url: document.getElementById('url-pagination').textContent,
         data: {
-            "_token": token,
             "page": page,
             "name": name,
             "minPrice": minPrice,
@@ -151,9 +139,7 @@ function pagination(page = 1)
             console.log('success');
             document.getElementById('pagination-content').innerHTML = data;
         },
-        error: function(data) {
-            // console.log(data);
-        },
+        error: function(data) {},
     });
 }
 
@@ -205,20 +191,11 @@ function addProduct(urlAdd)
     document.getElementById('id-product').value = null;
 }
 
-function submitPopup()
-{
-
-}
-
 function displayProductId(urlEdit, id)
 {
     openModal();
     // lay du lieu va hien thi len trang popup
-    var btnEdit = document.getElementById('btn-edit-inp-' + id);
-    var arrInp = document.getElementsByClassName('inp-row-' + id);
-
     document.getElementById('submit-popup').textContent = "商品の編集";
-
     document.getElementById('product-form').action = urlEdit;
     document.getElementById('inp-name').disabled = true;
     document.getElementById('inp-img').disabled = true;
@@ -236,7 +213,6 @@ function displayProductId(urlEdit, id)
         cache: false,
         url: document.getElementById('url-product').textContent,
         data: {
-            "_token": document.getElementById('token-product').textContent,
             "id": id
         },
         success: function(data) {
@@ -247,7 +223,6 @@ function displayProductId(urlEdit, id)
             document.getElementById('inp-price').value = data.price;
             document.getElementById('inp-sales').value = data.is_sales;
 
-            var btnEdit = document.getElementById('btn-edit-inp-' + id);
             var arrInp = document.getElementsByClassName('inp-row-' + id);
 
             arrInp[0].value = data.name;
@@ -304,6 +279,7 @@ $('#product-form').submit(function(e) {
                 alert("製品が正常に追加されました。");
                 this.reset();
                 resetForm();
+                pagination(1);
             }
             else if(document.getElementById('product-form').action.includes('edit')) {
                 alert("製品を正常に更新されました。");

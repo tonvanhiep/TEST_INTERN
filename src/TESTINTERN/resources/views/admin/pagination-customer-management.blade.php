@@ -1,7 +1,7 @@
 @include('components.pagination')
 
 <div class="d-flex justify-content-end">
-    <p><strong> {{$record['total']}} </strong> 行で <strong> {{($record['min'] >= 0) ? $record['min'] : 0}} </strong> 行から <strong> {{$record['max']}} </strong> 行まで表示</p>
+    <p><strong> {{ $record['total'] }} </strong> 行で <strong> {{ ($record['min'] >= 0) ? $record['min'] : 0 }} </strong> 行から <strong> {{ $record['max'] }} </strong> 行まで表示</p>
 </div>
 
 <div style="overflow-x:auto;">
@@ -20,50 +20,45 @@
             </tr>
         </thead>
         <tbody>
-            <p hidden id="url-edit-customer">{{route('admin.p_editCustomerManagement')}}</p>
-            <p hidden id="url-delete-customer">{{route('admin.p_deleteCustomerManagement')}}</p>
-            <p hidden id="token-edit-customer">{{ csrf_token() }}</p>
             @foreach ($listCustomer as $item)
             <tr>
                 <td data-th="ID">
-                    #{{$item->customer_id}}
+                    #{{ $item->customer_id }}
                 </td>
                 <td data-th="Name">
-                    <input class="form-control inp-row-{{$item->customer_id}} inp-name" value="{{$item->customer_name}}" name="name" disabled>
+                    <input class="form-control inp-row-{{ $item->customer_id }} inp-name" value="{{ $item->customer_name }}" name="name" disabled>
                 </td>
                 <td data-th="Subtotal" class="Tel">
-                    <input class="form-control inp-row-{{$item->customer_id}} inp-tel" value="{{$item->tel_num}}" name="tel" disabled>
+                    <input class="form-control inp-row-{{ $item->customer_id }} inp-tel" value="{{ $item->tel_num }}" name="tel" disabled>
                 </td>
                 <td class="actions" data-th="Email">
-                    <input class="form-control inp-row-{{$item->customer_id}} inp-email" value="{{$item->email}}" name="email" disabled>
+                    <input class="form-control inp-row-{{ $item->customer_id }} inp-email" value="{{ $item->email }}" name="email" disabled>
                 </td>
                 <td class="actions" data-th="Address">
-                    <input class="form-control inp-row-{{$item->customer_id}} inp-address" value="{{$item->address}}" name="address" disabled>
+                    <input class="form-control inp-row-{{ $item->customer_id }} inp-address" value="{{ $item->address }}" name="address" disabled>
                 </td>
                 <td class="actions" data-th="Status">
                     <select class="form-select inp-row-{{$item->customer_id}} inp-status" name="status" aria-label="Disabled select example" disabled>
-                        <option value="1" {{($item->is_active == 1)?'selected':''}}>活動</option>
-                        <option value="0" {{($item->is_active == 0)?'selected':''}}>ロック</option>
+                        <option value="1" {{ ($item->is_active == 1) ? 'selected' : '' }}>活動</option>
+                        <option value="0" {{ ($item->is_active == 0) ? 'selected' : '' }}>ロック</option>
                     </select>
                 </td>
                 <td class="actions" data-th="CreatedAt">
-                    {{$item->created_at}}
+                    {{ $item->created_at }}
                 </td>
                 <td class="actions" data-th="Edit">
-                    <button class="btn btn-outline-warning" id="btn-edit-inp-{{$item->customer_id}}" onclick="editCustomerId({{$item->customer_id}});">編集</button>
+                    <button class="btn btn-outline-warning" id="btn-edit-inp-{{ $item->customer_id }}" onclick="editCustomerId({{ $item->customer_id }});">編集</button>
                 </td>
                 <td class="actions" data-th="Remove">
-                    <button class="btn btn-outline-danger" id="btn-edit-inp-{{$item->customer_id}}" onclick="deleteCustomerId({{$item->customer_id}});">削除</button>
+                    <button class="btn btn-outline-danger" id="btn-edit-inp-{{ $item->customer_id }}" onclick="deleteCustomerId({{ $item->customer_id }});">削除</button>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
-    @php
-        if(count($listCustomer) === 0) {
-            echo "データがありません";
-        }
-    @endphp
+    @if (count($listCustomer) === 0)
+            <p>データがありません</p>
+    @endif
 </div>
 
 @include('components.pagination')

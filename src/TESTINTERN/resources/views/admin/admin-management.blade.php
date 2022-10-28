@@ -23,8 +23,7 @@
                     </div>
                     <div class="modal-body">
                         <div id="div-alert"></div>
-                        <form id="register-form" action="{{route('admin.p_registerManagement')}}">
-                            <p hidden id="token-register">{{ csrf_token() }}</p>
+                        <form id="register-form" action="{{ route('admin.p_registerManagement') }}">
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="inp-name">名前 *</label>
                                 <input type="text" id="inp-name" class="form-control"/>
@@ -74,7 +73,7 @@
                     </div>
                     @if (session()->get('success'))
                         <div class="alert alert-success">
-                            <ul> <li> {{session()->get('success')}} </li> </ul>
+                            <ul> <li>{{ session()->get('success') }}</li> </ul>
                         </div>
                     @endif
                     @if ($errors->any())
@@ -106,9 +105,9 @@
                     @endif
                     <div class="modal-body">
                         <div id="div-alert"></div>
-                        <form id="form-uploadfile" enctype="multipart/form-data" method="POST" action="{{route('admin.admin.p_importCsv')}}">
-                            <p hidden id="token-uploadfile">{{ csrf_token() }}</p>
+                        <form id="form-uploadfile" enctype="multipart/form-data" method="POST" action="{{ route('admin.admin.p_importCsv') }}">
                             @csrf
+
                             <div class="input-group">
                                 <input name="filecsv" type="file" class="form-control" id="file-csv" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                 <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">アップロード</button>
@@ -127,8 +126,9 @@
 
 @section('content')
 <div class="right-sidebar">
-    <p hidden id="url-pagination">{{route('admin.admin.p_pagination')}}</p>
-    <p hidden id="token-pagination">{{csrf_token()}}</p>
+    <p hidden id="url-pagination">{{ route('admin.admin.p_pagination') }}</p>
+    <p hidden id="url-edit-admin">{{ route('admin.admin.p_edit') }}</p>
+    <p hidden id="url-delete-admin">{{ route('admin.admin.p_delete') }}</p>
 
     <h3 class="title-category mb-40">
         <button class="btn btn-outline-dark" id="btn-menu-extend" style="display: inline; margin-right:15px">&larr;</button>管理者アカウントの管理
@@ -140,8 +140,7 @@
             <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#myModal">アカウントを作成</button>
         </div>
         <div class="p-2">
-            <button class="btn btn-info" onclick="exportCsv('{{route('admin.admin.exportCsv')}}')" >CSVをエクスポート</button>
-            {{-- onclick="location.href='{{route('admin.admin.exportCsv')}}'" --}}
+            <button class="btn btn-info" onclick="exportCsv('{{ route('admin.admin.exportCsv') }}')" >CSVをエクスポート</button>
         </div>
         <div class="p-2">
             <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#myModal2">CSVをインポート</button>
@@ -149,16 +148,18 @@
     </div>
 
     <div class="options">
-        <form class="d-flex flex-row" id="search-form" action="{{route('admin.admin.p_search')}}">
-            <p hidden id="token-search">{{ csrf_token() }}</p>
+        <form class="d-flex flex-row" id="search-form" action="{{ route('admin.admin.p_search') }}">
+
             <div class="p-2">
                 <label class="form-label" for="search-name">名前</label>
-                <input class="form-control" id="search-name" type="search" placeholder="名前を入力。。。">
+                <input class="form-control" id="search-name" type="search">
             </div>
+
             <div class="p-2">
                 <label class="form-label" for="search-email">メール</label>
-                <input class="form-control" id="search-email" type="search" placeholder="メールを入力。。。">
+                <input class="form-control" id="search-email" type="search">
             </div>
+
             <div class="p-2">
                 <label class="form-label" for="filter-group">グループ</label>
                 <select class="form-select" id="filter-group">
@@ -168,6 +169,7 @@
                     <option value="3">レビュアー</option>
                 </select>
             </div>
+
             <div class="p-2">
                 <label class="form-label" for="filter-status">スターテス</label>
                 <select class="form-select" id="filter-status">
@@ -176,9 +178,11 @@
                     <option value="0">ロック</option>
                 </select>
             </div>
+
             <div class="align-self-end p-2">
                 <button class="btn btn-outline-dark" type="button" onclick="submitSearchFormAjax();">検索</button>
             </div>
+
             <div class="align-self-end p-2">
                 <button class="btn btn-outline-dark" type="reset" onclick="deleteSearchFormAjax();">検索を削除</button>
             </div>
@@ -198,7 +202,7 @@
 
 
 
-@section('js')
-    <script src="{{asset('assets/js/admin-management.js')}}"></script>
-@endsection
+@push('js')
+    <script src="{{ asset('assets/js/admin-management.js') }}"></script>
+@endpush
 

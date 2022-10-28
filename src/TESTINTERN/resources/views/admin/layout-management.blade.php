@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title')</title>
 
@@ -19,7 +20,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
-    @yield('css')
+
+    @stack('css')
+
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
 </head>
 <body>
     @yield('popup')
@@ -39,6 +49,7 @@
     <script src="{{asset('assets/js/admin-xx.js?v=003')}}"></script>
     <script src="{{asset('assets/js/bootstrap.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
-    @yield('js')
+
+    @stack('js')
 </body>
 </html>

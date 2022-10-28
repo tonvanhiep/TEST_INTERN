@@ -5,7 +5,7 @@
 
 
 @section('title')
-顧客アカウントの管理
+    顧客アカウントの管理
 @endsection
 
 
@@ -21,10 +21,10 @@
                         <h5 class="modal-title">顧客のアカウントを登録</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
+
                     <div class="modal-body">
                         <div id="div-alert"></div>
-                        <form id="register-form" action="{{route('account.p_registerAdmin')}}">
-                            <p hidden id="token-register">{{ csrf_token() }}</p>
+                        <form id="register-form" action="{{ route('account.p_registerAdmin') }}">
                             <div class="form-outline mb-3">
                                 <label class="form-label" for="inp-name">名前 *</label>
                                 <input type="text" id="inp-name" class="form-control"/>
@@ -75,7 +75,7 @@
                     </div>
                     @if (session()->get('success'))
                         <div class="alert alert-success">
-                            <ul> <li> {{session()->get('success')}} </li> </ul>
+                            <ul> <li> {{ session()->get('success') }} </li> </ul>
                         </div>
                     @endif
                     @if ($errors->any())
@@ -108,12 +108,10 @@
                     <div class="modal-body">
                         <div id="div-alert"></div>
                         <form id="form-uploadfile" enctype="multipart/form-data" method="POST" action="{{route('admin.p_importCsvCustomerManagement')}}">
-                            <p hidden id="token-uploadfile">{{ csrf_token() }}</p>
                             @csrf
                             <div class="input-group">
                                 <input name="filecsv" type="file" class="form-control" id="file-csv" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                 <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">アップロード</button>
-                                {{-- onclick="importCsv();" --}}
                             </div>
                         </form>
                     </div>
@@ -129,9 +127,9 @@
 
 @section('content')
 <div class="right-sidebar">
-    <p hidden id="url-pagination">{{route('admin.p_paginationCustomerManagement')}}</p>
-    <p hidden id="token-pagination">{{csrf_token()}}</p>
-
+    <p hidden id="url-pagination">{{ route('admin.p_paginationCustomerManagement') }}</p>
+    <p hidden id="url-edit-customer">{{route('admin.p_editCustomerManagement')}}</p>
+    <p hidden id="url-delete-customer">{{route('admin.p_deleteCustomerManagement')}}</p>
     <h3 class="title-category mb-40">
         <button class="btn btn-outline-dark" id="btn-menu-extend" style="display: inline; margin-right:15px">&larr;</button>顧客アカウントの管理
     </h3>
@@ -151,14 +149,13 @@
 
     <div class="options">
         <form class="d-flex flex-row" id="search-form" action="{{route('admin.p_searchcustomerManagement')}}">
-            <p hidden id="token-search">{{ csrf_token() }}</p>
             <div class="p-2">
                 <label class="form-label" for="search-name">名前</label>
-                <input class="form-control" id="search-name" type="search" placeholder="名前を入力。。。">
+                <input class="form-control" id="search-name" type="search">
             </div>
             <div class="p-2">
                 <label class="form-label" for="search-email">メール</label>
-                <input class="form-control" id="search-email" type="search" placeholder="メールを入力。。。">
+                <input class="form-control" id="search-email" type="search">
             </div>
             <div class="p-2">
                 <label class="form-label" for="filter-status">スターテス</label>
@@ -170,7 +167,7 @@
             </div>
             <div class="p-2">
                 <label class="form-label" for="search-address">住所</label>
-                <input class="form-control" id="search-address" type="search" placeholder="住所を入力。。。">
+                <input class="form-control" id="search-address" type="search">
             </div>
             <div class="align-self-end p-2">
                 <button class="btn btn-outline-dark" type="button" onclick="submitSearchFormAjax();">検索</button>

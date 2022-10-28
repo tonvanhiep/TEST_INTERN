@@ -11,12 +11,11 @@ function editAdminId(id)
         }
     }
     else if (btnEdit.textContent == "セーブ") {
-        $.ajax({
+        $.ajax ({
             type: 'POST',
             cache: false,
             url: document.getElementById('url-edit-admin').textContent,
             data: {
-                "_token": document.getElementById('token-edit-admin').textContent,
                 "id": id,
                 "name": arrInp[0].value,
                 "email": arrInp[1].value,
@@ -55,12 +54,11 @@ function deleteAdminId(id)
 
     var result = confirm("管理者アカウント #" + id + " を削除してもよろしいですか?");
     if (result == true) {
-        $.ajax({
+        $.ajax ({
             type: 'POST',
             cache: false,
             url: document.getElementById('url-delete-admin').textContent,
             data: {
-                "_token": document.getElementById('token-edit-admin').textContent,
                 "id": id
             },
             success: function(data) {
@@ -112,7 +110,6 @@ function submitSearchFormAjax(delSearch = 0)
         cache: false,
         url: document.getElementById('search-form').action,
         data: {
-            "_token": document.getElementById('token-search').textContent,
             "email": (email == '') ? null : email,
             "name": (name == '') ? null : name,
             "group": (group == '') ? -1 : group,
@@ -134,7 +131,6 @@ function submitRegisterFormAjax()
     var urlAction = document.getElementById('register-form').action;
 
     var currentPage = document.getElementById('current-page').textContent;
-    var token = document.getElementById('token-register').textContent;
     var dataName = document.getElementById('inp-name').value;
     var dataEmail = document.getElementById('inp-email').value;
     var dataPass = document.getElementById('inp-pass').value;
@@ -146,7 +142,6 @@ function submitRegisterFormAjax()
         cache: false,
         url: urlAction,
         data: {
-            "_token": token,
             "name": dataName,
             "email": dataEmail,
             "pass": dataPass,
@@ -156,9 +151,7 @@ function submitRegisterFormAjax()
         success: function(data){
             var success = data.responseJSON;
             console.log(success);
-            successHtml = '<div class="alert alert-success"><ul>';
-            successHtml += '<li> アカウント登録成功。</li>';
-            successHtml += '</ul></div>';
+            successHtml = '<div class="alert alert-success"><ul><li> アカウント登録成功。</li></ul></div>';
 
             $( '#div-alert' ).html( successHtml );
             document.getElementById("register-form").reset();
@@ -168,13 +161,13 @@ function submitRegisterFormAjax()
         },
         error: function(data){
             var errors = data.responseJSON;
-            errorsHtml = '<div class="alert alert-danger"><ul>';
+            var errorsHtml = '';
 
             $.each( errors.errors, function( key, value ) {
                 errorsHtml += '<li>' + value[0] + '</li>';
             });
-            errorsHtml += '</ul></div>';
 
+            errorsHtml = '<div class="alert alert-danger"><ul>' + errorsHtml + '</ul></div>';
             $( '#div-alert' ).html( errorsHtml );
         },
     });
@@ -187,7 +180,6 @@ function deleteSearchFormAjax()
 
 function pagination(page = 1)
 {
-    var token = document.getElementById('token-pagination').textContent;
     var email = document.getElementById('search-email').value;
     var name = document.getElementById('search-name').value;
     var group = document.getElementById('filter-group').value;
@@ -199,12 +191,11 @@ function pagination(page = 1)
     is_active = (is_active == 1 || is_active == 0) ? is_active : -1;
 
 
-    $.ajax({
+    $.ajax ({
         type: 'POST',
         cache: false,
         url: document.getElementById('url-pagination').textContent,
         data: {
-            "_token": token,
             "page": page,
             "email": (email == '') ? null : email,
             "name": (name == '') ? null : name,

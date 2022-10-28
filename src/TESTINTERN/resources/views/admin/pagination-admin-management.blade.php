@@ -1,7 +1,7 @@
 @include('components.pagination')
 
 <div class="d-flex justify-content-end">
-    <p><strong> {{$record['total']}} </strong> 行で<strong> {{($record['min'] >= 0) ? $record['min'] : 0}} </strong>行から<strong> {{$record['max']}} </strong>行まで表示</p>
+    <p><strong> {{ $record['total'] }} </strong> 行で<strong> {{ ($record['min'] >= 0) ? $record['min'] : 0 }} </strong>行から<strong> {{ $record['max'] }} </strong>行まで表示</p>
 </div>
 
 <div>
@@ -19,51 +19,54 @@
             </tr>
         </thead>
         <tbody>
-            <p hidden id="url-edit-admin">{{route('admin.admin.p_edit')}}</p>
-            <p hidden id="url-delete-admin">{{route('admin.admin.p_delete')}}</p>
-            <p hidden id="token-edit-admin">{{ csrf_token() }}</p>
             @foreach ($listAdmin as $item)
             <tr>
                 <td data-th="ID">
-                    #{{$item->admin_id}}
+                    #{{ $item->admin_id }}
                 </td>
+
                 <td data-th="Name">
-                    <input class="form-control inp-row-{{$item->admin_id}} inp-name" value="{{$item->name}}" name="name" disabled>
+                    <input class="form-control inp-row-{{ $item->admin_id }} inp-name" value="{{ $item->name }}" name="name" disabled>
                 </td>
+
                 <td class="actions" data-th="Email">
-                    <input class="form-control inp-row-{{$item->admin_id}} inp-email" value="{{$item->email}}" name="email" disabled>
+                    <input class="form-control inp-row-{{ $item->admin_id }} inp-email" value="{{ $item->email }}" name="email" disabled>
                 </td>
+
                 <td class="actions" data-th="Group">
-                    <select class="form-select inp-row-{{$item->admin_id}} inp-status" name="status" aria-label="Disabled select example" disabled>
-                        <option value="1" {{($item->group_role == 1)?'selected':''}}>管理者</option>
-                        <option value="2" {{($item->group_role == 2)?'selected':''}}>編集者</option>
-                        <option value="3" {{($item->group_role == 3)?'selected':''}}>レビュアー</option>
+                    <select class="form-select inp-row-{{ $item->admin_id }} inp-status" name="status" aria-label="Disabled select example" disabled>
+                        <option value="1" {{ ($item->group_role == 1) ? 'selected' : '' }}>管理者</option>
+                        <option value="2" {{ ($item->group_role == 2) ? 'selected' : '' }}>編集者</option>
+                        <option value="3" {{ ($item->group_role == 3) ? 'selected' : '' }}>レビュアー</option>
                     </select>
                 </td>
+
                 <td class="actions" data-th="Status">
-                    <select class="form-select inp-row-{{$item->admin_id}} inp-status" name="status" aria-label="Disabled select example" disabled>
-                        <option value="1" {{($item->is_active == 1)?'selected':''}}>活動</option>
-                        <option value="0" {{($item->is_active == 0)?'selected':''}}>ロック</option>
+                    <select class="form-select inp-row-{{ $item->admin_id }} inp-status" name="status" aria-label="Disabled select example" disabled>
+                        <option value="1" {{ ($item->is_active == 1) ? 'selected' : '' }}>活動</option>
+                        <option value="0" {{ ($item->is_active == 0) ? 'selected' : '' }}>ロック</option>
                     </select>
                 </td>
+
                 <td class="actions" data-th="CreatedAt">
-                    {{$item->created_at}}
+                    {{ $item->created_at }}
                 </td>
+
                 <td class="actions" data-th="Edit">
-                    <button class="btn btn-outline-warning" id="btn-edit-inp-{{$item->admin_id}}" onclick="editAdminId({{$item->admin_id}});">編集</button>
+                    <button class="btn btn-outline-warning" id="btn-edit-inp-{{ $item->admin_id }}" onclick="editAdminId({{ $item->admin_id }});">編集</button>
                 </td>
+
                 <td class="actions" data-th="Remove">
-                    <button class="btn btn-outline-danger" id="btn-edit-inp-{{$item->admin_id}}" onclick="deleteAdminId({{$item->admin_id}});">削除</button>
+                    <button class="btn btn-outline-danger" id="btn-edit-inp-{{ $item->admin_id }}" onclick="deleteAdminId({{ $item->admin_id }});">削除</button>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
-    @php
-        if(count($listAdmin) === 0) {
-            echo "データがありません";
-        }
-    @endphp
+
+    @if (count($listAdmin) === 0)
+        <p>データがありません</p>
+    @endif
 </div>
 
 @include('components.pagination')

@@ -1,6 +1,6 @@
 @if (isset($currentPage) && isset($totalPage))
 <div class="d-flex justify-content-center">
-    <p hidden id="current-page">{{$currentPage}}</p>
+    <p hidden id="current-page">{{ $currentPage }}</p>
     <div>
         <ul class="pagination">
             @if ($currentPage >= 3)
@@ -13,7 +13,7 @@
 
             @if ($currentPage >= 2)
                 <li class="page-item">
-                    <a onclick="pagination({{$currentPage - 1}})"; class="page-link" aria-label="Previous">
+                    <a onclick="pagination({{ $currentPage - 1 }})"; class="page-link" aria-label="Previous">
                         <span aria-hidden="true">&lsaquo;</span>
                     </a>
                 </li>
@@ -26,7 +26,7 @@
                     </li>
 
                     @php
-                        if($i > 3 && $i < $currentPage - 2) {
+                        if ($i > 3 && $i < $currentPage - 2) {
                             $i = $currentPage - 3;
                         }
                         else if ($i > $currentPage + 2 && $i < $totalPage - 2) {
@@ -34,8 +34,8 @@
                         }
                     @endphp
                 @else
-                    <li class="page-item {{($i == $currentPage)?'active':''}}">
-                        <a class="page-link" onclick="pagination({{$i}});">{{$i}}</a>
+                    <li class="page-item {{ ($i == $currentPage) ? 'active' : '' }}">
+                        <a class="page-link" onclick="pagination({{ $i }});">{{ $i }}</a>
                     </li>
                 @endif
 
@@ -43,7 +43,7 @@
 
             @if ($currentPage < $totalPage)
                 <li class="page-item">
-                    <a onclick="pagination({{$currentPage + 1}});" class="page-link" aria-label="Next">
+                    <a onclick="pagination({{ $currentPage + 1 }});" class="page-link" aria-label="Next">
                         <span aria-hidden="true">&rsaquo;</span>
                     </a>
                 </li>
@@ -51,7 +51,7 @@
 
             @if ($currentPage < $totalPage - 1)
                 <li class="page-item">
-                    <a onclick="pagination({{$totalPage}});" class="page-link" aria-label="Next">
+                    <a onclick="pagination({{ $totalPage }});" class="page-link" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
