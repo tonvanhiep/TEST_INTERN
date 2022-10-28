@@ -11,6 +11,7 @@ services:
       - "80:80"
     volumes:
       - ./src/TESTINTERN:/var/www/html
+      - ./docker/nginx/helloworld.nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - mysql
       - php

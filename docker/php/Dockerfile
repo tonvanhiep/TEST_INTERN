@@ -11,13 +11,7 @@ RUN apk add --no-cache \
       zip \
     && docker-php-ext-install zip
 
-RUN apk add --no-cache libpng libpng-dev && docker-php-ext-install gd && apk del libpng-dev
-
-RUN docker-php-ext-configure gd \
-        --with-freetype-dir=/usr/lib/ \
-        --with-png-dir=/usr/lib/ \
-        --with-jpeg-dir=/usr/lib/ \
-        --with-gd
-
+RUN apk add --no-cache libpng libpng-dev && docker-php-ext-install gd
+RUN docker-php-ext-configure gd 
 RUN NUMPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
     && docker-php-ext-install -j${NUMPROC} gd
