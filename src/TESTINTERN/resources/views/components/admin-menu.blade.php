@@ -2,13 +2,13 @@
     <div>
         <ul class="left-sidebar nav flex-column nav-pills nav-fill">
             <li class="nav-item">
-                <a class="nav-link {{ $nameRoute == 'admin.admin.management' ? 'active' : ''}}" href="{{route('admin.admin.management')}}">管理者アカウントの管理</a>
+                <a class="nav-link {{ $nameRoute == 'admin.admin.management' ? 'active' : ''}}" href="{{ route('admin.admin.management') }}">管理者アカウントの管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ $nameRoute == 'admin.customerManagement' ? 'active' : ''}}" href="{{route('admin.customerManagement')}}">顧客アカウントの管理</a>
+                <a class="nav-link {{ $nameRoute == 'admin.customerManagement' ? 'active' : ''}}" href="{{ route('admin.customerManagement') }}">顧客アカウントの管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ $nameRoute == 'admin.product.management' ? 'active' : ''}}" href="{{route('admin.product.management')}}">製品の管理</a>
+                <a class="nav-link {{ $nameRoute == 'admin.product.management' ? 'active' : ''}}" href="{{ route('admin.product.management') }}">製品の管理</a>
             </li>
         </ul>
     </div>

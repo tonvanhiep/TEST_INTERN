@@ -12,8 +12,8 @@
         <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/album/">
 
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}">
-        <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,11 +24,10 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-        @yield('css')
+        @stack('css')
     </head>
 
     <body>
-        <div hidden id="top"></div>
         @include('components.header-client')
 
         <main role="main">
@@ -40,12 +39,12 @@
         <footer class="text-muted">
             <div class="container">
                 <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-                <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
+                <p>New to Bootstrap? <a href="#">Visit the homepage</a> or read our <a href="#">getting started guide</a>.</p>
             </div>
         </footer>
 
-        <script src="{{asset('assets/js/client.js')}}"></script>
+        <script src="{{ asset('assets/js/client.js') }}"></script>
 
-        @yield('js')
+        @stack('js')
     </body>
 </html>

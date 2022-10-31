@@ -5,13 +5,13 @@
 接触
 @endsection
 
-@section('css')
+@push('css')
     <style>
         address {
             margin-bottom: 0;
         }
     </style>
-@endsection
+@endpush
 
 
 @section('main')
@@ -31,14 +31,14 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 mb-5 mb-lg-0">
-                        <form method="POST" action="{{route('p_contact')}}">
+                        <form method="POST" action="{{ route('p_contact') }}">
                             @csrf
                             <div class="row">
                                 <div class="col-6 mb-3">
                                     <div class="form-group">
                                         <label class="form-label" for="fname">ファーストネーム</label>
                                         <input type="text" class="form-control" name="fname" id="fname">
-                                        @if($errors->has('fname'))
+                                        @if ($errors->has('fname'))
                                             <div class="error" style="color: red;">{{ $errors->first('fname') }}</div>
                                         @endif
                                     </div>
@@ -47,7 +47,7 @@
                                     <div class="form-group">
                                         <label class="form-label" for="lname">ラストネーム</label>
                                         <input type="text" class="form-control" name="lname" id="lname">
-                                        @if($errors->has('lname'))
+                                        @if ($errors->has('lname'))
                                             <div class="error" style="color: red;">{{ $errors->first('lname') }}</div>
                                         @endif
                                     </div>
@@ -57,7 +57,7 @@
                             <div class="form-group mb-3">
                                 <label class="form-label" for="tel">電話番号</label>
                                 <input type="tel" class="form-control" name="phone" id="tel">
-                                @if($errors->has('phone'))
+                                @if ($errors->has('phone'))
                                     <div class="error" style="color: red;">{{ $errors->first('phone') }}</div>
                                 @endif
                             </div>
@@ -65,7 +65,7 @@
                             <div class="form-group mb-3">
                                 <label class="form-label" for="email">メール</label>
                                 <input type="email" class="form-control" name="email" id="email">
-                                @if($errors->has('email'))
+                                @if ($errors->has('email'))
                                     <div class="error" style="color: red;">{{ $errors->first('email') }}</div>
                                 @endif
                             </div>
@@ -73,7 +73,7 @@
                             <div class="form-group mb-3">
                                 <label class="form-label" for="message">メッセージ</label>
                                 <textarea class="form-control" name="message" id="message" cols="30" rows="5"></textarea>
-                                @if($errors->has('message'))
+                                @if ($errors->has('message'))
                                     <div class="error" style="color: red;">{{ $errors->first('message') }}</div>
                                 @endif
                             </div>

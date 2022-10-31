@@ -17,7 +17,7 @@
             <h2>すべての製品</h2>
         </div>
         <div class="row" id="display-product">
-            <p id="url-load-more" hidden>{{route('loadMoreProduct')}}</p>
+            <p id="url-load-more" hidden>{{ route('loadMoreProduct') }}</p>
             <p id="token-load-more" hidden>{{ csrf_token() }}</p>
 
             @include('client.pagination-product')
@@ -25,7 +25,7 @@
         </div>
 
         <div class="d-flex justify-content-center">
-            <button id="btn-load-more" style="width: 150px" class="btn btn-block btn-outline-secondary" onclick="loadMoreProduct();" {{ ($loadMore == 1) ? '' : 'hidden'}}>もっと。。。</button>
+            <button id="btn-load-more" style="width: 150px" class="btn btn-block btn-outline-secondary" onclick="loadMoreProduct();" {{ ($loadMore == 1) ? '' : 'hidden' }}>もっと。。。</button>
         </div>
 
     </div>

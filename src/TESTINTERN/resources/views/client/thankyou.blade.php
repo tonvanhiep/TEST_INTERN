@@ -11,16 +11,16 @@
     <div class="container">
         <div class="py-5 text-center">
             <h2>ありがとうございます。</h2>
-            <p>注文 #{{$id_dh}} が正常に行われました。 ご注文を確認するために、できるだけ早くご連絡いたします。 信頼してご注文いただきありがとうございます。</p>
+            <p>注文 #{{ $id_dh }} が正常に行われました。 ご注文を確認するために、できるだけ早くご連絡いたします。 信頼してご注文いただきありがとうございます。</p>
         </div>
     </div>
 </div>
 @endsection
 
-@section('js')
+@push('js')
     <script>
         cart = new Array();
         localStorage.setItem('cart', JSON.stringify(cart))
         displayTotalCart();
     </script>
-@endsection
+@endpush

@@ -5,7 +5,7 @@
     カード
 @endsection
 
-@section('css')
+@push('css')
     <style>
         address {
             margin-bottom: 0;
@@ -14,7 +14,7 @@
             vertical-align: middle;
         }
     </style>
-@endsection
+@endpush
 
 
 @section('main')
@@ -46,16 +46,16 @@
         </table>
 
         <div class="d-flex justify-content-between mt-5">
-            <button class="btn btn-warning" style="width: 10rem" onclick="location.href='{{route('product')}}'">買い続ける</button>
-            <button class="btn btn-success" style="width: 10rem" onclick="location.href='{{route('checkout')}}'" id="btn-checkout" hidden>チェックアウト</button>
+            <button class="btn btn-warning" style="width: 10rem" onclick="location.href='{{ route('product') }}'">買い続ける</button>
+            <button class="btn btn-success" style="width: 10rem" onclick="location.href='{{ route('checkout') }}'" id="btn-checkout" hidden>チェックアウト</button>
         </div>
     </div>
 </div>
 @endsection
 
-@section('js')
-<script src="{{asset('assets/js/cart.js')}}"></script>
-<script>
-    displayCart();
-</script>
-@endsection
+@push('js')
+    <script src="{{ asset('assets/js/cart.js') }}"></script>
+    <script>
+        displayCart();
+    </script>
+@endpush

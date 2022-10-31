@@ -47,20 +47,20 @@
 
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">情報</h4>
-                <form method="POST" action="{{route('p_checkout')}}" onsubmit="saveCartToCookie();">
+                <form method="POST" action="{{ route('p_checkout') }}" onsubmit="saveCartToCookie();">
                     @csrf
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">ファーストネーム</label>
                             <input type="text" class="form-control" name="firstName" id="firstName" placeholder="RC" value="">
-                            @if($errors->has('firstName'))
+                            @if ($errors->has('firstName'))
                                 <div class="error" style="color: red;">{{ $errors->first('firstName') }}</div>
                             @endif
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="lastName">ラストネーム</label>
                             <input type="text" class="form-control" name="lastName" id="lastName" placeholder="VN" value="">
-                            @if($errors->has('lastName'))
+                            @if ($errors->has('lastName'))
                                 <div class="error" style="color: red;">{{ $errors->first('lastName') }}</div>
                             @endif
                         </div>
@@ -69,7 +69,7 @@
                     <div class="mb-3">
                         <label for="email">メール</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="you@example.com">
-                        @if($errors->has('email'))
+                        @if ($errors->has('email'))
                             <div class="error" style="color: red;">{{ $errors->first('email') }}</div>
                         @endif
                     </div>
@@ -80,7 +80,7 @@
                             <span class="input-group-text" id="basic-addon3">+84</span>
                             <input type="tel" class="form-control" name="tel" id="tel" aria-describedby="basic-addon3" placeholder="337480664">
                         </div>
-                        @if($errors->has('tel'))
+                        @if ($errors->has('tel'))
                             <div class="error" style="color: red;">{{ $errors->first('tel') }}</div>
                         @endif
                     </div>
@@ -88,7 +88,7 @@
                     <div class="mb-3">
                         <label for="address">住所</label>
                         <input type="text" class="form-control" name="address" id="address" placeholder="1234 Main St">
-                        @if($errors->has('address'))
+                        @if ($errors->has('address'))
                             <div class="error" style="color: red;">{{ $errors->first('address') }}</div>
                         @endif
                     </div>
@@ -96,7 +96,7 @@
                     <div class="mb-3">
                         <label for="massage">メッセージ</label>
                         <textarea type="text" class="form-control" name="massage" id="message" placeholder="..." rows="2"></textarea>
-                        @if($errors->has('massage'))
+                        @if ($errors->has('massage'))
                             <div class="error" style="color: red;">{{ $errors->first('massage') }}</div>
                         @endif
                     </div>
@@ -118,7 +118,7 @@
                             <input id="momo" name="paymentMethod" type="radio" class="custom-control-input" value="3">
                             <label class="custom-control-label" for="momo">Momo</label>
                         </div>
-                        @if($errors->has('paymentMethod'))
+                        @if ($errors->has('paymentMethod'))
                             <div class="error" style="color: red;">{{ $errors->first('paymentMethod') }}</div>
                         @endif
                     </div>
@@ -133,10 +133,10 @@
 </div>
 @endsection
 
-@section('js')
+@push('js')
     <script src="{{asset('assets/js/checkout.js')}}"></script>
     <script>
         getCartLocalStorage();
         displayCartCheckout();
     </script>
-@endsection
+@endpush

@@ -152,9 +152,7 @@ function submitRegisterFormAjax()
         success: function(data){
             var success = data.responseJSON;
             console.log(success);
-            successHtml = '<div class="alert alert-success"><ul>';
-            successHtml += '<li> アカウント登録成功。</li>';
-            successHtml += '</ul></div>';
+            successHtml = '<div class="alert alert-success"><ul><li> アカウント登録成功。</li></ul></div>';
 
             $( '#div-alert' ).html( successHtml );
             document.getElementById("register-form").reset();

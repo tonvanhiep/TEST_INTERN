@@ -8,9 +8,9 @@
 
     <title>@yield('title')</title>
 
-    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/admin-style.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin-style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,9 +46,9 @@
         </div>
     </div>
 
-    <script src="{{asset('assets/js/admin-xx.js?v=003')}}"></script>
-    <script src="{{asset('assets/js/bootstrap.js')}}"></script>
-    <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
+    <script src="{{ asset('assets/js/admin-xx.js?v=003') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 
     @stack('js')
 </body>

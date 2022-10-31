@@ -107,7 +107,7 @@
                     @endif
                     <div class="modal-body">
                         <div id="div-alert"></div>
-                        <form id="form-uploadfile" enctype="multipart/form-data" method="POST" action="{{route('admin.p_importCsvCustomerManagement')}}">
+                        <form id="form-uploadfile" enctype="multipart/form-data" method="POST" action="{{ route('admin.p_importCsvCustomerManagement') }}">
                             @csrf
                             <div class="input-group">
                                 <input name="filecsv" type="file" class="form-control" id="file-csv" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
@@ -128,8 +128,8 @@
 @section('content')
 <div class="right-sidebar">
     <p hidden id="url-pagination">{{ route('admin.p_paginationCustomerManagement') }}</p>
-    <p hidden id="url-edit-customer">{{route('admin.p_editCustomerManagement')}}</p>
-    <p hidden id="url-delete-customer">{{route('admin.p_deleteCustomerManagement')}}</p>
+    <p hidden id="url-edit-customer">{{ route('admin.p_editCustomerManagement') }} </p>
+    <p hidden id="url-delete-customer">{{ route('admin.p_deleteCustomerManagement' )}}</p>
     <h3 class="title-category mb-40">
         <button class="btn btn-outline-dark" id="btn-menu-extend" style="display: inline; margin-right:15px">&larr;</button>顧客アカウントの管理
     </h3>
@@ -140,7 +140,7 @@
             <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#myModal">アカウントを作成</button>
         </div>
         <div class="p-2">
-            <button class="btn btn-info" onclick="exportCsv('{{route('admin.exportCsvCustomerManagement')}}')">CSVをエクスポート</button>
+            <button class="btn btn-info" onclick="exportCsv('{{ route('admin.exportCsvCustomerManagement') }}')">CSVをエクスポート</button>
         </div>
         <div class="p-2">
             <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#myModal2">CSVをインポート</button>
@@ -148,7 +148,7 @@
     </div>
 
     <div class="options">
-        <form class="d-flex flex-row" id="search-form" action="{{route('admin.p_searchcustomerManagement')}}">
+        <form class="d-flex flex-row" id="search-form" action="{{ route('admin.p_searchcustomerManagement') }}">
             <div class="p-2">
                 <label class="form-label" for="search-name">名前</label>
                 <input class="form-control" id="search-name" type="search">
@@ -191,7 +191,6 @@
 
 
 
-@section('js')
-    <script src="{{asset('assets/js/customer-management.js')}}"></script>
-@endsection
-
+@push('js')
+    <script src="{{ asset('assets/js/customer-management.js') }}"></script>
+@endpush

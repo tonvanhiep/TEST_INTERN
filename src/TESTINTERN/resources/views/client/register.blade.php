@@ -21,7 +21,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{route('account.register')}}">
+    <form method="POST" action="{{ route('account.register') }}">
         @csrf
         <div class="form-outline mb-3">
             <label class="form-label" for="inp-name">名前 *</label>
@@ -65,7 +65,7 @@
         </div>
 
         <p class="text-center text-muted mt-4 mb-0">
-            アカウントを持っていますか？ <a href="{{route('account.login')}}" class="fw-bold text-body"><u>ログイン</u></a>
+            アカウントを持っていますか？ <a href="{{ route('account.login') }}" class="fw-bold text-body"><u>ログイン</u></a>
         </p>
     </form>
 @endsection

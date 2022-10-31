@@ -21,7 +21,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{route('account.p_login')}}">
+    <form method="POST" action="{{ route('account.p_login') }}">
         @csrf
         <div class="form-outline mb-3">
             <label class="form-label" for="inp-email">メール *</label>
@@ -38,7 +38,7 @@
         </div>
 
         <p class="text-center text-muted mt-4 mb-0">
-            まだアカウントを持っていませんか？<a href="{{route('account.register')}}" class="fw-bold text-body"><u>レジスター</u></a>
+            まだアカウントを持っていませんか？<a href="{{ route('account.register') }}" class="fw-bold text-body"><u>レジスター</u></a>
         </p>
     </form>
 @endsection
