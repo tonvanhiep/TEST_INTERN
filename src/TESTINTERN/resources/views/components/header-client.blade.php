@@ -29,7 +29,7 @@
                     </div>
                 @else
                     <button type="button" class="btn btn-outline-light me-2" onclick="location.href='{{ route('account.login') }}'">ログイン</button>
-                    <button type="button" class="btn btn-outline-warning" onclick="location.href='{{ route('account.register') }}'">レジスター</button>';
+                    <button type="button" class="btn btn-outline-warning" onclick="location.href='{{ route('account.register') }}'">レジスター</button>
                 @endif
 
             </div>
