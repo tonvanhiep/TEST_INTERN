@@ -26,19 +26,19 @@
                     #{{ $item->customer_id }}
                 </td>
                 <td data-th="Name">
-                    <input style="min-width: fit-content" class="form-control inp-row-{{ $item->customer_id }} inp-name" value="{{ $item->customer_name }}" name="name" disabled>
+                    <input style="min-width: max-content" class="form-control inp-row-{{ $item->customer_id }} inp-name" value="{{ $item->customer_name }}" name="name" disabled>
                 </td>
                 <td data-th="Subtotal" class="Tel">
-                    <input style="min-width: fit-content" class="form-control inp-row-{{ $item->customer_id }} inp-tel" value="{{ $item->tel_num }}" name="tel" disabled>
+                    <input style="min-width: max-content" class="form-control inp-row-{{ $item->customer_id }} inp-tel" value="{{ $item->tel_num }}" name="tel" disabled>
                 </td>
                 <td class="actions" data-th="Email">
-                    <input style="min-width: fit-content" class="form-control inp-row-{{ $item->customer_id }} inp-email" value="{{ $item->email }}" name="email" disabled>
+                    <input style="min-width: max-content" class="form-control inp-row-{{ $item->customer_id }} inp-email" value="{{ $item->email }}" name="email" disabled>
                 </td>
                 <td class="actions" data-th="Address">
-                    <input style="min-width: fit-content" class="form-control inp-row-{{ $item->customer_id }} inp-address" value="{{ $item->address }}" name="address" disabled>
+                    <input style="min-width: max-content" class="form-control inp-row-{{ $item->customer_id }} inp-address" value="{{ $item->address }}" name="address" disabled>
                 </td>
                 <td class="actions" data-th="Status">
-                    <select style="min-width: fit-content" class="form-select inp-row-{{$item->customer_id}} inp-status" name="status" aria-label="Disabled select example" disabled>
+                    <select style="min-width: max-content" class="form-select inp-row-{{$item->customer_id}} inp-status" name="status" aria-label="Disabled select example" disabled>
                         <option value="1" {{ ($item->is_active == 1) ? 'selected' : '' }}>活動</option>
                         <option value="0" {{ ($item->is_active == 0) ? 'selected' : '' }}>ロック</option>
                     </select>

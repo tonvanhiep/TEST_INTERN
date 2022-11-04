@@ -58,7 +58,7 @@
                 </td>
 
                 <td data-th="Name" class="div-img">
-                    <input style="width: fit-content" class="form-control inp-row-{{ $item->product_id }} inp-name" value="{{ $item->product_name }}" name="name" disabled>
+                    <input style="width: max-content" class="form-control inp-row-{{ $item->product_id }} inp-name" value="{{ $item->product_name }}" name="name" disabled>
                     @php
                         $image = '';
                         if (strlen(strstr($item->product_image, 'http')) > 0) {
@@ -74,7 +74,7 @@
                 </td>
 
                 <td data-th="Description">
-                    <textarea  style="min-width: fit-content" class="form-control inp-row-{{ $item->product_id }} inp-description" name="description" disabled>{{ $item->description }}</textarea>
+                    <textarea  style="min-width: max-content" class="form-control inp-row-{{ $item->product_id }} inp-description" name="description" disabled>{{ $item->description }}</textarea>
                 </td>
 
                 <td data-th="Price">
@@ -82,7 +82,7 @@
                 </td>
 
                 <td class="actions" data-th="Status">
-                    <select style="width: fit-content" class="form-select inp-row-{{ $item->product_id }} inp-status" name="status" aria-label="Disabled select example" disabled>
+                    <select style="width: max-content" class="form-select inp-row-{{ $item->product_id }} inp-status" name="status" aria-label="Disabled select example" disabled>
                         <option value="1" {{ ($item->is_sales == 1) ? 'selected' : '' }}>活動</option>
                         <option value="0" {{ ($item->is_sales == 0) ? 'selected' : '' }}>ロック</option>
                     </select>
