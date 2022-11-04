@@ -14,25 +14,29 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/register.css') }}">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
-<body style="background-image: url('https://img.freepik.com/free-photo/hand-painted-watercolor-background-with-sky-clouds-shape_24972-1095.jpg?w=1500'); background-attachment:fixed;">
-    <section class="bg-image" style="margin: auto;">
-        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-            <div class="container h-100">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                        <div class="card" style="border-radius: 15px;">
-                            <div class="card-body p-5">
-                                <a href="{{ url()->previous() }}" class="fw-bold text-body">&larr; 帰る</a>
+<body style="background-image: url('{{ asset('assets/images/background.jpg') }}'); background-attachment:local; background-repeat: no-repeat; background-size: cover;">
+    <div class="row" style='min-width: 350px; max-width: 600px; width: 100vw; border: darkgray; border-width: thin; border-style: solid; border-radius: 15px;'>
+        <div class="card" style="border-radius: 15px;">
+            <div class="card-body">
+                <a href="{{ url()->previous() }}" class="fw-bold text-body">&larr; 帰る</a>
 
-                                @yield('content')
+                @yield('content')
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-    </section>
+    </div>
 </body>
 </html>
