@@ -35,7 +35,7 @@
 </style>
 
 
-<div>
+<div style="overflow-x: auto">
     <table class="table table-hover table-condensed">
         <thead>
             <tr>
@@ -58,7 +58,7 @@
                 </td>
 
                 <td data-th="Name" class="div-img">
-                    <input class="form-control inp-row-{{ $item->product_id }} inp-name" value="{{ $item->product_name }}" name="name" disabled>
+                    <input style="width: fit-content" class="form-control inp-row-{{ $item->product_id }} inp-name" value="{{ $item->product_name }}" name="name" disabled>
                     @php
                         $image = '';
                         if (strlen(strstr($item->product_image, 'http')) > 0) {
@@ -74,15 +74,15 @@
                 </td>
 
                 <td data-th="Description">
-                    <textarea class="form-control inp-row-{{ $item->product_id }} inp-description" name="description" disabled>{{ $item->description }}</textarea>
+                    <textarea  style="min-width: fit-content" class="form-control inp-row-{{ $item->product_id }} inp-description" name="description" disabled>{{ $item->description }}</textarea>
                 </td>
 
                 <td data-th="Price">
-                    <input class="form-control inp-row-{{ $item->product_id }} inp-price" value="{{ $item->product_price }}" name="price" disabled>
+                    <input style="width:auto; max-width: 100px" class="form-control inp-row-{{ $item->product_id }} inp-price" value="{{ $item->product_price }}" name="price" disabled>
                 </td>
 
                 <td class="actions" data-th="Status">
-                    <select class="form-select inp-row-{{ $item->product_id }} inp-status" name="status" aria-label="Disabled select example" disabled>
+                    <select style="width: fit-content" class="form-select inp-row-{{ $item->product_id }} inp-status" name="status" aria-label="Disabled select example" disabled>
                         <option value="1" {{ ($item->is_sales == 1) ? 'selected' : '' }}>活動</option>
                         <option value="0" {{ ($item->is_sales == 0) ? 'selected' : '' }}>ロック</option>
                     </select>

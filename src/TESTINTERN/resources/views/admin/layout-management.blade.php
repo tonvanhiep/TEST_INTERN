@@ -36,7 +36,7 @@
 
 
     <div class="container-fluid dashboard mt-3">
-        <div class="d-flex align-items-start">
+        <div class="row">
 
             @include('components.admin-menu')
 

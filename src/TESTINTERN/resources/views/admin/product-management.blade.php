@@ -103,42 +103,42 @@
     </div>
 
     <div class="options">
-        <form class="d-flex flex-row" id="search-form" action="{{ route('admin.product.p_search') }}">
+        <form class="row" id="search-form" action="{{ route('admin.product.p_search') }}">
 
-            <div class="p-2">
+            <div class="p-2" style="width: fit-content">
                 <label class="form-label" for="search-name">製品の名前</label>
-                <input class="form-control" id="search-name" type="search">
+                <input style="width: auto" class="form-control" id="search-name" type="search">
             </div>
 
-            <div class="p-2">
+            <div class="p-2" style="width: fit-content">
                 <label class="form-label" for="filter-sales">スターテス</label>
-                <select class="form-select" id="filter-sales" style="width: 200px">
+                <select style="width: auto" class="form-select" id="filter-sales" style="width: 200px">
                     <option value="-1" selected>全部</option>
                     <option value="1">活動</option>
                     <option value="0">ロック</option>
                 </select>
             </div>
 
-            <div class="p-2">
+            <div class="p-2" style="width: fit-content">
                 <label class="form-label" for="search-price-min">から</label>
                 <input class="form-control" id="search-price-min" style="width: 100px" type="search">
             </div>
 
-            <div class="align-self-end p-2">
+            <div class="align-self-end p-2" style="width: fit-content">
                 ～
             </div>
 
-            <div class="p-2">
+            <div class="p-2" style="width: fit-content">
                 <label class="form-label" for="search-price-max">まで</label>
                 <input class="form-control" id="search-price-max" style="width: 100px" type="search">
             </div>
 
-            <div class="align-self-end p-2">
-                <button class="btn btn-outline-dark" type="button" onclick="submitSearchFormAjax();">検索</button>
+            <div class="align-self-end p-2" style="width: fit-content">
+                <button style="width: 100px" class="btn btn-outline-dark" type="button" onclick="submitSearchFormAjax();">検索</button>
             </div>
 
-            <div class="align-self-end p-2">
-                <button class="btn btn-outline-dark" type="reset" onclick="deleteSearchFormAjax();">検索を削除</button>
+            <div class="align-self-end p-2" style="width: fit-content">
+                <button style="width: 150px" class="btn btn-outline-dark" type="reset" onclick="deleteSearchFormAjax();">検索を削除</button>
             </div>
 
         </form>
